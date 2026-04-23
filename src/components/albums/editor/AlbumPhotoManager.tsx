@@ -1,0 +1,295 @@
+import React from "react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  LayoutGrid,
+  List,
+  Filter,
+  Trash2,
+  Maximize2,
+  Wand2,
+  BookOpen,
+  PencilLine,
+} from "lucide-react";
+import type { AlbumDetailResponse } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { albumsApi } from "@/lib/api";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import PhotoUploadZone from "../PhotoUploadZone";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import DestinationCard from "@/components/cards/DestinationCard";
+import type { Destination } from "@/lib/models/ui";
+
+export default function AlbumPhotoManager({
+  album,
+}: {
+  album: AlbumDetailResponse;
+}) {
+  const queryClient = useQueryClient();
+  const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = React.useState("date");
+  const [isRenameOpen, setIsRenameOpen] = React.useState(false);
+  const [newTitle, setNewTitle] = React.useState(album.title);
+
+  const images = album.images || [];
+
+  const sortedImages = React.useMemo(() => {
+    const imgs = [...images];
+    if (sortBy === "recent") {
+      imgs.sort(
+        (a, b) =>
+          new Date(b.taken_at || 0).getTime() -
+          new Date(a.taken_at || 0).getTime(),
+      );
+    } else if (sortBy === "old") {
+      imgs.sort(
+        (a, b) =>
+          new Date(a.taken_at || 0).getTime() -
+          new Date(b.taken_at || 0).getTime(),
+      );
+    }
+    return imgs;
+  }, [images, sortBy]);
+
+  // Calculate unique countries/places
+  const uniquePlaces = new Set(
+    images.map((img) => img.place_id).filter(Boolean),
+  ).size;
+
+  const handleDelete = async (imageId: string) => {
+    try {
+      await albumsApi.deleteAlbumImage(album.id, imageId);
+      queryClient.invalidateQueries({ queryKey: ["albums", album.id] });
+      toast.success("Photo supprimée.");
+    } catch (error) {
+      toast.error("Erreur lors de la suppression.");
+    }
+  };
+
+  const handleRename = async () => {
+    if (!newTitle.trim()) return;
+    try {
+      await albumsApi.updateAlbum(album.id, { title: newTitle });
+      queryClient.invalidateQueries({ queryKey: ["albums", album.id] });
+      toast.success("Nom de l'album modifié !");
+      setIsRenameOpen(false);
+    } catch (error) {
+      toast.error("Erreur lors de la modification.");
+    }
+  };
+
+  const associatedPlaces = (album.places || [])
+    .map((ap) => ap.place)
+    .filter(Boolean) as any[];
+
+  return (
+    <div className="space-y-6">
+      {/* Header Controls */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-black flex items-center gap-2">
+            {album.title}
+            <Dialog open={isRenameOpen} onOpenChange={setIsRenameOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <PencilLine className="w-5 h-5" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Modifier l'album</DialogTitle>
+                  <DialogDescription>
+                    Saisissez un nouveau nom pour votre album.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="py-4">
+                  <Input
+                    value={newTitle}
+                    onChange={(e) => setNewTitle(e.target.value)}
+                    placeholder="Nom de l'album"
+                    className="text-lg font-medium h-12 rounded-xl"
+                  />
+                </div>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline" className="rounded-xl">
+                      Annuler
+                    </Button>
+                  </DialogClose>
+                  <Button
+                    onClick={handleRename}
+                    className="rounded-xl bg-primary"
+                  >
+                    Enregistrer
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </h2>
+          <p className="text-muted-foreground text-sm font-medium mt-1">
+            {images.length} photos • {uniquePlaces} lieux
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <div className="flex bg-muted/50 p-1 rounded-xl">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={`p-2 rounded-lg transition-colors ${viewMode === "grid" ? "bg-white shadow-sm" : "hover:bg-white/50"}`}
+            >
+              <LayoutGrid className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setViewMode("list")}
+              className={`p-2 rounded-lg transition-colors ${viewMode === "list" ? "bg-white shadow-sm" : "hover:bg-white/50"}`}
+            >
+              <List className="w-4 h-4" />
+            </button>
+          </div>
+
+          <Select value={sortBy} onValueChange={setSortBy}>
+            <SelectTrigger className="w-[180px] h-10 rounded-xl bg-white border border-border">
+              <SelectValue placeholder="Trier par date" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="date">Trier par date</SelectItem>
+              <SelectItem value="recent">Récents d'abord</SelectItem>
+              <SelectItem value="old">Anciens d'abord</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Button variant="outline" className="rounded-xl h-10 gap-2 bg-white">
+            <Filter className="w-4 h-4" /> Filtrer
+          </Button>
+        </div>
+      </div>
+
+      {/* Grid */}
+      <div
+        className={
+          viewMode === "grid"
+            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+            : "space-y-6"
+        }
+      >
+        {sortedImages.map((image, index) => {
+          // Find if the image is linked to a place in the album
+          const place = associatedPlaces.find((p) => p.id === image.place_id);
+
+          const mockDestination: Destination = {
+            id: image.id,
+            name: image.caption || (place ? place.name : "Photo de voyage"),
+            slug: place ? place.slug : "#",
+            image: image.url,
+            type: place ? place.category : "attraction",
+            isFavorite: false,
+            rating: place?.rating || 0,
+            city: place ? place.city : "Inconnu",
+            category: place ? place.category : "Souvenir",
+            description: `Prise le ${
+              image.taken_at
+                ? format(new Date(image.taken_at), "dd MMM yyyy", {
+                    locale: fr,
+                  })
+                : "Date inconnue"
+            }. ${image.caption || ""}`,
+            gallery: [image.url],
+            safety: place?.safety || "0",
+            longDescription: place?.longDescription || "",
+            coordinates: {
+              lat: place?.latitude || 0,
+              lng: place?.longitude || 0,
+            },
+            featured: false,
+            reviewsCount: 0,
+          };
+
+          return (
+            <motion.div
+              key={image.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
+              className={`relative group ${viewMode === "list" ? "w-full max-w-2xl mx-auto" : ""}`}
+            >
+              <DestinationCard destination={mockDestination} />
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="destructive"
+                    size="icon"
+                    className="absolute top-16 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity rounded-full h-10 w-10 shadow-lg"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent onClick={(e) => e.stopPropagation()}>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Supprimer la photo</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Voulez-vous vraiment supprimer cette photo de votre album
+                      ? Cette action est irréversible.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Annuler</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => handleDelete(image.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white"
+                    >
+                      Supprimer
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </motion.div>
+          );
+        })}
+
+        {/* Upload Zone inside grid if grid mode, or below if list mode */}
+        <div className={viewMode === "list" ? "mt-4" : ""}>
+          <PhotoUploadZone
+            albumId={album.id}
+            associatedPlaces={associatedPlaces}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

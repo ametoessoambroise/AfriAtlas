@@ -1,0 +1,247 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@layer base {
+  :root,
+  :root[data-theme="light"] {
+    /* ── Horizon Travel · Light ────────────────────────────────────────────
+       Ambiance : air pur, ciel ouvert, destinations lointaines
+       Primary  : Bleu océan profond
+       Secondary: Sable chaud
+       Accent   : Corail sunset
+    ─────────────────────────────────────────────────────────────────────── */
+
+    --background: 210 40% 98%; /* #F7FAFC – Blanc bleuté */
+    --foreground: 215 30% 12%; /* #1B2633 – Bleu nuit */
+
+    --primary: 205 85% 32%; /* #0F4C75 – Bleu océan */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 38 85% 70%; /* #F4C95D – Sable doré */
+    --secondary-foreground: 215 30% 12%;
+
+    --accent: 12 90% 60%; /* #FF7A59 – Corail sunset */
+    --accent-foreground: 0 0% 100%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 30% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 30% 12%;
+
+    --muted: 210 30% 94%; /* #E9F0F5 */
+    --muted-foreground: 210 15% 45%; /* #6B7C8F */
+
+    --destructive: 0 80% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 25% 85%; /* #D6E0EA */
+    --input: 210 25% 85%;
+    --ring: 205 85% 32%;
+    --radius: 0.75rem;
+
+    /* Compat */
+    --color-text: var(--foreground);
+    --color-background: var(--background);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-primary-dark: 205 85% 22%;
+    --color-primary-light: 205 75% 45%;
+    --color-text-muted: var(--muted-foreground);
+    --color-surface: var(--card);
+    --color-surface-alt: var(--muted);
+
+    /* Sidebar */
+    --sidebar-background: 210 30% 95%;
+    --sidebar-foreground: 215 30% 12%;
+    --sidebar-primary: 205 85% 32%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 38 85% 70%;
+    --sidebar-accent-foreground: 215 30% 12%;
+    --sidebar-border: 210 25% 85%;
+    --sidebar-ring: 205 85% 32%;
+  }
+
+  .dark,
+  :root[data-theme="dark"] {
+    /* ── Horizon Travel · Dark ─────────────────────────────────────────────
+       Ambiance : nuit en altitude, horizon lumineux, villes vues du ciel
+       Primary  : Bleu néon
+       Secondary: Or chaud
+       Accent   : Corail vibrant
+    ─────────────────────────────────────────────────────────────────────── */
+
+    --background: 220 35% 7%; /* #0B1220 – Nuit profonde */
+    --foreground: 210 40% 96%; /* #EAF2F8 */
+
+    --primary: 200 90% 55%; /* #38BDF8 – Bleu néon */
+    --primary-foreground: 220 35% 7%;
+
+    --secondary: 42 85% 60%; /* #FBBF24 – Or chaud */
+    --secondary-foreground: 220 35% 7%;
+
+    --accent: 10 90% 65%; /* #FF6B4A – Corail */
+    --accent-foreground: 0 0% 100%;
+
+    --card: 220 30% 10%; /* #121A2B */
+    --card-foreground: 210 40% 96%;
+
+    --popover: 220 30% 10%;
+    --popover-foreground: 210 40% 96%;
+
+    --muted: 220 25% 15%; /* #1C2538 */
+    --muted-foreground: 210 20% 65%; /* #94A3B8 */
+
+    --destructive: 0 70% 40%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 25% 18%; /* #24304A */
+    --input: 220 25% 18%;
+    --ring: 200 90% 55%;
+
+    /* Sidebar Dark */
+    --sidebar-background: 220 30% 9%;
+    --sidebar-foreground: 210 40% 96%;
+    --sidebar-primary: 200 90% 55%;
+    --sidebar-primary-foreground: 220 35% 7%;
+    --sidebar-accent: 42 85% 60%;
+    --sidebar-accent-foreground: 220 35% 7%;
+    --sidebar-border: 220 25% 18%;
+    --sidebar-ring: 200 90% 55%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body text-base antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+
+  :where(a, button, input, select, textarea):focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  #card-element {
+    padding: 10px;
+    border: 1px solid hsl(var(--border));
+    border-radius: 8px;
+    background-color: hsl(var(--card));
+    transition: all 0.2s;
+  }
+
+  #card-element:focus {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 3px hsla(var(--primary), 0.15);
+  }
+
+  #card-element input {
+    font-family: "DM Sans", sans-serif;
+    color: hsl(var(--foreground));
+    font-size: 14px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-primary-foreground font-semibold rounded-full px-8 py-3 transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5;
+  }
+
+  .btn-outline-white {
+    @apply border-2 border-white/80 text-white font-semibold rounded-full px-8 py-3 transition-all duration-200 hover:bg-white/10;
+  }
+
+  /* Légère teinte jungle + bordure subtile */
+  .card-destination {
+    @apply bg-card rounded-2xl border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+    box-shadow: 0 1px 3px hsla(160, 55%, 10%, 0.08);
+  }
+
+  .dark .card-destination:hover {
+    box-shadow: 0 8px 32px hsla(148, 60%, 42%, 0.15);
+  }
+
+  /* Badge : vert forêt en light, vert bioluminescent en dark */
+  .badge-rating {
+    @apply bg-primary text-primary-foreground rounded-full px-2.5 py-0.5 text-sm font-semibold;
+  }
+
+  /* Badge secondaire : or tropical */
+  .badge-secondary {
+    @apply bg-secondary text-secondary-foreground rounded-full px-2.5 py-0.5 text-sm font-semibold;
+  }
+
+  /* Badge accent : flamant pour promos / alertes */
+  .badge-accent {
+    @apply bg-accent text-accent-foreground rounded-full px-2.5 py-0.5 text-sm font-semibold;
+  }
+
+  /* Titres éditoriaux – Cormorant en italique pour l'effet magazine */
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-foreground font-heading;
+  }
+
+  .section-title-editorial {
+    @apply text-4xl md:text-5xl font-heading italic font-semibold text-foreground;
+  }
+
+  .section-subtitle {
+    @apply text-muted-foreground text-lg max-w-2xl font-body;
+  }
+
+  /* Highlight de texte en or tropical */
+  .text-highlight {
+    @apply text-secondary font-semibold;
+  }
+
+  /* Diviseur décoratif végétal */
+  .divider-tropical {
+    @apply w-12 h-0.5 rounded-full bg-primary opacity-60;
+  }
+
+  .section-muted {
+    @apply bg-muted;
+  }
+
+  /* Utility for hiding scrollbar but keeping functionality */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+.overlay {
+  backdrop-filter: blur(1px);
+  background-color: rgba(187, 200, 215, 0.4);
+}
+
+.dark .overlay {
+  backdrop-filter: blur(1px);
+  background-color: rgba(12, 18, 32, 0.65);
+}

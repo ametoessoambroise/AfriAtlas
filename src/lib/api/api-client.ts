@@ -34,7 +34,7 @@ export async function fetchWithAuth(url: string, init: RequestInit = {}): Promis
     
     if (refreshTokenValue) {
       if (!refreshPromise) {
-        refreshPromise = (async () => {
+        refreshPromise = (async (): Promise<string | null> => {
           try {
             const refreshUrl = `${getApiBaseUrl()}/api/v1/auth/refresh`;
             const refreshRes = await fetch(refreshUrl, {

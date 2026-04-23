@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import DestinationCard from "@/components/cards/DestinationCard";
 import { ApiErrorState, DestinationGridSkeleton } from "@/components/feedback/ApiQueryState";
@@ -8,14 +8,18 @@ import { usePlaces } from "@/hooks/queries/usePlaces";
 import { mapPlaceListToDestination } from "@/lib/mappers/placeMapper";
 import { getErrorMessage } from "@/lib/utils/errorMessages";
 
-const stagger = {
+const stagger: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
 };
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } 
+  },
 };
 
 function pickFeaturedIds(items: { id: string; is_featured: boolean }[]) {
@@ -61,7 +65,7 @@ export default function FeaturedDestinations() {
                 initial={{ width: 0 }}
                 whileInView={{ width: "100%" }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.6, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: 0.6, duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
               />
             </span>
           </motion.h2>

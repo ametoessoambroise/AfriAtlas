@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import NumberFlow from "@number-flow/react";
-import { Check, CheckCheck, Loader2, AlertTriangle, Users } from "lucide-react";
+import { Check, AlertTriangle, Users } from "lucide-react";
 import { motion } from "motion/react";
 import { useRef, useState } from "react";
 import {
@@ -10,6 +10,7 @@ import {
 } from "@/hooks/queries/useSubscription";
 import { StripeBuyButton } from "@/components/shared/StripeBuyButton";
 import { useAuth } from "@/hooks/useAuth";
+import { PricingSkeleton } from "@/components/skeletons/PricingSkeleton";
 
 const PricingSwitch = ({ onSwitch }: { onSwitch: (value: string) => void }) => {
   const [selected, setSelected] = useState("0");
@@ -93,7 +94,7 @@ export default function SubscriptionPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-neutral-100 flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+        <PricingSkeleton />
       </div>
     );
   }
@@ -288,7 +289,7 @@ export default function SubscriptionPage() {
                         } disabled:opacity-50 disabled:cursor-not-allowed`}
                       >
                         {isSubscribing ? (
-                          <Loader2 className="h-5 w-5 animate-spin" />
+                          <PricingSkeleton />
                         ) : isCurrentPlan ? (
                           "Plan actuel"
                         ) : (

@@ -25,6 +25,7 @@ export async function listVrSessions(params: { slug: string }): Promise<Array<T.
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
+    "Authorization": `Bearer ${getAccessToken()}`,
   };
 
   const init: RequestInit = {

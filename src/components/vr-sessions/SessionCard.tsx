@@ -1,6 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Calendar, Clock, MapPin, Users, ChevronRight, Euro } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Users,
+  ChevronRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { VRSessionListResponse } from "@/lib/types";
 
@@ -16,7 +22,7 @@ export function SessionCard({ session }: SessionCardProps) {
           <Calendar className="h-10 w-10 text-primary/40" />
         </div>
       </div>
-      
+
       <div className="flex-1 flex flex-col min-w-0">
         <div className="flex justify-between items-start gap-4">
           <div>
@@ -54,7 +60,10 @@ export function SessionCard({ session }: SessionCardProps) {
         </div>
 
         <div className="mt-6 pt-6 border-t border-border flex justify-end">
-          <Button asChild className="rounded-xl px-8 w-full md:w-auto gap-2 group-hover:bg-primary/90">
+          <Button
+            asChild
+            className="rounded-xl px-8 w-full md:w-auto gap-2 group-hover:bg-primary/90"
+          >
             <Link to={`/vr-sessions/${session.id}/book`}>
               Réserver cette session
               <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

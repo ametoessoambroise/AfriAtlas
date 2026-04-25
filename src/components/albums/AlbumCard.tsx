@@ -1,16 +1,25 @@
-import { Link } from 'react-router-dom';
-import { Image as ImageIcon, MapPin, Calendar, Lock, Globe } from 'lucide-react';
-import { motion } from 'framer-motion';
-import type { AlbumListResponse } from '@/lib/types/album';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { Link } from "react-router-dom";
+import {
+  Image as ImageIcon,
+  MapPin,
+  Calendar,
+  Lock,
+  Globe,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import type { AlbumListResponse } from "@/lib/types/album";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { resolveAlbumCoverUrl } from "@/lib/utils/imageUrl";
 
 interface AlbumCardProps {
   album: AlbumListResponse;
 }
 
 const AlbumCard = ({ album }: AlbumCardProps) => {
-  const dateStr = format(new Date(album.created_at), 'MMMM yyyy', { locale: fr });
+  const dateStr = format(new Date(album.created_at), "MMMM yyyy", {
+    locale: fr,
+  });
 
   return (
     <motion.div
@@ -18,14 +27,24 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className="group"
     >
-      <Link to={`/albums/${album.id}`} className="block relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-surface-alt border border-border transition-all group-hover:shadow-2xl group-hover:shadow-primary/10">
+      <Link
+        to={`/albums/${album.id}`}
+        className="block relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-surface-alt border border-border transition-all group-hover:shadow-2xl group-hover:shadow-primary/10"
+      >
         {/* Cover Image */}
         {album.cover_image_url ? (
           <img
-            src={album.cover_image_url}
+            src={resolveAlbumCoverUrl(album.cover_image_url)}
             alt={album.title}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
+            onError={(e) => {
+              console.error("❌ Image failed to load:", e.currentTarget.src);
+              console.error("Original URL:", album.cover_image_url);
+            }}
+            onLoad={(e) => {
+              console.log("✅ Image loaded successfully:", e.currentTarget.src);
+            }}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-primary/5">
@@ -42,17 +61,23 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
             {album.is_public ? (
               <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10">
                 <Globe className="w-3 h-3 text-emerald-400" />
-                <span className="text-[10px] font-black uppercase tracking-widest">Public</span>
+                <span className="text-[10px] font-black uppercase tracking-widest">
+                  Public
+                </span>
               </div>
             ) : (
               <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10">
                 <Lock className="w-3 h-3 text-amber-400" />
-                <span className="text-[10px] font-black uppercase tracking-widest">Privé</span>
+                <span className="text-[10px] font-black uppercase tracking-widest">
+                  Privé
+                </span>
               </div>
             )}
           </div>
 
-          <h3 className="text-xl font-black mb-2 line-clamp-1">{album.title}</h3>
+          <h3 className="text-xl font-black mb-2 line-clamp-1">
+            {album.title}
+          </h3>
 
           <div className="flex items-center gap-4 text-xs font-medium text-white/70">
             <div className="flex items-center gap-1.5">

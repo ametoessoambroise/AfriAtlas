@@ -1,6 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { analyticsApi } from '@/lib/api';
-import type { VisitType } from '@/lib/types';
+import type { 
+  AnalyticsFilter, 
+  VisitRecordRequest 
+} from '@/lib/types/analytics';
 
 export const usePlaceAnalytics = (slug: string, params?: { start_date?: string; end_date?: string }) => {
   return useQuery({
@@ -10,7 +13,7 @@ export const usePlaceAnalytics = (slug: string, params?: { start_date?: string; 
   });
 };
 
-export const useGlobalAnalytics = (params?: { start_date?: string; end_date?: string }) => {
+export const useGlobalAnalytics = (params?: AnalyticsFilter) => {
   return useQuery({
     queryKey: ['analytics', 'global', params],
     queryFn: () => analyticsApi.getGlobalAnalytics(params),
@@ -26,14 +29,7 @@ export const useUserVisitHistory = (params?: { page?: number; per_page?: number 
 
 export const useAnalyticsMutations = () => {
   const recordVisit = useMutation({
-    mutationFn: (body: {
-      place_id: string;
-      visit_type?: VisitType;
-      session_id: string;
-      ip_address?: string;
-      user_agent?: string;
-      referrer?: string;
-    }) => analyticsApi.recordVisit(body),
+    mutationFn: (body: VisitRecordRequest) => analyticsApi.recordVisit(body),
   });
 
   return {

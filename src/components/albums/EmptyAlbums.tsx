@@ -1,21 +1,26 @@
-import { Link } from 'react-router-dom';
-import { Camera, Plus } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Link } from "react-router-dom";
+import { Camera, Plus } from "lucide-react";
+import { motion } from "framer-motion";
 
 const DECORATIVE_IMAGES = [
   "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=400",
   "https://images.unsplash.com/photo-1506461883276-594a12b11cc3?auto=format&fit=crop&q=80&w=400",
   "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1582234372722-50d7ccc30ebd?auto=format&fit=crop&q=80&w=400"
+  "https://images.unsplash.com/photo-1582234372722-50d7ccc30ebd?auto=format&fit=crop&q=80&w=400",
 ];
 
 const EmptyAlbums = () => {
   return (
-    <div className="relative min-h-[60vh] flex flex-col items-center justify-center p-8 text-center overflow-hidden rounded-[2.5rem] border border-dashed border-border bg-surface-alt/50">
+    <div className="relative min-h-[60vh] flex flex-col items-center justify-center p-8 text-center overflow-hidden rounded-[2.5rem] border border-dashed border-border ">
       {/* Decorative background grid */}
-      <div className="absolute inset-0 grid grid-cols-2 gap-4 opacity-[0.03] pointer-events-none scale-110 -rotate-2">
+      <div className="absolute inset-0 grid grid-cols-2 gap-4 opacity-[0.09] pointer-events-none scale-110 -rotate-2">
         {DECORATIVE_IMAGES.map((img, i) => (
-          <img key={i} src={img} className="w-full h-full object-cover rounded-3xl" alt="" />
+          <img
+            key={i}
+            src={img}
+            className="w-full h-full object-cover rounded-3xl"
+            alt=""
+          />
         ))}
       </div>
 
@@ -29,9 +34,13 @@ const EmptyAlbums = () => {
           <Camera className="w-10 h-10 text-primary" />
         </div>
 
-        <h2 className="text-3xl font-black mb-4 tracking-tight">Capturez vos souvenirs</h2>
+        <h2 className="text-3xl font-black mb-4 tracking-tight">
+          Capturez vos souvenirs
+        </h2>
         <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
-          Commencez à créer des albums pour organiser vos photos de voyage, raconter vos histoires et partager vos aventures au Togo avec vos proches.
+          Commencez à créer des albums pour organiser vos photos de voyage,
+          raconter vos histoires et partager vos aventures au Togo avec vos
+          proches.
         </p>
 
         <Link

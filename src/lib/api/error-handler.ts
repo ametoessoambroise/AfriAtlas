@@ -12,17 +12,25 @@ export class ApiError extends Error {
     public readonly endpoint: string,
     public readonly moduleName: string = "API",
   ) {
-    // Message technique pour les logs
-    super(`[${moduleName}] HTTP ${status} — ${rawMessage} (${endpoint})`);
+    // Message convivial pour l'UI (utilisé comme message principal)
+    const friendlyMsg = ApiError.parseFriendlyMessage(status, rawMessage);
+    super(friendlyMsg);
     this.name = "ApiError";
 
-    // Message convivial pour l'UI
-    this.friendlyMessage = this.parseFriendlyMessage(status, rawMessage);
+    // Stocker aussi le message convivial
+    this.friendlyMessage = friendlyMsg;
+
+    // Log technique en console pour le debug (seulement en dev)
+    if (import.meta.env.DEV) {
+      console.error(
+        `[${moduleName}] HTTP ${status} — ${rawMessage} (${endpoint})`,
+      );
+    }
 
     Object.setPrototypeOf(this, ApiError.prototype);
   }
 
-  private parseFriendlyMessage(status: number, raw: string): string {
+  private static parseFriendlyMessage(status: number, raw: string): string {
     if (status === 401)
       return "Votre session a expiré. Veuillez vous reconnecter.";
     if (status === 403)

@@ -22,12 +22,17 @@ import { getAccessToken } from "./token";
  * Full-text search for destinations.
  * @method GET /api/v1/search
  */
-export async function searchDestinations(params?: { q: string; category?: string | null }): Promise<Array<T.DestinationResponse>> {
+export async function searchDestinations(params?: {
+  page: number;
+  q?: string;
+  page_size: number;
+  category?: string | null;
+}): Promise<Array<T.DestinationResponse>> {
   const url = `${getApiBaseUrl()}/api/v1/search`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${getAccessToken()}`,
+    Authorization: `Bearer ${getAccessToken()}`,
   };
 
   const init: RequestInit = {
@@ -35,13 +40,22 @@ export async function searchDestinations(params?: { q: string; category?: string
     headers,
   };
 
-  const qs = params
-    ? "?" + new URLSearchParams(
-        Object.entries(params)
-          .filter(([, v]) => v !== undefined && v !== null)
-          .map(([k, v]) => [k, String(v)])
-      ).toString()
-    : "";
+  // Map 'q' to 'query' for the backend
+  const apiParams: Record<string, any> = {
+    query: params?.q,
+    category: params?.category,
+    page: params?.page || 1,
+    page_size: params?.page_size || 10,
+    sort_by: "popular",
+  };
+
+  const qs =
+    "?" +
+    new URLSearchParams(
+      Object.entries(apiParams)
+        .filter(([, v]) => v !== undefined && v !== null)
+        .map(([k, v]) => [k, String(v)]),
+    ).toString();
 
   const res = await fetch(url + qs, init);
 
@@ -50,5 +64,8 @@ export async function searchDestinations(params?: { q: string; category?: string
     throw new ApiError(res.status, errorBody, url, "SEARCH");
   }
 
-  return res.json() as Promise<Array<T.DestinationResponse>>;
+  const data = await res.json();
+  // The backend might return a paginated object or a direct array
+  // If it's a paginated object { items: [], ... }, we return the items
+  return (data.items || data) as Array<T.DestinationResponse>;
 }

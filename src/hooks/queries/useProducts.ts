@@ -8,6 +8,7 @@ import {
 } from "@/lib/api/products";
 import type * as T from "@/lib/types";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/lib/utils/errorHandler";
 
 export function usePlaceProducts(slug: string | null) {
   return useQuery({
@@ -21,7 +22,6 @@ export function usePlaceProducts(slug: string | null) {
 // Alias for owner dashboard compatibility
 export { usePlaceProducts as useProducts };
 
-
 export function useCreateProduct(slug: string) {
   const queryClient = useQueryClient();
   return useMutation({
@@ -30,7 +30,7 @@ export function useCreateProduct(slug: string) {
       queryClient.invalidateQueries({ queryKey: ["products", slug] });
       toast.success("Produit créé !");
     },
-    onError: (err: any) => toast.error(err?.message || "Erreur lors de la création."),
+    onError: (err: any) => toast.error(getErrorMessage(err)),
   });
 }
 
@@ -43,7 +43,7 @@ export function useUpdateProduct(slug: string) {
       queryClient.invalidateQueries({ queryKey: ["products", slug] });
       toast.success("Produit mis à jour !");
     },
-    onError: (err: any) => toast.error(err?.message || "Erreur lors de la modification."),
+    onError: (err: any) => toast.error(getErrorMessage(err)),
   });
 }
 
@@ -55,7 +55,7 @@ export function useDeleteProduct(slug: string) {
       queryClient.invalidateQueries({ queryKey: ["products", slug] });
       toast.success("Produit supprimé.");
     },
-    onError: (err: any) => toast.error(err?.message || "Erreur lors de la suppression."),
+    onError: (err: any) => toast.error(getErrorMessage(err)),
   });
 }
 
@@ -71,6 +71,6 @@ export function useUploadProductImage(slug: string) {
       queryClient.invalidateQueries({ queryKey: ["products", slug] });
       toast.success("Image ajoutée !");
     },
-    onError: (err: any) => toast.error(err?.message || "Erreur upload image."),
+    onError: (err: any) => toast.error(getErrorMessage(err)),
   });
 }

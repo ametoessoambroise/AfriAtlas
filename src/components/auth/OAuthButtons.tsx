@@ -1,11 +1,20 @@
+import { useLocation } from "react-router-dom";
+
 export default function OAuthButtons() {
+  const location = useLocation();
+
+  // Récupérer l'URL d'origine pour la redirection après OAuth
+  const returnUrl = location.state?.from?.pathname || "/";
+
   const handleGoogle = () => {
-    // Redirection vers l'endpoint OAuth du serveur FastAPI
-    window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/v1/auth/oauth/google`;
+    // Encoder l'URL de retour dans les paramètres
+    const params = new URLSearchParams({ return_url: returnUrl });
+    window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/auth/oauth/google?${params}`;
   };
 
   const handleFacebook = () => {
-    window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/v1/auth/oauth/facebook`;
+    const params = new URLSearchParams({ return_url: returnUrl });
+    window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/auth/oauth/facebook?${params}`;
   };
 
   return (

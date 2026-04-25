@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { albumsApi } from "@/lib/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { resolveAlbumImageUrl } from "@/lib/utils/imageUrl";
 
 interface PhotoGalleryProps {
   images: AlbumImageResponse[];
@@ -17,11 +18,12 @@ interface PhotoGalleryProps {
 
 export default function PhotoGallery({ images, albumId }: PhotoGalleryProps) {
   const queryClient = useQueryClient();
-  const [selectedImage, setSelectedImage] = React.useState<AlbumImageResponse | null>(null);
+  const [selectedImage, setSelectedImage] =
+    React.useState<AlbumImageResponse | null>(null);
 
   const handleDelete = async (imageId: string) => {
     if (!confirm("Voulez-vous vraiment supprimer cette photo ?")) return;
-    
+
     try {
       await albumsApi.deleteAlbumImage(albumId, imageId);
       queryClient.invalidateQueries({ queryKey: ["albums", albumId] });
@@ -38,9 +40,12 @@ export default function PhotoGallery({ images, albumId }: PhotoGalleryProps) {
         <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-4">
           <Maximize2 className="h-8 w-8 text-muted-foreground" />
         </div>
-        <p className="text-lg font-medium text-muted-foreground">Aucune photo dans cet album.</p>
+        <p className="text-lg font-medium text-muted-foreground">
+          Aucune photo dans cet album.
+        </p>
         <p className="text-sm text-center text-muted-foreground/60 mt-1 max-w-xs">
-          Ajoutez vos souvenirs ci-dessous pour donner vie à votre récit de voyage.
+          Ajoutez vos souvenirs ci-dessous pour donner vie à votre récit de
+          voyage.
         </p>
       </div>
     );
@@ -68,7 +73,7 @@ export default function PhotoGallery({ images, albumId }: PhotoGalleryProps) {
             <Dialog>
               <DialogTrigger asChild>
                 <img
-                  src={image.url}
+                  src={resolveAlbumImageUrl(image)}
                   alt={image.caption || "Photo d'album"}
                   className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
@@ -77,22 +82,28 @@ export default function PhotoGallery({ images, albumId }: PhotoGalleryProps) {
               <DialogContent className="max-w-[95vw] md:max-w-[80vw] h-[90vh] p-0 overflow-hidden border-none bg-black/95">
                 <div className="relative h-full w-full flex flex-col items-center justify-center">
                   <img
-                    src={image.url}
+                    src={resolveAlbumImageUrl(image)}
                     alt={image.caption || ""}
                     className="max-h-[80%] max-w-full object-contain"
                   />
-                  
+
                   <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black via-black/60 to-transparent text-white">
                     <div className="max-w-4xl mx-auto space-y-4">
                       {image.caption && (
                         <p className="text-xl font-medium">{image.caption}</p>
                       )}
-                      
+
                       <div className="flex flex-wrap gap-6 text-sm text-gray-300">
                         {image.taken_at && (
                           <div className="flex items-center gap-2">
-                             <Calendar className="h-4 w-4 text-primary" />
-                             <span>{format(new Date(image.taken_at), "dd MMMM yyyy", { locale: fr })}</span>
+                            <Calendar className="h-4 w-4 text-primary" />
+                            <span>
+                              {format(
+                                new Date(image.taken_at),
+                                "dd MMMM yyyy",
+                                { locale: fr },
+                              )}
+                            </span>
                           </div>
                         )}
                       </div>

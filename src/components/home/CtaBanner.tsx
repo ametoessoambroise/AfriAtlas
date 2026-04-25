@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function CtaBanner() {
   return (
-    <section className="relative w-full py-12 md:py-20 lg:py-24 bg-[#F5F5F0] overflow-hidden">
+    <section className="relative w-full py-12 md:py-20 lg:py-24 overflow-hidden">
       {/* ── Dot pattern ── */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -26,7 +26,7 @@ export default function CtaBanner() {
             className="relative flex-1 bg-black rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-12 lg:p-14 flex flex-col justify-between overflow-hidden group shadow-2xl min-h-[380px] md:min-h-[440px] lg:min-h-[600px]"
           >
             {/* Glow subtil en arrière-plan */}
-            <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white/20 blur-3xl pointer-events-none" />
 
             {/* Header */}
             <div className="flex justify-between items-start mb-10 md:mb-14">

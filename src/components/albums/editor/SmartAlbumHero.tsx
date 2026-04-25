@@ -4,6 +4,7 @@ import { Sparkles, UploadCloud, LayoutTemplate } from "lucide-react";
 import type { AlbumDetailResponse } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { resolveAlbumImageUrl } from "@/lib/utils/imageUrl";
 
 export default function SmartAlbumHero({
   album,
@@ -11,9 +12,15 @@ export default function SmartAlbumHero({
   album: AlbumDetailResponse;
 }) {
   const heroImages = [
-    album.images?.[0]?.url || "/placeholder.svg",
-    album.images?.[1]?.url || "/placeholder.svg",
-    album.images?.[2]?.url || "/placeholder.svg",
+    album.images?.[0]
+      ? resolveAlbumImageUrl(album.images[0])
+      : "/placeholder.svg",
+    album.images?.[1]
+      ? resolveAlbumImageUrl(album.images[1])
+      : "/placeholder.svg",
+    album.images?.[2]
+      ? resolveAlbumImageUrl(album.images[2])
+      : "/placeholder.svg",
   ];
 
   return (

@@ -12,7 +12,6 @@ export type {
   PaymentStatus,
 } from "../api/enums";
 
-
 export type {
   AdvertisementBase,
   AdvertisementCreate,
@@ -36,6 +35,7 @@ export type {
   PlaceListResponse,
   AlbumImageResponse,
   AlbumImageCreate,
+  AlbumImageUpdate,
   AlbumListResponse,
   AlbumPlaceCreate,
   AlbumResponse,
@@ -163,7 +163,6 @@ export type {
   OwnerRevenueTransactionResponse,
 } from "./revenues";
 
-
 export type {
   VRBookingBase,
   VRBookingCreate,
@@ -185,4 +184,3 @@ export type {
   DestinationReviewsSummary,
   PaginatedReviewsResponse,
 } from "./reviews";
-

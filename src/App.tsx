@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTokenRefresh } from "@/hooks/useTokenRefresh";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BottomNav from "@/components/layout/BottomNav";
@@ -30,6 +31,7 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import DashboardPage from "./pages/DashboardPage";
+import { ErrorBoundary } from "./components/dashboard/ErrorBoundary";
 import ProfilePage from "./pages/profile/ProfilePages";
 import ProfileEditPage from "./pages/profile/ProfilesEditPage";
 import FavoritesPage from "./pages/FavoritesPage";
@@ -75,248 +77,255 @@ import AdminOwnerRevenuesPage from "./pages/admin/AdminOwnerRevenuesPage";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000,
-      gcTime: 10 * 60 * 1000,
+      staleTime: 25 * 60 * 1000, // 25 minutes (avant l'expiration du token de 30 min)
+      gcTime: 30 * 60 * 1000, // 30 minutes
       retry: 1,
       refetchOnWindowFocus: false,
+      refetchOnReconnect: true, // Rafraîchir quand la connexion revient
     },
   },
 });
 
-const App = () => {
+import { useLocation } from "react-router-dom";
+
+const AppContent = () => {
   const isMobile = useIsMobile();
+  const location = useLocation();
+  const isDashboard = location.pathname === "/dashboard";
+
+  // Rafraîchir automatiquement le token toutes les 25 minutes
+  useTokenRefresh();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <a
-            href="#contenu-principal"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[10001] focus:rounded-md focus:bg-primary focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-          >
-            Aller au contenu principal
-          </a>
-          <Navbar />
-          <main
-            id="contenu-principal"
-            tabIndex={-1}
-            className={
-              isMobile
-                ? "min-h-dvh scroll-mt-24 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] outline-none md:pb-0"
-                : "min-h-dvh scroll-mt-24 outline-none"
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <a
+        href="#contenu-principal"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[10001] focus:rounded-md focus:bg-primary focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+      >
+        Aller au contenu principal
+      </a>
+      {!isDashboard && <Navbar />}
+      <main
+        id="contenu-principal"
+        tabIndex={-1}
+        className={
+          isMobile
+            ? `min-h-dvh scroll-mt-24 ${isDashboard ? "" : "pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))]"} outline-none md:pb-0`
+            : "min-h-dvh scroll-mt-24 outline-none"
+        }
+      >
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/destinations" element={<DestinationsPage />} />
+          <Route
+            path="/destinations/:slug/catalog"
+            element={<PlaceCatalogPage />}
+          />
+          <Route path="/destinations/:slug" element={<DestinationDetail />} />
+          <Route path="/carte" element={<CartePage />} />
+          <Route path="/map/:slug" element={<NavigationPage />} />
+          <Route path="/how-ads-works" element={<PartnerLandingPage />} />
+
+          {/* Auth Routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
+
+          {/* Private Routes (Protected) */}
+          <Route path="/cart" element={<CartPage />} />
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedWrapper>
+                <CheckoutPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/checkout/confirm"
+            element={
+              <ProtectedWrapper>
+                <ConfirmationPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedWrapper>
+                <ErrorBoundary>
+                  <DashboardPage />
+                </ErrorBoundary>
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedWrapper>
+                <ProfilePage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/profile/edit"
+            element={
+              <ProtectedWrapper>
+                <ProfileEditPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/favorites"
+            element={
+              <ProtectedWrapper>
+                <FavoritesPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/albums"
+            element={
+              <ProtectedWrapper>
+                <AlbumsPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/albums/new"
+            element={
+              <ProtectedWrapper>
+                <CreateAlbumPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/albums/:id"
+            element={
+              <ProtectedWrapper>
+                <AlbumDetailPage />
+              </ProtectedWrapper>
+            }
+          />
+
+          {/* VR & Bookings */}
+          <Route path="/vr-sessions" element={<VrSessionsPage />} />
+          <Route
+            path="/vr-sessions/:slug/:id/book"
+            element={
+              <ProtectedWrapper>
+                <VrBookingPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/bookings"
+            element={
+              <ProtectedWrapper>
+                <BookingsPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/bookings/:id"
+            element={
+              <ProtectedWrapper>
+                <BookingDetailPage />
+              </ProtectedWrapper>
+            }
+          />
+
+          {/* Orders */}
+          <Route
+            path="/orders"
+            element={
+              <ProtectedWrapper>
+                <OrdersPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/orders/:id"
+            element={
+              <ProtectedWrapper>
+                <OrderDetailPage />
+              </ProtectedWrapper>
+            }
+          />
+
+          {/* Subscription & Famille */}
+          <Route path="/pricing" element={<SubscriptionPage />} />
+          <Route
+            path="/family"
+            element={
+              <ProtectedWrapper>
+                <FamilyPage />
+              </ProtectedWrapper>
+            }
+          />
+
+          {/* Owner Space */}
+          <Route
+            path="/owner"
+            element={
+              <ProtectedWrapper>
+                <OwnerLayout />
+              </ProtectedWrapper>
             }
           >
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/destinations" element={<DestinationsPage />} />
-              <Route
-                path="/destinations/:slug/catalog"
-                element={<PlaceCatalogPage />}
-              />
-              <Route
-                path="/destinations/:slug"
-                element={<DestinationDetail />}
-              />
-              <Route path="/carte" element={<CartePage />} />
-              <Route path="/map/:slug" element={<NavigationPage />} />
-              <Route path="/how-ads-works" element={<PartnerLandingPage />} />
+            <Route path="dashboard" element={<OwnerDashboardPage />} />
+            <Route path="places/:id/edit" element={<PlaceEditPage />} />
+            <Route path="products" element={<OwnerProductsPage />} />
+            <Route path="vr-sessions" element={<VrOwnerSessionsPage />} />
+            <Route
+              path="vr-sessions/:id/bookings"
+              element={<VrSessionBookingsPage />}
+            />
+            <Route path="claims" element={<OwnerClaimsPage />} />
+          </Route>
 
-              {/* Auth Routes */}
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-              <Route path="/reset-password" element={<ResetPasswordPage />} />
-              <Route path="/verify-email" element={<VerifyEmailPage />} />
-
-              {/* Private Routes (Protected) */}
-              <Route path="/cart" element={<CartPage />} />
-              <Route
-                path="/checkout"
-                element={
-                  <ProtectedWrapper>
-                    <CheckoutPage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/checkout/confirm"
-                element={
-                  <ProtectedWrapper>
-                    <ConfirmationPage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedWrapper>
-                    <DashboardPage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedWrapper>
-                    <ProfilePage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/profile/edit"
-                element={
-                  <ProtectedWrapper>
-                    <ProfileEditPage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/favorites"
-                element={
-                  <ProtectedWrapper>
-                    <FavoritesPage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/albums"
-                element={
-                  <ProtectedWrapper>
-                    <AlbumsPage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/albums/new"
-                element={
-                  <ProtectedWrapper>
-                    <CreateAlbumPage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/albums/:id"
-                element={
-                  <ProtectedWrapper>
-                    <AlbumDetailPage />
-                  </ProtectedWrapper>
-                }
-              />
-
-              {/* VR & Bookings */}
-              <Route path="/vr-sessions" element={<VrSessionsPage />} />
-              <Route
-                path="/vr-sessions/:slug/:id/book"
-                element={
-                  <ProtectedWrapper>
-                    <VrBookingPage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/bookings"
-                element={
-                  <ProtectedWrapper>
-                    <BookingsPage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/bookings/:id"
-                element={
-                  <ProtectedWrapper>
-                    <BookingDetailPage />
-                  </ProtectedWrapper>
-                }
-              />
-
-              {/* Orders */}
-              <Route
-                path="/orders"
-                element={
-                  <ProtectedWrapper>
-                    <OrdersPage />
-                  </ProtectedWrapper>
-                }
-              />
-              <Route
-                path="/orders/:id"
-                element={
-                  <ProtectedWrapper>
-                    <OrderDetailPage />
-                  </ProtectedWrapper>
-                }
-              />
-
-              {/* Subscription & Famille */}
-              <Route path="/pricing" element={<SubscriptionPage />} />
-              <Route
-                path="/family"
-                element={
-                  <ProtectedWrapper>
-                    <FamilyPage />
-                  </ProtectedWrapper>
-                }
-              />
-
-              {/* Owner Space */}
-              <Route
-                path="/owner"
-                element={
-                  <ProtectedWrapper>
-                    <OwnerLayout />
-                  </ProtectedWrapper>
-                }
+          {/* Admin Dashboard (Protected) */}
+          <Route
+            path="/admin"
+            element={
+              <RoleGuard
+                allowedRoles={["admin", "superadmin"]}
+                fallbackPath="/owner/dashboard"
               >
-                <Route path="dashboard" element={<OwnerDashboardPage />} />
-                <Route path="places/:id/edit" element={<PlaceEditPage />} />
-                <Route path="products" element={<OwnerProductsPage />} />
-                <Route path="vr-sessions" element={<VrOwnerSessionsPage />} />
-                <Route
-                  path="vr-sessions/:id/bookings"
-                  element={<VrSessionBookingsPage />}
-                />
-                <Route path="claims" element={<OwnerClaimsPage />} />
-              </Route>
+                <AdminLayout />
+              </RoleGuard>
+            }
+          >
+            <Route index element={<Navigate to="/admin/dashboard" replace />} />
+            <Route path="dashboard" element={<AdminDashboardPage />} />
+            <Route path="analytics" element={<AdminAnalyticsPage />} />
+            <Route path="revenues" element={<AdminOwnerRevenuesPage />} />
+            <Route path="ads" element={<AdminAdsPage />} />
+            <Route path="destinations" element={<AdminDestinationsPage />} />
+            <Route path="claims" element={<AdminClaimsPage />} />
+          </Route>
 
-              {/* Admin Dashboard (Protected) */}
-              <Route
-                path="/admin"
-                element={
-                  <RoleGuard
-                    allowedRoles={["admin", "superadmin"]}
-                    fallbackPath="/owner/dashboard"
-                  >
-                    <AdminLayout />
-                  </RoleGuard>
-                }
-              >
-                <Route
-                  index
-                  element={<Navigate to="/admin/dashboard" replace />}
-                />
-                <Route path="dashboard" element={<AdminDashboardPage />} />
-                <Route path="analytics" element={<AdminAnalyticsPage />} />
-                <Route path="revenues" element={<AdminOwnerRevenuesPage />} />
-                <Route path="ads" element={<AdminAdsPage />} />
-                <Route
-                  path="destinations"
-                  element={<AdminDestinationsPage />}
-                />
-                <Route path="claims" element={<AdminClaimsPage />} />
-              </Route>
+          {/* Catch-all (Public) */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
 
-              {/* Catch-all (Public) */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
+      {!isDashboard && <Footer />}
+      {isMobile && !isDashboard && <BottomNav />}
+    </TooltipProvider>
+  );
+};
 
-          <Footer />
-          {isMobile && <BottomNav />}
-        </BrowserRouter>
-      </TooltipProvider>
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
     </QueryClientProvider>
   );
 };

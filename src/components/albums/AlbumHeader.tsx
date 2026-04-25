@@ -16,6 +16,8 @@ import { albumsApi } from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { resolveAlbumCoverUrl } from "@/lib/utils/imageUrl";
+import { EditAlbumDialog } from "./EditAlbumDialog";
 
 interface AlbumHeaderProps {
   album: AlbumDetailResponse;
@@ -82,7 +84,7 @@ export default function AlbumHeader({ album }: AlbumHeaderProps) {
       {/* Background Cover with Blur */}
       <div className="absolute inset-0 z-0">
         <img
-          src={album.cover_image_url || "/placeholder.svg"}
+          src={resolveAlbumCoverUrl(album.cover_image_url)}
           alt=""
           className="h-full w-full object-cover opacity-20 blur-2xl scale-110"
         />
@@ -97,7 +99,7 @@ export default function AlbumHeader({ album }: AlbumHeaderProps) {
           className="relative aspect-[4/5] w-full max-w-[280px] shrink-0 overflow-hidden rounded-2xl border-4 border-white/10 shadow-xl"
         >
           <img
-            src={album.cover_image_url || "/placeholder.svg"}
+            src={resolveAlbumCoverUrl(album.cover_image_url)}
             alt={album.title}
             className="h-full w-full object-cover"
           />
@@ -126,6 +128,7 @@ export default function AlbumHeader({ album }: AlbumHeaderProps) {
                 Album Photo
               </Badge>
               <AiDescriptionButton albumId={album.id} />
+              <EditAlbumDialog album={album} />
             </motion.div>
 
             <motion.h1

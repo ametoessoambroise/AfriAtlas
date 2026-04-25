@@ -226,6 +226,11 @@
     @apply bg-muted;
   }
 
+  /* Titres premium – Georgia stack */
+  .font-premium {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+
   /* Utility for hiding scrollbar but keeping functionality */
   .no-scrollbar::-webkit-scrollbar {
     display: none;

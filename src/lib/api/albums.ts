@@ -316,6 +316,40 @@ export async function deleteAlbumImage(
 }
 
 /**
+ * Update Album Image Endpoint
+ * Update image metadata (caption, date, coordinates).
+ * @method PATCH /api/v1/albums/{album_id}/images/{image_id}
+ * @auth   Bearer token required
+ */
+export async function updateAlbumImage(
+  album_id: string,
+  image_id: string,
+  body: T.AlbumImageUpdate,
+): Promise<T.AlbumImageResponse> {
+  const url = `${getApiBaseUrl()}/api/v1/albums/${album_id}/images/${image_id}`;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${getAccessToken()}`,
+  };
+
+  const init: RequestInit = {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify(body),
+  };
+
+  const res = await fetchWithAuth(url, init);
+
+  if (!res.ok) {
+    const errorBody = await res.text().catch(() => res.statusText);
+    throw new ApiError(res.status, errorBody, url);
+  }
+
+  return res.json() as Promise<T.AlbumImageResponse>;
+}
+
+/**
  * Generate a story from album photos
  * Generate an immersive travel story based on the album photos. Requires Premium or Family plan.
  * @method POST /api/v1/albums/{album_id}/generate-story

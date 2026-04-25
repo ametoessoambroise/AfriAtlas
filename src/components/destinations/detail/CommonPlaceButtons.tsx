@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Heart, Navigation, FolderPlus, Plus, Loader2, Check } from "lucide-react";
+import {
+  Heart,
+  Navigation,
+  FolderPlus,
+  Plus,
+  Loader2,
+  Check,
+} from "lucide-react";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/lib/utils/errorHandler";
 import type { Destination } from "@/lib/models/ui";
 
 import {
@@ -17,7 +25,10 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { useFavorites, useFavoriteMutations } from "@/hooks/queries/useFavorites";
+import {
+  useFavorites,
+  useFavoriteMutations,
+} from "@/hooks/queries/useFavorites";
 import { useAlbums, useAlbumMutations } from "@/hooks/queries/useAlbums";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -37,7 +48,8 @@ export function FavoriteButton({ destination }: ButtonsProps) {
 
   // Check if this destination is already in favorites
   // Note: f.id is number (backend) vs destination.id is string (UUID frontend) → normalize with String()
-  const isFav = favorites?.items?.some((f) => String(f.id) === destination.id) ?? false;
+  const isFav =
+    favorites?.items?.some((f) => String(f.id) === destination.id) ?? false;
   const isPending = addFavorite.isPending || removeFavorite.isPending;
 
   const handleToggle = () => {
@@ -48,12 +60,12 @@ export function FavoriteButton({ destination }: ButtonsProps) {
     if (isFav) {
       removeFavorite.mutate(destination.id, {
         onSuccess: () => toast.success("Retiré des favoris"),
-        onError: () => toast.error("Erreur lors de la suppression"),
+        onError: (err) => toast.error(getErrorMessage(err)),
       });
     } else {
       addFavorite.mutate(destination.id, {
         onSuccess: () => toast.success("Ajouté aux favoris !"),
-        onError: () => toast.error("Erreur lors de l'ajout"),
+        onError: (err) => toast.error(getErrorMessage(err)),
       });
     }
   };
@@ -68,9 +80,13 @@ export function FavoriteButton({ destination }: ButtonsProps) {
       {isPending ? (
         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
       ) : (
-        <Heart className={`h-5 w-5 transition-colors ${isFav ? "fill-red-500 text-red-500" : "text-muted-foreground"}`} />
+        <Heart
+          className={`h-5 w-5 transition-colors ${isFav ? "fill-red-500 text-red-500" : "text-muted-foreground"}`}
+        />
       )}
-      <span className={isFav ? "text-red-500" : ""}>{isFav ? "Favori" : "Sauvegarder"}</span>
+      <span className={isFav ? "text-red-500" : ""}>
+        {isFav ? "Favori" : "Sauvegarder"}
+      </span>
     </button>
   );
 }
@@ -105,8 +121,8 @@ export function AlbumPickerModal({ destination }: ButtonsProps) {
           toast.success("Lieu ajouté à l'album !");
           setOpen(false);
         },
-        onError: () => toast.error("Erreur lors de l'ajout."),
-      }
+        onError: (err) => toast.error(getErrorMessage(err)),
+      },
     );
   };
 
@@ -126,11 +142,11 @@ export function AlbumPickerModal({ destination }: ButtonsProps) {
                 setNewAlbumName("");
                 setShowCreate(false);
               },
-            }
+            },
           );
         },
-        onError: () => toast.error("Erreur lors de la création de l'album."),
-      }
+        onError: (err) => toast.error(getErrorMessage(err)),
+      },
     );
   };
 
@@ -171,8 +187,11 @@ export function AlbumPickerModal({ destination }: ButtonsProps) {
                       disabled={isBusy}
                       className="w-full flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-2.5 text-sm text-left hover:bg-surface-alt transition-colors disabled:opacity-60"
                     >
-                      <span className="font-medium truncate">{album.title}</span>
-                      {isBusy && addPlaceToAlbum.variables?.albumId === album.id ? (
+                      <span className="font-medium truncate">
+                        {album.title}
+                      </span>
+                      {isBusy &&
+                      addPlaceToAlbum.variables?.albumId === album.id ? (
                         <Loader2 className="h-4 w-4 animate-spin shrink-0" />
                       ) : (
                         <Check className="h-4 w-4 text-muted-foreground shrink-0 opacity-0 group-hover:opacity-100" />
@@ -207,9 +226,17 @@ export function AlbumPickerModal({ destination }: ButtonsProps) {
                   disabled={!newAlbumName.trim() || isBusy}
                   className="flex-1"
                 >
-                  {isBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : "Créer et ajouter"}
+                  {isBusy ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Créer et ajouter"
+                  )}
                 </Button>
-                <Button size="sm" variant="ghost" onClick={() => setShowCreate(false)}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setShowCreate(false)}
+                >
                   Annuler
                 </Button>
               </div>

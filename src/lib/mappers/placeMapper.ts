@@ -5,6 +5,7 @@ import type {
   PlaceResponse,
 } from "@/lib/types";
 import type { Destination, DestinationUiType } from "@/lib/models/ui";
+import { resolveImageUrl } from "@/lib/utils/imageUrl";
 
 export const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
@@ -27,10 +28,17 @@ const CATEGORY_LABELS: Record<PlaceCategory, string> = {
   other: "Lieu",
 };
 
-export function mapPlaceCategoryToUiType(category: PlaceCategory): DestinationUiType {
+export function mapPlaceCategoryToUiType(
+  category: PlaceCategory,
+): DestinationUiType {
   if (category === "hotel") return "hotel";
-  if (category === "restaurant" || category === "cafe" || category === "bar") return "restaurant";
-  if (category === "supermarket" || category === "market" || category === "boutique") {
+  if (category === "restaurant" || category === "cafe" || category === "bar")
+    return "restaurant";
+  if (
+    category === "supermarket" ||
+    category === "market" ||
+    category === "boutique"
+  ) {
     return "supermarket";
   }
   return "city";
@@ -46,21 +54,30 @@ function parseRating(avg: string | undefined): number {
   return Math.min(5, Math.max(0, Math.round(n * 10) / 10));
 }
 
-function parseCoord(lat?: string | null, lng?: string | null): { lat: number; lng: number } {
+function parseCoord(
+  lat?: string | null,
+  lng?: string | null,
+): { lat: number; lng: number } {
   const la = Number.parseFloat(lat ?? "");
   const lo = Number.parseFloat(lng ?? "");
   if (Number.isNaN(la) || Number.isNaN(lo)) return TOGO_CENTER;
   return { lat: la, lng: lo };
 }
 
-function sortImages(images: PlaceImageResponse[] | undefined): PlaceImageResponse[] {
+function sortImages(
+  images: PlaceImageResponse[] | undefined,
+): PlaceImageResponse[] {
   if (!images?.length) return [];
-  return [...images].sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
+  return [...images].sort(
+    (a, b) => (a.display_order ?? 0) - (b.display_order ?? 0),
+  );
 }
 
 function galleryUrls(images: PlaceImageResponse[] | undefined): string[] {
   const sorted = sortImages(images);
-  const urls = sorted.map((i) => i.url).filter(Boolean);
+  const urls = sorted
+    .map((i) => resolveImageUrl(i.url, i.storage_provider))
+    .filter(Boolean);
   return urls.length ? urls : [PLACEHOLDER_IMAGE];
 }
 
@@ -71,7 +88,9 @@ function shortDescription(desc: string | null | undefined, max = 160): string {
   return `${t.slice(0, max).trim()}…`;
 }
 
-function formatOpeningHours(raw: string | Record<string, any> | null | undefined): string | undefined {
+function formatOpeningHours(
+  raw: string | Record<string, any> | null | undefined,
+): string | undefined {
   if (!raw) return undefined;
   if (typeof raw === "string") return raw;
   if (typeof raw !== "object") return undefined;
@@ -82,7 +101,9 @@ function formatOpeningHours(raw: string | Record<string, any> | null | undefined
 
 export function mapPlaceListToDestination(p: PlaceListResponse): Destination {
   const coords = parseCoord(p.latitude, p.longitude);
-  const primary = p.primary_image?.url;
+  const primary = p.primary_image
+    ? resolveImageUrl(p.primary_image.url, p.primary_image.storage_provider)
+    : undefined;
   const desc = p.description ?? "";
   return {
     id: p.id,

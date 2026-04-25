@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { placesApi } from '@/lib/api';
+import { getErrorMessage } from '@/lib/utils/errorMessages';
 import type { PlaceCreate } from '@/lib/types';
 
 const queryDefaults = {
@@ -21,35 +22,50 @@ export const usePlaces = (params?: {
   page?: number; 
   page_size?: number 
 }) => {
-  return useQuery({
+  const query = useQuery({
     queryKey: ['places', params],
     queryFn: () => placesApi.getPlaces(params),
     ...queryDefaults,
   });
+
+  return {
+    ...query,
+    errorMessage: query.error ? getErrorMessage(query.error) : null,
+  };
 };
 
 export const usePlace = (slug: string | undefined) => {
-  return useQuery({
+  const query = useQuery({
     queryKey: ['places', slug],
     queryFn: () => placesApi.getPlace(slug!),
     enabled: Boolean(slug),
     ...queryDefaults,
   });
+
+  return {
+    ...query,
+    errorMessage: query.error ? getErrorMessage(query.error) : null,
+  };
 };
 
 export const usePlaceSearch = (params?: { query?: string; lat?: number; lon?: number; radius?: number; limit?: number }) => {
-  return useQuery({
+  const query = useQuery({
     queryKey: ['places', 'search', params],
     queryFn: () => placesApi.searchPlaces(params),
     enabled: !!(params?.query || (params?.lat && params?.lon)),
     ...queryDefaults,
   });
+
+  return {
+    ...query,
+    errorMessage: query.error ? getErrorMessage(query.error) : null,
+  };
 };
 
 export const usePlaceMutations = () => {
   const queryClient = useQueryClient();
 
-  const createPlace = useMutation({
+  const createPlaceMutation = useMutation({
     mutationFn: (data: PlaceCreate) => placesApi.createNewPlace(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['places'] });
@@ -57,6 +73,8 @@ export const usePlaceMutations = () => {
   });
 
   return {
-    createPlace,
+    createPlace: createPlaceMutation.mutateAsync,
+    isCreating: createPlaceMutation.isPending,
+    createError: createPlaceMutation.error ? getErrorMessage(createPlaceMutation.error) : null,
   };
 };

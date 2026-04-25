@@ -148,6 +148,15 @@ export interface AlbumImageCreate {
   longitude?: string | null;
 }
 /**
+ * Schema for updating an album image.
+ */
+export interface AlbumImageUpdate {
+  caption?: string | null;
+  taken_at?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+}
+/**
  * Schema for album list item.
  */
 export interface AlbumListResponse {

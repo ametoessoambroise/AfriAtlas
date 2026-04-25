@@ -116,7 +116,7 @@ const MobileMenu = ({
                 alt=""
                 width={32}
                 height={32}
-                className="h-8 w-8 rounded-full object-cover"
+                className="h-12 bg-white w-12 rounded-full object-cover"
               />
               <span className="text-sm font-semibold uppercase tracking-widest text-white/90">
                 WorldAtlas
@@ -140,7 +140,7 @@ const MobileMenu = ({
                 <Link
                   to={href}
                   onClick={onClose}
-                  className="block py-3 px-4 text-sm uppercase tracking-widest font-medium text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                  className="block py-3 px-4 text-sm uppercase tracking-widest font-medium text-white/60 hover:text-white hover:bg-primary/5 rounded-lg transition-all"
                 >
                   {label}
                 </Link>
@@ -317,8 +317,8 @@ function NavBar() {
             >
               <motion.img
                 src="/favicon.ico"
-                alt=""
-                className="rounded-full object-cover flex-shrink-0"
+                alt="Logo"
+                className="rounded-full w-20 object-cover flex-shrink-0"
                 animate={isScrolled ? "shrunk" : "expanded"}
                 variants={{
                   expanded: {

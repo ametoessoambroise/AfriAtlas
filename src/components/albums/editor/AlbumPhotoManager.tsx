@@ -1,17 +1,6 @@
 import React from "react";
-import { format } from "date-fns";
-import { fr } from "date-fns/locale";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  LayoutGrid,
-  List,
-  Filter,
-  Trash2,
-  Maximize2,
-  Wand2,
-  BookOpen,
-  PencilLine,
-} from "lucide-react";
+import { AlbumPhotoCard } from "@/components/albums/AlbumPhotoCard";
+import { LayoutGrid, List, Filter, PencilLine } from "lucide-react";
 import type { AlbumDetailResponse } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,17 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { albumsApi } from "@/lib/api";
 import { useQueryClient } from "@tanstack/react-query";
@@ -47,8 +25,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import DestinationCard from "@/components/cards/DestinationCard";
-import type { Destination } from "@/lib/models/ui";
 
 export default function AlbumPhotoManager({
   album,
@@ -198,11 +174,11 @@ export default function AlbumPhotoManager({
         </div>
       </div>
 
-      {/* Grid */}
+      {/* Grid/List */}
       <div
         className={
           viewMode === "grid"
-            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+            ? "grid grid-cols-1 lg:grid-cols-2 gap-6"
             : "space-y-6"
         }
       >
@@ -210,85 +186,26 @@ export default function AlbumPhotoManager({
           // Find if the image is linked to a place in the album
           const place = associatedPlaces.find((p) => p.id === image.place_id);
 
-          const mockDestination: Destination = {
-            id: image.id,
-            name: image.caption || (place ? place.name : "Photo de voyage"),
-            slug: place ? place.slug : "#",
-            image: image.url,
-            type: place ? place.category : "attraction",
-            isFavorite: false,
-            rating: place?.rating || 0,
-            city: place ? place.city : "Inconnu",
-            category: place ? place.category : "Souvenir",
-            description: `Prise le ${
-              image.taken_at
-                ? format(new Date(image.taken_at), "dd MMM yyyy", {
-                    locale: fr,
-                  })
-                : "Date inconnue"
-            }. ${image.caption || ""}`,
-            gallery: [image.url],
-            safety: place?.safety || "0",
-            longDescription: place?.longDescription || "",
-            coordinates: {
-              lat: place?.latitude || 0,
-              lng: place?.longitude || 0,
-            },
-            featured: false,
-            reviewsCount: 0,
-          };
-
           return (
-            <motion.div
+            <AlbumPhotoCard
               key={image.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className={`relative group ${viewMode === "list" ? "w-full max-w-2xl mx-auto" : ""}`}
-            >
-              <DestinationCard destination={mockDestination} />
-
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button
-                    variant="destructive"
-                    size="icon"
-                    className="absolute top-16 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity rounded-full h-10 w-10 shadow-lg"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent onClick={(e) => e.stopPropagation()}>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Supprimer la photo</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Voulez-vous vraiment supprimer cette photo de votre album
-                      ? Cette action est irréversible.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Annuler</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() => handleDelete(image.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white"
-                    >
-                      Supprimer
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </motion.div>
+              albumId={album.id}
+              image={image}
+              place={place}
+              onDelete={handleDelete}
+              viewMode={viewMode}
+              index={index}
+            />
           );
         })}
+      </div>
 
-        {/* Upload Zone inside grid if grid mode, or below if list mode */}
-        <div className={viewMode === "list" ? "mt-4" : ""}>
-          <PhotoUploadZone
-            albumId={album.id}
-            associatedPlaces={associatedPlaces}
-          />
-        </div>
+      {/* Upload Zone */}
+      <div className="mt-8">
+        <PhotoUploadZone
+          albumId={album.id}
+          associatedPlaces={associatedPlaces}
+        />
       </div>
     </div>
   );

@@ -35,7 +35,7 @@ export default function TravelMapWidget({
     (acc, place) => {
       const loc = place.country || place.city || "Togo"; // Fallback to Togo
       if (!acc[loc]) {
-        acc[loc] = 1; // Simplification: we count 1 per place. Ideally we count photos linked to this place.
+        acc[loc] = 1; // Simplification: we count 1 per place. TODO : Ideally we count photos linked to this place.
       } else {
         acc[loc]++;
       }
@@ -53,7 +53,7 @@ export default function TravelMapWidget({
         </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6 h-[400px]">
+      <div className="grid md:grid-cols-2 gap-6 h-[400px]">
         {/* Map Container (2/3) */}
         <div className="md:col-span-2 relative rounded-[2rem] overflow-hidden border border-border shadow-sm">
           <InteractiveMap>
@@ -114,7 +114,7 @@ export default function TravelMapWidget({
           </InteractiveMap>
         </div>
 
-        {/* Stats Sidebar (1/3) */}
+        {/* Stats Sidebar (1/3)
         <div className="bg-white border border-border rounded-[2rem] p-6 shadow-sm flex flex-col">
           <div className="space-y-4 flex-1">
             {Object.entries(stats).map(([location, count], idx) => (
@@ -149,7 +149,7 @@ export default function TravelMapWidget({
           >
             Voir tous les pays
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

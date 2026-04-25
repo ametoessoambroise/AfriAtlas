@@ -1,18 +1,30 @@
-import { getAccessToken, setAccessToken, getRefreshToken, setRefreshToken, clearTokens } from "./token";
+import {
+  getAccessToken,
+  setAccessToken,
+  getRefreshToken,
+  setRefreshToken,
+  clearTokens,
+} from "./token";
 import { getApiBaseUrl } from "./env";
 import { ApiError } from "./error-handler";
 
 let refreshPromise: Promise<string | null> | null = null;
+let lastRefreshTime = 0;
+const REFRESH_COOLDOWN = 5000; // 5 secondes entre les tentatives de refresh
 
 /**
  * Enhanced fetch wrapper that handles:
  * 1. Automatic Authorization header injection
  * 2. Automatic token refresh on 401 Unauthorized
  * 3. Consistent error handling with ApiError
+ * 4. Prevents multiple simultaneous refresh attempts
  */
-export async function fetchWithAuth(url: string, init: RequestInit = {}): Promise<Response> {
+export async function fetchWithAuth(
+  url: string,
+  init: RequestInit = {},
+): Promise<Response> {
   const accessToken = getAccessToken();
-  
+
   const headers = new Headers(init.headers || {});
 
   // Auto-set Content-Type for JSON bodies
@@ -24,16 +36,27 @@ export async function fetchWithAuth(url: string, init: RequestInit = {}): Promis
     headers.set("Authorization", `Bearer ${accessToken}`);
   }
 
-  const newInit = { ...init, headers };
+  const newInit: RequestInit = { 
+    ...init, 
+    headers,
+    credentials: "include" // Enable cookies for cross-origin
+  };
+  
   let response = await fetch(url, newInit);
 
   // If 401, try to refresh the token (but NOT on the auth endpoints themselves)
-  const isAuthEndpoint = url.includes("/auth/login") || url.includes("/auth/register") || url.includes("/auth/refresh");
+  const isAuthEndpoint =
+    url.includes("/auth/login") ||
+    url.includes("/auth/register") ||
+    url.includes("/auth/refresh");
+    
   if (response.status === 401 && !isAuthEndpoint) {
     const refreshTokenValue = getRefreshToken();
-    
-    if (refreshTokenValue) {
+    const now = Date.now();
+
+    if (refreshTokenValue && now - lastRefreshTime > REFRESH_COOLDOWN) {
       if (!refreshPromise) {
+        lastRefreshTime = now;
         refreshPromise = (async (): Promise<string | null> => {
           try {
             const refreshUrl = `${getApiBaseUrl()}/api/v1/auth/refresh`;
@@ -41,24 +64,32 @@ export async function fetchWithAuth(url: string, init: RequestInit = {}): Promis
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ refresh_token: refreshTokenValue }),
+              credentials: "include", // Enable cookies for refresh
             });
 
             if (refreshRes.ok) {
               const data = await refreshRes.json();
               const newAccessToken = data.access_token;
-              
+
               if (newAccessToken) {
                 setAccessToken(newAccessToken);
                 // Si le backend utilise la rotation de refresh_token, on le met à jour
                 if (data.refresh_token) setRefreshToken(data.refresh_token);
+
+                console.log("✅ Token refreshed successfully");
                 return newAccessToken;
               }
+            } else {
+              console.warn(
+                "❌ Token refresh failed with status:",
+                refreshRes.status,
+              );
             }
-            
+
             clearTokens();
             return null;
           } catch (error) {
-            console.error("Token refresh failed:", error);
+            console.error("❌ Token refresh error:", error);
             clearTokens();
             return null;
           } finally {
@@ -71,10 +102,17 @@ export async function fetchWithAuth(url: string, init: RequestInit = {}): Promis
       const newAccessToken = await refreshPromise;
 
       if (newAccessToken) {
-        // Relancer la requête d'origine
+        // Relancer la requête d'origine avec le nouveau token
         headers.set("Authorization", `Bearer ${newAccessToken}`);
-        response = await fetch(url, { ...init, headers });
+        response = await fetch(url, { 
+          ...init, 
+          headers,
+          credentials: "include" 
+        });
       }
+    } else if (!refreshTokenValue) {
+      console.warn("⚠️ No refresh token available, clearing tokens");
+      clearTokens();
     }
   }
 
@@ -84,7 +122,11 @@ export async function fetchWithAuth(url: string, init: RequestInit = {}): Promis
 /**
  * Standardized request helper that parses JSON and throws ApiError
  */
-export async function request<T>(url: string, init: RequestInit = {}, moduleName = "API"): Promise<T> {
+export async function request<T>(
+  url: string,
+  init: RequestInit = {},
+  moduleName = "API",
+): Promise<T> {
   const res = await fetchWithAuth(url, init);
 
   if (!res.ok) {

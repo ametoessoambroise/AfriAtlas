@@ -1,123 +1,159 @@
+import React, { memo } from "react";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import { Heart, Image as ImageIcon, ShoppingBag, Calendar } from "lucide-react";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
+  ArrowUpRight,
+  TrendingUp,
+  Globe,
+  MapPin,
+  Compass,
+  CalendarDays,
+  Heart,
+  ShoppingBag,
+  Image as ImageIcon,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { formatNumber } from "@/lib/utils/formatters";
+import StatCardSkeleton from "./skeletons/StatCardSkeleton";
 
 interface StatCardProps {
-  title: string;
-  value: number;
+  label: string;
+  value: string | number;
+  sub: string;
   icon: React.ReactNode;
-  color: string;
-  data: number[];
+  accent?: boolean;
+  link?: string;
 }
 
-function StatCard({ title, value, icon, color, data }: StatCardProps) {
-  const chartData = {
-    labels: data.map((_, i) => i.toString()),
-    datasets: [
-      {
-        data,
-        borderColor: color,
-        backgroundColor: `${color}22`,
-        fill: true,
-        tension: 0.4,
-        pointRadius: 0,
-        borderWidth: 2,
-      },
-    ],
-  };
+const StatCard = memo(
+  ({ label, value, sub, icon, accent, link }: StatCardProps) => {
+    const Content = (
+      <div
+        className={`rounded-[32px] p-6 h-full relative overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl group ${
+          accent
+            ? "bg-primary text-primary-foreground"
+            : "bg-card border border-border"
+        }`}
+      >
+        <div className="flex items-center justify-between mb-4 relative z-10">
+          <p
+            className={`text-sm font-bold ${
+              accent ? "opacity-80" : "text-muted-foreground"
+            }`}
+          >
+            {label}
+          </p>
+          <div
+            className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all group-hover:scale-110 ${
+              accent
+                ? "border-primary-foreground/30 text-primary-foreground"
+                : "border-border text-muted-foreground"
+            }`}
+          >
+            <ArrowUpRight className="w-4 h-4" />
+          </div>
+        </div>
 
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { display: false }, tooltip: { enabled: false } },
-    scales: {
-      x: { display: false },
-      y: { display: false, min: Math.min(...data) - 1, max: Math.max(...data) + 1 },
-    },
-  };
+        <p
+          className={`text-4xl font-black tracking-tight mb-3 font-premium relative z-10`}
+        >
+          {typeof value === "number" ? formatNumber(value) : value}
+        </p>
 
-  return (
-    <div className="bg-card border border-border p-6 rounded-[32px] shadow-sm hover:shadow-md transition-all flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <div className="p-3 bg-surface-alt rounded-2xl text-muted-foreground">
+        <div className="flex items-center gap-2 relative z-10">
+          <div
+            className={`w-6 h-6 rounded-full flex items-center justify-center ${
+              accent ? "bg-primary-foreground/20" : "bg-muted text-secondary"
+            }`}
+          >
+            <TrendingUp className="w-3.5 h-3.5" />
+          </div>
+          <span
+            className={`text-xs font-bold ${
+              accent ? "text-primary-foreground/70" : "text-muted-foreground"
+            }`}
+          >
+            {sub}
+          </span>
+        </div>
+
+        {/* Background Icon Decoration */}
+        <div
+          className={`absolute -bottom-4 -right-4 w-24 h-24 opacity-5 transition-transform duration-700 group-hover:scale-125 group-hover:rotate-12 ${accent ? "text-primary-foreground" : "text-primary"}`}
+        >
           {icon}
         </div>
-        <div className="w-20 h-8">
-          <Line data={chartData} options={options} />
-        </div>
       </div>
-      <div>
-        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">{title}</p>
-        <p className="text-3xl font-black">{value}</p>
-      </div>
-    </div>
-  );
-}
+    );
+
+    if (link) {
+      return (
+        <Link to={link} className="block h-full outline-none">
+          {Content}
+        </Link>
+      );
+    }
+
+    return Content;
+  },
+);
 
 interface StatsRowProps {
-  stats: {
+  stats?: {
     favorites_count: number;
     albums_count: number;
     orders_count: number;
     bookings_count: number;
   };
+  isLoading?: boolean;
 }
 
-export default function StatsRow({ stats }: StatsRowProps) {
-  // Mock data pour les graphiques sparklines
-  const mockSpark = [3, 5, 4, 8, 6, 9, 8];
+export default function StatsRow({ stats, isLoading }: StatsRowProps) {
+  if (isLoading || !stats) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <StatCardSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
+  const statItems = [
+    {
+      label: "Favoris",
+      link: "/favorites",
+      value: stats.favorites_count,
+      sub: "Vos lieux préférés",
+      accent: true,
+      icon: <Heart className="w-full h-full" />,
+    },
+    {
+      label: "Albums",
+      link: "/albums",
+      value: stats.albums_count,
+      sub: "Souvenirs de voyage",
+      icon: <ImageIcon className="w-full h-full" />,
+    },
+    {
+      label: "Commandes",
+      link: "/orders",
+      value: stats.orders_count,
+      sub: "Transactions",
+      icon: <ShoppingBag className="w-full h-full" />,
+    },
+    {
+      label: "Réservations",
+      link: "/bookings",
+      value: stats.bookings_count,
+      sub: "Voyages prévus",
+      icon: <CalendarDays className="w-full h-full" />,
+    },
+  ];
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <StatCard
-        title="Favoris"
-        value={stats.favorites_count}
-        icon={<Heart className="w-5 h-5" />}
-        color="#F43F5E"
-        data={[2, 4, 3, 5, 4, 6, 5]}
-      />
-      <StatCard
-        title="Albums"
-        value={stats.albums_count}
-        icon={<ImageIcon className="w-5 h-5" />}
-        color="#8B5CF6"
-        data={[1, 2, 2, 3, 2, 4, 3]}
-      />
-      <StatCard
-        title="Commandes"
-        value={stats.orders_count}
-        icon={<ShoppingBag className="w-5 h-5" />}
-        color="#10B981"
-        data={[5, 3, 6, 4, 7, 5, 8]}
-      />
-      <StatCard
-        title="Réservations"
-        value={stats.bookings_count}
-        icon={<Calendar className="w-5 h-5" />}
-        color="#3B82F6"
-        data={[0, 1, 0, 2, 1, 3, 2]}
-      />
+      {statItems.map((item, i) => (
+        <StatCard key={i} {...item} />
+      ))}
     </div>
   );
 }

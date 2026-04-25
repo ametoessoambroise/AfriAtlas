@@ -1,3 +1,5 @@
+import { ApiError } from "@/lib/api/error-handler";
+
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
 
 export async function apiRequest<T>(
@@ -13,10 +15,13 @@ export async function apiRequest<T>(
   });
 
   if (!response.ok) {
-    const error = await response
-      .json()
-      .catch(() => ({ message: "Une erreur est survenue" }));
-    throw new Error(error.message || `Erreur HTTP: ${response.status}`);
+    const errorText = await response.text();
+    throw new ApiError(
+      response.status,
+      errorText,
+      endpoint,
+      "API_CLIENT"
+    );
   }
 
   return response.json();

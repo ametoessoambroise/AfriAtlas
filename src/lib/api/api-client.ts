@@ -36,12 +36,12 @@ export async function fetchWithAuth(
     headers.set("Authorization", `Bearer ${accessToken}`);
   }
 
-  const newInit: RequestInit = { 
-    ...init, 
+  const newInit: RequestInit = {
+    ...init,
     headers,
-    credentials: "include" // Enable cookies for cross-origin
+    credentials: "include", // Enable cookies for cross-origin
   };
-  
+
   let response = await fetch(url, newInit);
 
   // If 401, try to refresh the token (but NOT on the auth endpoints themselves)
@@ -49,7 +49,7 @@ export async function fetchWithAuth(
     url.includes("/auth/login") ||
     url.includes("/auth/register") ||
     url.includes("/auth/refresh");
-    
+
   if (response.status === 401 && !isAuthEndpoint) {
     const refreshTokenValue = getRefreshToken();
     const now = Date.now();
@@ -104,10 +104,10 @@ export async function fetchWithAuth(
       if (newAccessToken) {
         // Relancer la requête d'origine avec le nouveau token
         headers.set("Authorization", `Bearer ${newAccessToken}`);
-        response = await fetch(url, { 
-          ...init, 
+        response = await fetch(url, {
+          ...init,
           headers,
-          credentials: "include" 
+          credentials: "include",
         });
       }
     } else if (!refreshTokenValue) {

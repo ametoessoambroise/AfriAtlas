@@ -1,6 +1,7 @@
-import { Gamepad2, Calendar as CalendarIcon, Clock, Users } from "lucide-react";
+import { Gamepad2, Calendar as CalendarIcon, Clock } from "lucide-react";
 import { useVrSessions } from "@/hooks/queries/useVrSessions";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Separator } from "@/components/ui/separator";
 import type { VRSessionListResponse } from "@/lib/types";
 import { VrBookingModal } from "./VrBookingModal";
 import { useState } from "react";
@@ -12,90 +13,122 @@ export default function VrSessionCalendar({ slug }: { slug: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="mt-8 bg-gradient-to-br from-indigo-900 via-indigo-800 to-violet-900 rounded-3xl p-8 overflow-hidden relative shadow-xl">
-      <VrBookingModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        sessions={sessions} 
+    <div className="mt-8">
+      <VrBookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        sessions={sessions}
         placeSlug={slug}
       />
-      {/* Deco elements */}
-      <div className="absolute top-0 right-0 p-10 opacity-10 blur-3xl rounded-full bg-white w-64 h-64 pointer-events-none" />
-      <div className="absolute -bottom-10 -left-10 p-10 opacity-10 blur-3xl justify-center rounded-full bg-cyan-400 w-64 h-64 pointer-events-none" />
 
-      <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
-        <div className="text-white max-w-lg">
-          <div className="flex items-center gap-2 text-indigo-200 font-semibold uppercase tracking-wider text-sm mb-3">
-            <Gamepad2 className="h-5 w-5" />
-            Vivez l'expérience VR
-          </div>
-          <h3 className="text-3xl font-extrabold mb-3">Explorez avant d'y être</h3>
-          <p className="text-indigo-100/80 leading-relaxed mb-6">
-            Réservez une session en réalité virtuelle dans nos locaux et visitez physiquement 
-            cette destination depuis notre espace VR premium, sans quitter votre ville.
+      {/* ── Header label — même style qu'AlbumForm section header ── */}
+      <div className="flex items-center gap-2 mb-1">
+        <Gamepad2 className="h-4 w-4 text-primary" />
+        <span className="text-xs font-bold uppercase tracking-widest text-primary">
+          Expérience VR
+        </span>
+      </div>
+
+      <Separator className="mb-0" />
+
+      {/* ── Layout 3-col — calqué sur AlbumForm ── */}
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-3 py-8">
+        {/* ── Colonne gauche : titre + description ── */}
+        <div>
+          <h2 className="font-semibold text-foreground">
+            Réserver une session VR
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Visitez cette destination en réalité virtuelle depuis notre espace
+            premium, sans quitter votre ville.
           </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-black/20 p-5 rounded-2xl border border-white/10 backdrop-blur-md">
-                   <h4 className="font-semibold text-white mb-4">Aujourd'hui</h4>
-                   {isLoading ? (
-                     <Skeleton className="h-20 w-full bg-white/10 rounded-xl" />
-                   ) : isError || !sessions || sessions.length === 0 ? (
-                     <div className="text-sm text-indigo-200 bg-white/5 p-4 rounded-xl border border-white/5 text-center">
-                       Aucune session active.
-                     </div>
-                   ) : (
-                      <div className="space-y-3">
-                         {sessions.slice(0, 2).map((s: VRSessionListResponse) => (
-                            <div key={s.id} className="flex flex-col gap-1 bg-white/10 p-3 rounded-xl border border-white/5">
-                               <span className="font-bold text-white text-sm">{s.title}</span>
-                               <div className="flex items-center justify-between text-[10px] text-indigo-200">
-                                  <span>{s.duration_minutes} min</span>
-                                  <span className="font-black text-xs text-white">{s.price} {s.currency}</span>
-                               </div>
-                            </div>
-                         ))}
-                      </div>
-                   )}
-            </div>
-
-            <div className="bg-white/5 p-5 rounded-2xl border border-white/5 backdrop-blur-sm">
-              <h4 className="font-semibold text-white/90 mb-4 flex items-center gap-2 text-sm">
-                <Clock className="h-3.5 w-3.5 text-cyan-400" />
-                Horaires de service
-              </h4>
-              <div className="flex flex-wrap gap-1.5 opacity-60">
-                {VR_TIME_SLOTS.slice(0, 6).map(slot => (
-                  <span key={slot} className="text-[9px] px-2 py-1 rounded-md bg-white/10 border border-white/5 font-medium">
-                    {slot.split(' - ')[0]}
-                  </span>
-                ))}
-                <span className="text-[9px] px-2 py-1 rounded-md bg-white/10 border border-white/5 font-medium">
-                  ... +{VR_TIME_SLOTS.length - 6}
-                </span>
-              </div>
-              <p className="text-[10px] text-indigo-300/60 mt-4 leading-tight italic">
-                Créneaux de 45 min. Dernière session à {VR_TIME_SLOTS[VR_TIME_SLOTS.length-1].split(' - ')[0]}.
-              </p>
-            </div>
-          </div>
         </div>
 
-        <div className="shrink-0 w-full md:w-auto flex flex-col gap-3">
-          <button 
-             type="button" 
-             onClick={() => setIsModalOpen(true)}
-             disabled={sessions.length === 0}
-             className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-indigo-950 font-bold px-8 py-4 rounded-2xl shadow-lg shadow-cyan-500/20 transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100"
-          >
-             <CalendarIcon className="h-5 w-5" />
-             Réserver mon casque VR
-          </button>
-          <p className="text-xs text-center text-indigo-200/60 mt-1">
-            Réservé aux membres vérifiés. Places limitées.
-          </p>
+        {/* ── Colonne droite : contenu ── */}
+        <div className="sm:max-w-3xl md:col-span-2 space-y-5">
+          {/* Sessions du jour */}
+          <div className="rounded-lg border border-border bg-muted/40 px-5 py-4">
+            <h4 className="text-sm font-medium text-foreground mb-3">
+              Sessions disponibles aujourd'hui
+            </h4>
+
+            {isLoading ? (
+              <div className="space-y-2">
+                <Skeleton className="h-14 w-full rounded-lg" />
+                <Skeleton className="h-14 w-full rounded-lg" />
+              </div>
+            ) : isError || !sessions || sessions.length === 0 ? (
+              <p className="text-sm text-muted-foreground bg-background border border-border rounded-lg px-4 py-3 text-center">
+                Aucune session active pour le moment.
+              </p>
+            ) : (
+              <div className="space-y-2">
+                {sessions.slice(0, 2).map((s: VRSessionListResponse) => (
+                  <div
+                    key={s.id}
+                    className="flex items-center justify-between bg-background border border-border rounded-lg px-4 py-3"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-foreground truncate">
+                        {s.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {s.duration_minutes} min
+                      </p>
+                    </div>
+                    <span className="text-sm font-bold text-foreground shrink-0 ml-4">
+                      {s.price} {s.currency}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Horaires */}
+          <div className="rounded-lg border border-border bg-muted/40 px-5 py-4">
+            <h4 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
+              <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+              Horaires de service
+            </h4>
+            <div className="flex flex-wrap gap-1.5">
+              {VR_TIME_SLOTS.slice(0, 6).map((slot) => (
+                <span
+                  key={slot}
+                  className="text-[11px] px-2.5 py-1 rounded-md bg-background border border-border font-medium text-muted-foreground"
+                >
+                  {slot.split(" - ")[0]}
+                </span>
+              ))}
+              <span className="text-[11px] px-2.5 py-1 rounded-md bg-background border border-border font-medium text-muted-foreground">
+                +{VR_TIME_SLOTS.length - 6} autres
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3 italic">
+              Créneaux de 45 min. Dernière session à{" "}
+              {VR_TIME_SLOTS[VR_TIME_SLOTS.length - 1].split(" - ")[0]}.
+            </p>
+          </div>
+
+          {/* CTA */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-1">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              disabled={sessions.length === 0}
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-sm transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
+            >
+              <CalendarIcon className="h-4 w-4" />
+              Réserver mon casque VR
+            </button>
+            <p className="text-xs text-muted-foreground">
+              Réservé aux membres vérifiés. Places limitées.
+            </p>
+          </div>
         </div>
       </div>
+
+      <Separator />
     </div>
   );
 }

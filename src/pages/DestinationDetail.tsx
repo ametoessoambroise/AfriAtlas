@@ -32,7 +32,7 @@ const DestinationDetail = () => {
     return (
       <PageWrapper>
         <div className="container py-20 text-center">
-          <Link to="/destinations" className="btn-primary">
+          <Link to="/destinations" className="btn-primary cursor-pointer">
             Retour
           </Link>
         </div>

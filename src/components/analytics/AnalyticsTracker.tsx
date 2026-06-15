@@ -29,18 +29,12 @@ export function AnalyticsTracker({ entityId, entityType, metadata }: AnalyticsTr
         }
 
         await analyticsApi.recordVisit({
-          place_id: String(entityId),
+          entity_id: String(entityId),
+          entity_type: entityType === "album" ? "place" : entityType, // Fallback safe for backend if album not supported yet
           visit_type: "view",
-          session_id: sessionId,
-          user_agent: navigator.userAgent,
+          source: document.referrer ? new URL(document.referrer).hostname : "direct",
           referrer: document.referrer || undefined,
-          // metadata.device_id permet de tracker l'utilisateur anonyme au-delà de sa session
-          // @ts-ignore
-          metadata: { 
-            ...metadata, 
-            entity_type: entityType,
-            device_id: deviceId 
-          }
+          duration_seconds: 0, // Initial view
         });
       } catch (error) {
         // Silently fail analytics in production

@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
+const PLACEHOLDER = "/placeholder.png";
+
 interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
@@ -12,28 +14,21 @@ interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 
 export function LazyImage({ src, alt, className, containerClassName, ...props }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  const [imgSrc, setImgSrc] = useState(src || PLACEHOLDER);
 
   // Omit React DOM event handlers that conflict with framer-motion's types
   const { onAnimationStart, onDragStart, onDrag, onDragEnd, ...safeProps } = props;
 
   return (
     <div className={cn("relative overflow-hidden", containerClassName)}>
-      {/* Skeleton / Placeholder while loading */}
-      {!isLoaded && !hasError && (
+      {/* Skeleton while loading */}
+      {!isLoaded && (
         <Skeleton className="absolute inset-0 w-full h-full bg-muted" />
       )}
 
-      {/* Fallback Error */}
-      {hasError && (
-        <div className="absolute inset-0 flex items-center justify-center bg-muted text-muted-foreground text-xs text-center p-2">
-          Impossible de charger l'image
-        </div>
-      )}
-
-      {/* Actual Image */}
+      {/* Actual Image (with fallback to placeholder on error) */}
       <motion.img
-        src={src}
+        src={imgSrc}
         alt={alt}
         loading="lazy"
         decoding="async"
@@ -45,7 +40,11 @@ export function LazyImage({ src, alt, className, containerClassName, ...props }:
         }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         onLoad={() => setIsLoaded(true)}
-        onError={() => setHasError(true)}
+        onError={() => {
+          if (imgSrc !== PLACEHOLDER) {
+            setImgSrc(PLACEHOLDER);
+          }
+        }}
         className={cn(
           "w-full h-full object-cover",
           className

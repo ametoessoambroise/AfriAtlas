@@ -20,6 +20,7 @@ const getNavLinks = (user: any) => {
     { label: "Destinations", href: "/destinations" },
     { label: "Explorer", href: "/carte" },
     { label: "Albums", href: "/albums" },
+    { label: "Voyager", href: "/tripplanification" },
     { label: "Abonnements", href: "/pricing" },
   ];
 

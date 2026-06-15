@@ -23,7 +23,7 @@ export async function fetchWithAuth(
   url: string,
   init: RequestInit = {},
 ): Promise<Response> {
-  const accessToken = getAccessToken();
+  const accessToken = getAccessToken()?.trim();
 
   const headers = new Headers(init.headers || {});
 
@@ -34,12 +34,16 @@ export async function fetchWithAuth(
 
   if (accessToken && !headers.has("Authorization")) {
     headers.set("Authorization", `Bearer ${accessToken}`);
+    
+    // Debug log for 401 issues (only in development)
+    if (import.meta.env.DEV && url.includes("/auth/me")) {
+      console.log(`[fetchWithAuth] Sending request to ${url} with token: ${accessToken.substring(0, 10)}...`);
+    }
   }
 
   const newInit: RequestInit = {
     ...init,
     headers,
-    credentials: "include", // Enable cookies for cross-origin
   };
 
   let response = await fetch(url, newInit);
@@ -64,7 +68,6 @@ export async function fetchWithAuth(
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ refresh_token: refreshTokenValue }),
-              credentials: "include", // Enable cookies for refresh
             });
 
             if (refreshRes.ok) {
@@ -107,7 +110,6 @@ export async function fetchWithAuth(
         response = await fetch(url, {
           ...init,
           headers,
-          credentials: "include",
         });
       }
     } else if (!refreshTokenValue) {

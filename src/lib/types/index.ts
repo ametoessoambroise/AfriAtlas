@@ -62,7 +62,6 @@ export type {
 export type {
   ErrorResponse,
   MessageResponse,
-  PaginatedResponse,
 } from "./common";
 export type {
   CountryResponse,
@@ -106,7 +105,11 @@ export type {
   PlaceNearbyRequest,
   PlaceOwnerResponse,
   PlaceResponse,
-  PlaceNestedProductResponse,
+  PlaceFeatureResponse,
+  PlaceActivityResponse,
+  PlaceClimateResponse,
+  ClimateSeasonalityEntry,
+  ClimateBestTimingEntry,
   VRSessionResponse,
   PlaceSearchRequest,
   PlaceUpdate,
@@ -148,7 +151,6 @@ export type {
   UserCreate,
   UserDashboardResponse,
   UserUpdate,
-  AvatarUpdate,
   PasswordChangeRequest,
   AccountDeleteRequest,
 } from "./user";
@@ -184,3 +186,5 @@ export type {
   DestinationReviewsSummary,
   PaginatedReviewsResponse,
 } from "./reviews";
+
+export type { TripDraft, PlanningStep } from "./trip_planning";

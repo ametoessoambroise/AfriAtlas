@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Locate, Navigation } from "lucide-react";
 import { useMapEvents, CircleMarker } from "react-leaflet";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,6 +30,20 @@ export default function UserLocationDot() {
     map.locate({ setView: true, maxZoom: 14 });
   };
 
+  // Listen for external locate requests (from MapLayerControl)
+  useEffect(() => {
+    const handleLocateRequest = () => {
+      if (!position) {
+        setAskPermission(true);
+      } else {
+        map.flyTo(position, 14);
+      }
+    };
+
+    window.addEventListener('map:locate', handleLocateRequest);
+    return () => window.removeEventListener('map:locate', handleLocateRequest);
+  }, [position, map]);
+
   return (
     <>
       <div className="absolute right-4 bottom-8 z-[1000]">
@@ -45,9 +59,9 @@ export default function UserLocationDot() {
           )}
         </button>
         {errorVisible && (
-           <div className="absolute right-14 top-1 -translate-y-1 bg-destructive text-destructive-foreground text-xs whitespace-nowrap px-3 py-1.5 rounded-md font-medium shadow-md">
-             Localisation introuvable
-           </div>
+            <div className="absolute right-14 top-1 -translate-y-1 bg-destructive text-destructive-foreground text-xs whitespace-nowrap px-3 py-1.5 rounded-md font-medium shadow-md">
+              Localisation introuvable
+            </div>
         )}
       </div>
 

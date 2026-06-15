@@ -1,12 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  Users,
-  ChevronRight,
-} from "lucide-react";
+import { Calendar, Clock, MapPin, Users, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { VRSessionListResponse } from "@/lib/types";
 

@@ -84,7 +84,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         {/* Logo */}
         <div>
           <Link to="/" className="flex items-center gap-2.5 mb-8 px-2 group">
-            <div className="w-8 h-8 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-20 h20 flex items-center justify-center group-hover:scale-110 transition-transform">
               <img
                 src="/favicon.ico"
                 alt="logo"

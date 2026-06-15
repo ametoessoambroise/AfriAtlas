@@ -11,6 +11,43 @@
 export type BookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
 
 /**
+ * Additional VR booking information (Premium UI fields).
+ */
+export interface VRBookingAdditionalInfo {
+  /**
+   * Place ID for immersion destination
+   */
+  immersion_location_id?: string | null;
+  /**
+   * solo, couple, family, friends
+   */
+  participation_type?: string | null;
+  /**
+   * e.g., '26-40'
+   */
+  age_range?: string | null;
+  /**
+   * e.g., 'France'
+   */
+  nationality?: string | null;
+  /**
+   * e.g., 'Français'
+   */
+  language?: string | null;
+  /**
+   * beginner, intermediate, expert
+   */
+  experience_level?: string | null;
+  /**
+   * JSON string for health/preferences
+   */
+  health_preferences?: string | null;
+  /**
+   * Subscription plan ID for pricing tier
+   */
+  subscription_plan_id?: string | null;
+}
+/**
  * Base schema for VR bookings.
  */
 export interface VRBookingBase {
@@ -31,6 +68,38 @@ export interface VRBookingBase {
  * Schema for creating a new VR booking.
  */
 export interface VRBookingCreate {
+  /**
+   * Place ID for immersion destination
+   */
+  immersion_location_id?: string | null;
+  /**
+   * solo, couple, family, friends
+   */
+  participation_type?: string | null;
+  /**
+   * e.g., '26-40'
+   */
+  age_range?: string | null;
+  /**
+   * e.g., 'France'
+   */
+  nationality?: string | null;
+  /**
+   * e.g., 'Français'
+   */
+  language?: string | null;
+  /**
+   * beginner, intermediate, expert
+   */
+  experience_level?: string | null;
+  /**
+   * JSON string for health/preferences
+   */
+  health_preferences?: string | null;
+  /**
+   * Subscription plan ID for pricing tier
+   */
+  subscription_plan_id?: string | null;
   /**
    * Date and time of the booking
    */
@@ -62,6 +131,38 @@ export interface VRBookingListResponse {
  * Schema for VR booking response.
  */
 export interface VRBookingResponse {
+  /**
+   * Place ID for immersion destination
+   */
+  immersion_location_id?: string | null;
+  /**
+   * solo, couple, family, friends
+   */
+  participation_type?: string | null;
+  /**
+   * e.g., '26-40'
+   */
+  age_range?: string | null;
+  /**
+   * e.g., 'France'
+   */
+  nationality?: string | null;
+  /**
+   * e.g., 'Français'
+   */
+  language?: string | null;
+  /**
+   * beginner, intermediate, expert
+   */
+  experience_level?: string | null;
+  /**
+   * JSON string for health/preferences
+   */
+  health_preferences?: string | null;
+  /**
+   * Subscription plan ID for pricing tier
+   */
+  subscription_plan_id?: string | null;
   /**
    * Date and time of the booking
    */

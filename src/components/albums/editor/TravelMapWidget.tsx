@@ -89,7 +89,7 @@ export default function TravelMapWidget({
                 <Popup className="rounded-xl overflow-hidden p-0 border-0 shadow-xl">
                   <div className="w-48">
                     <img
-                      src={place.primary_image?.url || "/placeholder.svg"}
+                      src={place.primary_image?.url || "/placeholder.png"}
                       alt={place.name}
                       className="w-full h-24 object-cover"
                     />

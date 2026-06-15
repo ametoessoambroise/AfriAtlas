@@ -47,8 +47,8 @@ export interface DestinationFilter {
  * Schema for destination media response.
  */
 export interface DestinationMediaResponse {
-  id: number;
-  destination_id: number;
+  id: string;
+  destination_id: string;
   media_type: string;
   media_url: string;
   is_cover: boolean;
@@ -89,6 +89,35 @@ export interface DestinationTagResponse {
   tag_name: string;
 }
 /**
+ * Schema for favorite items that can be either Destination or Place.
+ */
+export interface FavoriteItemResponse {
+  id: string;
+  name: string;
+  type: string;
+  city?: string | null;
+  country?: string | null;
+  latitude?: string | null;
+  longitude?: string | null;
+  description?: string | null;
+  short_description?: string | null;
+  country_id?: number | null;
+  popularity_score?: number | null;
+  average_rating?: string | null;
+  reviews_count?: number | null;
+  slug?: string | null;
+  category?: string | null;
+  status?: string | null;
+  rating_avg?: string | null;
+  rating_count?: number | null;
+  is_featured?: boolean | null;
+  images?: {
+    [k: string]: unknown;
+  }[];
+  primary_image_url?: string | null;
+  created_at?: string | null;
+}
+/**
  * Schema for region/region response.
  */
 export interface RegionResponse {
@@ -100,6 +129,25 @@ export interface RegionResponse {
   latitude?: string | null;
   longitude?: string | null;
   created_at: string;
+}
+/**
+ * Schema for search results (Destination with UUID support).
+ */
+export interface SearchResultResponse {
+  id: string;
+  name: string;
+  city?: string | null;
+  country_id?: string | null;
+  short_description?: string | null;
+  description?: string | null;
+  average_rating?: string | null;
+  reviews_count?: number | null;
+  latitude?: string | null;
+  longitude?: string | null;
+  popularity_score?: number | null;
+  created_at?: string | null;
+  media?: DestinationMediaResponse[];
+  country_name?: string | null;
 }
 /**
  * Schema for translation response.

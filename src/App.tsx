@@ -25,6 +25,7 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import VerifyEmailPage from "./pages/auth/VerifyEmailPage";
+import OAuthCallbackPage from "./pages/auth/OAuthCallbackPage";
 
 // Pages de cartes
 import CartPage from "./pages/CartPage";
@@ -39,6 +40,7 @@ import AlbumsPage from "./pages/albums/AlbumsPage";
 import CreateAlbumPage from "./pages/albums/CreateAlbumPage";
 import AlbumDetailPage from "./pages/albums/AlbumDetailPage";
 import ProtectedWrapper from "./components/auth/ProtectedWrapper";
+import TripPlanningPage from "./pages/TripPlanningPage";
 
 // Pages VR & Bookings
 import VrSessionsPage from "./pages/vr-sessions/VrSessionsPage";
@@ -87,6 +89,7 @@ const queryClient = new QueryClient({
 });
 
 import { useLocation } from "react-router-dom";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 const AppContent = () => {
   const isMobile = useIsMobile();
@@ -98,6 +101,7 @@ const AppContent = () => {
 
   return (
     <TooltipProvider>
+      <ScrollToTop />
       <Toaster />
       <Sonner />
       <a
@@ -134,6 +138,7 @@ const AppContent = () => {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route path="/auth/callback" element={<OAuthCallbackPage />} />
 
           {/* Private Routes (Protected) */}
           <Route path="/cart" element={<CartPage />} />
@@ -208,6 +213,14 @@ const AppContent = () => {
             element={
               <ProtectedWrapper>
                 <AlbumDetailPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/tripplanification"
+            element={
+              <ProtectedWrapper>
+                <TripPlanningPage />
               </ProtectedWrapper>
             }
           />

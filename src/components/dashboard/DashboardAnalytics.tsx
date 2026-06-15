@@ -25,14 +25,7 @@ export const DashboardAnalytics = memo(
     });
 
     const chartData = useMemo(() => {
-      // Days order for display (Lundi to Dimanche)
       const dayLabels = ["L", "M", "M", "J", "V", "S", "D"];
-      const data = dayLabels.map((label) => ({
-        name: label,
-        value: 0,
-        fullDay: "",
-      }));
-
       const fullDays = [
         "Lundi",
         "Mardi",
@@ -42,33 +35,51 @@ export const DashboardAnalytics = memo(
         "Samedi",
         "Dimanche",
       ];
-      data.forEach((d, i) => (d.fullDay = fullDays[i]));
+      const data = dayLabels.map((label, i) => ({
+        name: label,
+        value: 0,
+        fullDay: fullDays[i],
+      }));
 
-      if (!analytics?.visits || analytics.visits.length === 0) {
-        return data.map((d) => ({ ...d, value: 0 }));
-      }
+      if (!analytics) return data;
 
+      const visits = analytics.visits ?? [];
+
+      // Fenêtre glissante : les 7 derniers jours (pas semaine calendaire)
       const now = new Date();
-      const today = now.getDay();
-      const startOfWeek = new Date(now);
-      const diff = now.getDate() - today + (today === 0 ? -6 : 1);
-      startOfWeek.setDate(diff);
-      startOfWeek.setHours(0, 0, 0, 0);
+      const sevenDaysAgo = new Date(now);
+      sevenDaysAgo.setDate(now.getDate() - 6);
+      sevenDaysAgo.setHours(0, 0, 0, 0);
 
-      analytics.visits.forEach((visit) => {
+      let hasAnyDataInWindow = false;
+
+      visits.forEach((visit) => {
         if (!visit.visited_at) return;
         const visitDate = new Date(visit.visited_at);
-        if (visitDate >= startOfWeek) {
-          const dayIdx = visitDate.getDay();
-          const chartIdx = dayIdx === 0 ? 6 : dayIdx - 1;
+        if (isNaN(visitDate.getTime())) return;
+        if (visitDate >= sevenDaysAgo) {
+          const dayIdx = visitDate.getDay(); // 0=Sun, 1=Mon ...
+          const chartIdx = dayIdx === 0 ? 6 : dayIdx - 1; // map to L-D
           if (data[chartIdx]) {
             data[chartIdx].value += 1;
+            hasAnyDataInWindow = true;
           }
         }
       });
 
+      // Fallback : aucune visite avec date dans les 7 jours
+      // → montrer le total de toutes les activités sur le jour actuel
+      if (!hasAnyDataInWindow) {
+        const total =
+          (analytics.total_visits || 0) + ordersCount + bookingsCount;
+        if (total > 0) {
+          const currentDayIdx = now.getDay() === 0 ? 6 : now.getDay() - 1;
+          data[currentDayIdx].value = total;
+        }
+      }
+
       return data;
-    }, [analytics]);
+    }, [analytics, ordersCount, bookingsCount]);
 
     const totalActivity = useMemo(() => {
       return (analytics?.total_visits || 0) + ordersCount + bookingsCount;
@@ -91,7 +102,8 @@ export const DashboardAnalytics = memo(
       );
     }
 
-    const currentDayIdx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
+    const currentDayIdx =
+      new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
 
     return (
       <div className="bg-card rounded-[32px] p-6 border border-border flex flex-col h-full shadow-sm hover:shadow-md transition-shadow group">
@@ -116,14 +128,21 @@ export const DashboardAnalytics = memo(
         </div>
 
         {/* Recharts Area */}
-        <div className="flex-1 min-h-[160px] -ml-4 -mr-2">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-              <XAxis 
-                dataKey="name" 
-                axisLine={false} 
-                tickLine={false} 
-                tick={{ fontSize: 10, fontWeight: 900, fill: "hsl(var(--muted-foreground))" }}
+        <div className="flex-1 -ml-4 -mr-2">
+          <ResponsiveContainer width="100%" height={180}>
+            <BarChart
+              data={chartData}
+              margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
+            >
+              <XAxis
+                dataKey="name"
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fontSize: 10,
+                  fontWeight: 900,
+                  fill: "hsl(var(--muted-foreground))",
+                }}
                 dy={10}
               />
               <YAxis hide />
@@ -145,15 +164,15 @@ export const DashboardAnalytics = memo(
                   return null;
                 }}
               />
-              <Bar 
-                dataKey="value" 
-                radius={[8, 8, 0, 0]} 
-                barSize={32}
-              >
+              <Bar dataKey="value" radius={[8, 8, 0, 0]} barSize={32}>
                 {chartData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={index === currentDayIdx ? "#0F4C75" : "rgba(15, 76, 117, 0.2)"}
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={
+                      index === currentDayIdx
+                        ? "#0F4C75"
+                        : "rgba(15, 76, 117, 0.2)"
+                    }
                     className="transition-all duration-500"
                   />
                 ))}
@@ -167,5 +186,5 @@ export const DashboardAnalytics = memo(
         </p>
       </div>
     );
-  }
+  },
 );

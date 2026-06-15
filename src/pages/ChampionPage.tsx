@@ -1,14 +1,15 @@
 import { useState, useMemo } from 'react';
-import { Search, ShoppingCart } from 'lucide-react';
+import { Search, ShoppingCart, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PageWrapper from '@/components/layout/PageWrapper';
 import ProductCard from '@/components/cards/ProductCard';
 import CartSidebar from '@/components/CartSidebar';
-import { PRODUCTS, DESTINATIONS } from '@/lib/data/mockData';
 import { useCartStore } from '@/stores/cartStore';
+import { useDestination } from '@/hooks/queries/useDestinations';
+import { useProducts } from '@/hooks/queries/useProducts';
+import { mapProductListToProduct } from '@/lib/mappers/productMapper';
 
 const categories = ['Tous', 'Épicerie', 'Boissons', 'Snacks', 'Beauté'];
-const champion = DESTINATIONS.find((d) => d.slug === 'le-champion')!;
 
 const ChampionPage = () => {
   const [cat, setCat] = useState('Tous');
@@ -16,13 +17,39 @@ const ChampionPage = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const count = useCartStore((s) => s.count());
 
+  const slug = 'le-champion';
+  const { data: champion, isLoading: isLoadingDest } = useDestination(slug);
+  const { data: rawProducts, isLoading: isLoadingProducts } = useProducts(slug);
+
   const filtered = useMemo(() => {
-    return PRODUCTS.filter((p) => {
+    if (!rawProducts) return [];
+    const products = rawProducts.map(mapProductListToProduct);
+    return products.filter((p) => {
       if (cat !== 'Tous' && p.category !== cat) return false;
       if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
       return true;
     });
-  }, [cat, search]);
+  }, [rawProducts, cat, search]);
+
+  if (isLoadingDest) {
+    return (
+      <PageWrapper>
+        <div className="flex h-screen items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </PageWrapper>
+    );
+  }
+
+  if (!champion) {
+    return (
+      <PageWrapper>
+        <div className="flex h-screen items-center justify-center">
+          <p className="text-muted-foreground">Supermarché introuvable.</p>
+        </div>
+      </PageWrapper>
+    );
+  }
 
   return (
     <PageWrapper>
@@ -71,13 +98,19 @@ const ChampionPage = () => {
         <div className="flex gap-8">
           <div className="flex-1">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {filtered.map((p, i) => (
-                <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}>
-                  <ProductCard product={p} />
-                </motion.div>
-              ))}
+              {isLoadingProducts ? (
+                <div className="col-span-full py-16 flex justify-center">
+                  <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                </div>
+              ) : (
+                filtered.map((p, i) => (
+                  <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}>
+                    <ProductCard product={p} />
+                  </motion.div>
+                ))
+              )}
             </div>
-            {filtered.length === 0 && (
+            {!isLoadingProducts && filtered.length === 0 && (
               <div className="text-center py-16">
                 <p className="text-muted-foreground">Aucun produit trouvé</p>
               </div>

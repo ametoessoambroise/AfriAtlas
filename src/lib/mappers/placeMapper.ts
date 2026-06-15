@@ -7,7 +7,7 @@ import type {
 import type { Destination, DestinationUiType } from "@/lib/models/ui";
 import { resolveImageUrl } from "@/lib/utils/imageUrl";
 
-export const PLACEHOLDER_IMAGE = "/placeholder.svg";
+export const PLACEHOLDER_IMAGE = "/placeholder.png";
 
 const TOGO_CENTER = { lat: 8.6195, lng: 0.8248 };
 
@@ -153,5 +153,9 @@ export function mapPlaceResponseToDestination(p: PlaceResponse): Destination {
     featured: p.is_featured,
     hasCatalog: p.has_catalog,
     isFavorite: (p as any).is_favorite ?? false,
+    // Rich data from Option A backend relations
+    features: p.features ?? [],
+    activities: p.activities ?? [],
+    climate: p.climate ?? null,
   };
 }

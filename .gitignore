@@ -22,6 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.vscode/
+.kiro/
+tests/
+scratch/
+.agent/
 
 
 # Variables d'environnements

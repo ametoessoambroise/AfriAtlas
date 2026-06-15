@@ -7,6 +7,7 @@ import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CtaBanner from "@/components/home/CtaBanner";
 import { usePublicAds } from "@/hooks/queries/useAds";
 import AdPremiumSpotlight from "@/components/ads/AdPremiumSpotlight";
+import AdPromoCard from "@/components/ads/AdPromoCard";
 
 const Index = () => {
   const ads = usePublicAds({ per_page: 1 });
@@ -25,6 +26,11 @@ const Index = () => {
 
       <FeaturedDestinations />
       <CategoryFilter />
+
+      <section className="container px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl my-24">
+        <AdPromoCard layout="horizontal" />
+      </section>
+
       <TestimonialsSection />
       <CtaBanner />
     </PageWrapper>

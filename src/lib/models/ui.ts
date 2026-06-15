@@ -1,8 +1,16 @@
 /**
  * Modèles d'affichage (UI) — distincts des DTO OpenAPI dans @/lib/types.
  */
+import type {
+  PlaceFeatureResponse,
+  PlaceActivityResponse,
+  PlaceClimateResponse,
+} from "@/lib/types/place";
 
 export type DestinationUiType = "city" | "hotel" | "restaurant" | "supermarket";
+
+/** Re-export for convenience */
+export type { PlaceFeatureResponse, PlaceActivityResponse, PlaceClimateResponse };
 
 export interface Destination {
   id: string;
@@ -33,6 +41,12 @@ export interface Destination {
   reviewsCount?: number;
   /** Fiche lieu avec offres catalogue (hôtel, resto, commerce…) — renvoyé par l’API (`has_catalog`). */
   hasCatalog?: boolean;
+  /** Feature cards (Histoire, Culture, Paysages…) from PlaceFeature backend relation. */
+  features?: PlaceFeatureResponse[];
+  /** Activities from PlaceActivity backend relation. */
+  activities?: PlaceActivityResponse[];
+  /** Climate & seasonality from PlaceClimate backend relation. */
+  climate?: PlaceClimateResponse | null;
 }
 
 export interface Product {

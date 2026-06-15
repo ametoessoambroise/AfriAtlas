@@ -145,20 +145,20 @@ export default function AlbumPhotoManager({
           <div className="flex bg-muted/50 p-1 rounded-xl">
             <button
               onClick={() => setViewMode("grid")}
-              className={`p-2 rounded-lg transition-colors ${viewMode === "grid" ? "bg-white shadow-sm" : "hover:bg-white/50"}`}
+              className={`p-2 rounded-lg transition-colors ${viewMode === "grid" ? "bg-background shadow-sm" : "hover:bg-background/50"}`}
             >
               <LayoutGrid className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode("list")}
-              className={`p-2 rounded-lg transition-colors ${viewMode === "list" ? "bg-white shadow-sm" : "hover:bg-white/50"}`}
+              className={`p-2 rounded-lg transition-colors ${viewMode === "list" ? "bg-background shadow-sm" : "hover:bg-background/50"}`}
             >
               <List className="w-4 h-4" />
             </button>
           </div>
 
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px] h-10 rounded-xl bg-white border border-border">
+            <SelectTrigger className="w-[180px] h-10 rounded-xl bg-background border border-border">
               <SelectValue placeholder="Trier par date" />
             </SelectTrigger>
             <SelectContent>
@@ -168,7 +168,10 @@ export default function AlbumPhotoManager({
             </SelectContent>
           </Select>
 
-          <Button variant="outline" className="rounded-xl h-10 gap-2 bg-white">
+          <Button
+            variant="outline"
+            className="rounded-xl h-10 gap-2 bg-background"
+          >
             <Filter className="w-4 h-4" /> Filtrer
           </Button>
         </div>
@@ -178,8 +181,8 @@ export default function AlbumPhotoManager({
       <div
         className={
           viewMode === "grid"
-            ? "grid grid-cols-1 lg:grid-cols-2 gap-6"
-            : "space-y-6"
+            ? "grid grid-cols-1 lg:grid-cols-2 gap-6 text-foreground"
+            : "space-y-6 text-foreground"
         }
       >
         {sortedImages.map((image, index) => {

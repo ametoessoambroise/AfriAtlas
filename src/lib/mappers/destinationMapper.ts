@@ -2,7 +2,7 @@ import type { DestinationResponse } from "@/lib/types/destination";
 import type { PlaceListResponse } from "@/lib/types/place";
 import type { Destination, DestinationUiType } from "@/lib/models/ui";
 
-const PLACEHOLDER_IMAGE = "/placeholder.svg";
+const PLACEHOLDER_IMAGE = "/placeholder.png";
 
 export function mapDestinationResponseToUi(
   d: DestinationResponse | PlaceListResponse,

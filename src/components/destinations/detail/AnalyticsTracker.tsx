@@ -43,12 +43,12 @@ export default function AnalyticsTracker({ placeId }: { placeId: string }) {
     const timer = setTimeout(() => {
       tracked.current = true;
       recordVisit.mutate({
-        place_id: placeId,
-        session_id: getOrCreateSessionId(),
-        user_agent: navigator.userAgent,
+        entity_id: placeId,
+        entity_type: "place",
+        visit_type: "view",
+        source: document.referrer ? new URL(document.referrer).hostname : "direct",
         referrer: document.referrer || undefined,
-        // device_id transmis en champ étendu si le backend le supporte
-        ...(({ device_id: getOrCreateDeviceId() }) as object),
+        duration_seconds: 0,
       });
     }, 1000);
 

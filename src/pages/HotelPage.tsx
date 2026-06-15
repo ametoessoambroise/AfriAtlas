@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Star, Users, Check, MapPin, Phone, Clock, Wifi, Car, Waves, Dumbbell, Wine, Coffee } from 'lucide-react';
+import { Star, Users, Check, MapPin, Phone, Clock, Wifi, Car, Waves, Dumbbell, Wine, Coffee, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import PageWrapper from '@/components/layout/PageWrapper';
-import { DESTINATIONS, ROOMS } from '@/lib/data/mockData';
 import { formatPrice } from '@/stores/cartStore';
+import { useDestination } from '@/hooks/queries/useDestinations';
+import { useProducts } from '@/hooks/queries/useProducts';
+import { mapProductListToRoom } from '@/lib/mappers/productMapper';
 import 'leaflet/dist/leaflet.css';
-
-const hotel = DESTINATIONS.find((d) => d.slug === 'hotel-2-fevrier')!;
 
 const amenityIcons: Record<string, React.ElementType> = {
   Wifi, Piscine: Waves, 'Salle de sport': Dumbbell, Parking: Car, Restaurant: Coffee, Bar: Wine,
@@ -26,6 +26,11 @@ const HotelPage = () => {
   const [guests, setGuests] = useState(2);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const slug = 'hotel-2-fevrier';
+  const { data: hotel, isLoading: isLoadingDest } = useDestination(slug);
+  const { data: rawProducts, isLoading: isLoadingProducts } = useProducts(slug);
+
+  const ROOMS = rawProducts ? rawProducts.map(mapProductListToRoom) : [];
   const room = ROOMS.find((r) => r.id === selectedRoom);
   const nights = checkIn && checkOut ? Math.max(1, Math.ceil((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000)) : 1;
   const totalPrice = room ? room.price * nights : 0;
@@ -34,6 +39,26 @@ const HotelPage = () => {
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
   };
+
+  if (isLoadingDest) {
+    return (
+      <PageWrapper>
+        <div className="flex h-screen items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </PageWrapper>
+    );
+  }
+
+  if (!hotel) {
+    return (
+      <PageWrapper>
+        <div className="flex h-screen items-center justify-center">
+          <p className="text-muted-foreground">Hôtel introuvable.</p>
+        </div>
+      </PageWrapper>
+    );
+  }
 
   return (
     <PageWrapper>
@@ -74,46 +99,52 @@ const HotelPage = () => {
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6">Nos chambres</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {ROOMS.map((r) => (
-              <motion.div key={r.id} whileHover={{ y: -2 }} className={`card-destination overflow-hidden ${selectedRoom === r.id ? 'ring-2 ring-primary' : ''}`}>
-                <div className="relative h-48">
-                  <img src={r.image} alt={r.name} className="w-full h-full object-cover" />
-                  {!r.available && (
-                    <div className="absolute inset-0 bg-foreground/60 flex items-center justify-center">
-                      <span className="bg-destructive text-destructive-foreground px-4 py-1.5 rounded-full font-semibold text-sm">Complet</span>
+            {isLoadingProducts ? (
+              <div className="col-span-full py-16 flex justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              </div>
+            ) : (
+              ROOMS.map((r) => (
+                <motion.div key={r.id} whileHover={{ y: -2 }} className={`card-destination overflow-hidden ${selectedRoom === r.id ? 'ring-2 ring-primary' : ''}`}>
+                  <div className="relative h-48">
+                    <img src={r.image} alt={r.name} className="w-full h-full object-cover" />
+                    {!r.available && (
+                      <div className="absolute inset-0 bg-foreground/60 flex items-center justify-center">
+                        <span className="bg-destructive text-destructive-foreground px-4 py-1.5 rounded-full font-semibold text-sm">Complet</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-5">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-bold">{r.name}</h3>
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                        <Users className="w-4 h-4" /> {r.capacity}
+                      </div>
                     </div>
-                  )}
-                </div>
-                <div className="p-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-bold">{r.name}</h3>
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <Users className="w-4 h-4" /> {r.capacity}
+                    <p className="text-sm text-muted-foreground mb-3">{r.description}</p>
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {r.amenities.slice(0, 5).map((a) => (
+                        <span key={a} className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">{a}</span>
+                      ))}
+                      {r.amenities.length > 5 && <span className="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-full">+{r.amenities.length - 5}</span>}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-xl font-bold text-primary">{formatPrice(r.price)}</span>
+                        <span className="text-sm text-muted-foreground"> / nuit</span>
+                      </div>
+                      <button
+                        disabled={!r.available}
+                        onClick={() => setSelectedRoom(r.id)}
+                        className="btn-primary text-sm py-2 px-5 disabled:opacity-40 disabled:cursor-not-allowed"
+                      >
+                        {selectedRoom === r.id ? '✓ Sélectionné' : 'Réserver'}
+                      </button>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{r.description}</p>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {r.amenities.slice(0, 5).map((a) => (
-                      <span key={a} className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">{a}</span>
-                    ))}
-                    {r.amenities.length > 5 && <span className="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-full">+{r.amenities.length - 5}</span>}
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-xl font-bold text-primary">{formatPrice(r.price)}</span>
-                      <span className="text-sm text-muted-foreground"> / nuit</span>
-                    </div>
-                    <button
-                      disabled={!r.available}
-                      onClick={() => setSelectedRoom(r.id)}
-                      className="btn-primary text-sm py-2 px-5 disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      {selectedRoom === r.id ? '✓ Sélectionné' : 'Réserver'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))
+            )}
           </div>
         </div>
 

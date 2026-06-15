@@ -13,7 +13,7 @@ export function resolveImageUrl(
 ): string {
   // Si pas d'URL, retourner le placeholder
   if (!url) {
-    return "/placeholder.svg";
+    return "/placeholder.png";
   }
 
   // Si l'URL est déjà absolue (commence par http:// ou https://), la retourner telle quelle

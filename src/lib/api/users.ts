@@ -119,28 +119,41 @@ export async function updateAvatar(body: T.AvatarUpdate): Promise<T.UserResponse
 
 /**
  * Upload Avatar File
- * Converts the file to a base64 Data URL, then sends it as JSON
- * to PUT /api/v1/users/me/avatar  (backend expects { avatar_url: string }).
- * @method PUT /api/v1/users/me/avatar
+ * Envoie le fichier via FormData vers POST /api/v1/users/me/avatar/upload
+ * @method POST /api/v1/users/me/avatar/upload
  * @auth   Bearer token required
  */
-export async function uploadAvatarFile(file: File): Promise<T.UserResponse> {
+export async function uploadAvatarFile(file: File, storage: "local" | "cloudinary" = "local"): Promise<T.UserResponse> {
   // Validate size client-side (max 2 MB)
   const MAX_SIZE_BYTES = 2 * 1024 * 1024;
   if (file.size > MAX_SIZE_BYTES) {
     throw new ApiError(400, "L'image ne doit pas dépasser 2 Mo.", "client");
   }
 
-  // Convert file → base64 Data URL
-  const base64Url = await new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = () => reject(new Error("Impossible de lire le fichier."));
-    reader.readAsDataURL(file);
-  });
+  const url = `${getApiBaseUrl()}/api/v1/users/me/avatar/upload?storage=${storage}`;
+  
+  const formData = new FormData();
+  formData.append("file", file);
 
-  // Send as JSON to the backend endpoint
-  return updateAvatar({ avatar_url: base64Url });
+  const headers: Record<string, string> = {
+    "Authorization": `Bearer ${getAccessToken()}`,
+    // Ne pas inclure "Content-Type", fetch le définit automatiquement avec le boundary pour FormData
+  };
+
+  const init: RequestInit = {
+    method: "POST",
+    headers,
+    body: formData,
+  };
+
+  const res = await fetch(url, init);
+
+  if (!res.ok) {
+    const errorBody = await res.text().catch(() => res.statusText);
+    throw new ApiError(res.status, errorBody, url);
+  }
+
+  return res.json() as Promise<T.UserResponse>;
 }
 
 

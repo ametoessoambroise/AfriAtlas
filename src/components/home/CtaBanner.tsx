@@ -93,7 +93,7 @@ export default function CtaBanner() {
                   <img
                     src="/vr.png"
                     alt="Destination Preview"
-                    className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+                    className="w-full h-full grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
@@ -152,7 +152,7 @@ export default function CtaBanner() {
             <img
               src="/vr.png"
               alt="Destination Experience"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-fill transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
             />
 
             {/* Overlay */}

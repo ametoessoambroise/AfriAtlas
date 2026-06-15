@@ -55,6 +55,7 @@ import type {
   VRSessionUpdate,
   VRBookingListResponse,
 } from "@/lib/types";
+import { toast } from "sonner";
 
 // ─── Status Badge ─────────────────────────────────────────────────────────────
 // src/pages/owner/VrOwnerSessionsPage.tsx
@@ -206,8 +207,13 @@ export default function VrOwnerSessionsPage() {
 
   // On récupère toutes les sessions. Le filtrage par lieu se fait côté client
   // ou on pourrait passer le slug si l'API le supporte bien.
-  const { data: sessions, isLoading: isSessionsLoading, isError } = useVrSessions();
-  const { data: revenueSummary, isLoading: isRevenueLoading } = useMyRevenueSummary();
+  const {
+    data: sessions,
+    isLoading: isSessionsLoading,
+    isError,
+  } = useVrSessions();
+  const { data: revenueSummary, isLoading: isRevenueLoading } =
+    useMyRevenueSummary();
 
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [search, setSearch] = useState("");
@@ -338,7 +344,7 @@ export default function VrOwnerSessionsPage() {
         >
           <option value="">Tous les lieux</option>
           {claims?.map((c) => (
-            <option key={c.id} value={c.place_id}>
+            <option key={c.id} value={c.id}>
               {c.place_name}
             </option>
           ))}
@@ -424,9 +430,7 @@ function SessionBookingsModal({
   onClose: () => void;
 }) {
   const { data: bookings, isLoading } = useVrSessionBookings(session?.id || "");
-  const { mutate: updateAttendance } = useUpdateVrAttendance(
-    session?.id || ""
-  );
+  const { mutate: updateAttendance } = useUpdateVrAttendance(session?.id || "");
 
   return (
     <Dialog open={!!session} onOpenChange={onClose}>
@@ -563,6 +567,7 @@ function VrSessionFormModal({
               Titre de l'expérience
             </label>
             <Input
+              id="session-title"
               defaultValue={session?.title}
               className="bg-white/5 border-white/10"
               placeholder="Ex: Survol du Koutammakou"
@@ -573,6 +578,7 @@ function VrSessionFormModal({
               Description
             </label>
             <textarea
+              id="session-desc"
               className="w-full bg-white/5 border-white/10 rounded-md p-3 min-h-[100px]"
               defaultValue={session?.description || ""}
             />
@@ -582,6 +588,7 @@ function VrSessionFormModal({
               Durée (minutes)
             </label>
             <Input
+              id="session-duration"
               type="number"
               defaultValue={session?.duration_minutes}
               className="bg-white/5 border-white/10"
@@ -592,6 +599,7 @@ function VrSessionFormModal({
               Prix (FCFA)
             </label>
             <Input
+              id="session-price"
               type="number"
               defaultValue={session?.price}
               className="bg-white/5 border-white/10"
@@ -602,6 +610,7 @@ function VrSessionFormModal({
               Places Max
             </label>
             <Input
+              id="session-max"
               type="number"
               defaultValue={session?.max_participants}
               className="bg-white/5 border-white/10"
@@ -611,7 +620,11 @@ function VrSessionFormModal({
             <label className="text-xs text-white/40 uppercase font-bold tracking-tighter">
               Statut
             </label>
-            <select className="w-full bg-white/5 border-white/10 rounded-md h-10 px-3 outline-none">
+            <select
+              id="session-is-active"
+              className="w-full bg-white/5 border-white/10 rounded-md h-10 px-3 outline-none"
+              defaultValue={session?.is_active ? "true" : "false"}
+            >
               <option value="true">Actif</option>
               <option value="false">Désactivé / Maintenance</option>
             </select>
@@ -626,8 +639,60 @@ function VrSessionFormModal({
           >
             Annuler
           </Button>
-          <Button className="bg-amber-500 text-zinc-900 font-bold hover:bg-amber-400">
-            {isEditing ? "Enregistrer" : "Créer la session"}
+          <Button
+            className="bg-amber-500 text-zinc-900 font-bold hover:bg-amber-400"
+            disabled={isCreating}
+            onClick={() => {
+              const title = (
+                document.getElementById("session-title") as HTMLInputElement
+              ).value;
+              const description = (
+                document.getElementById("session-desc") as HTMLTextAreaElement
+              ).value;
+              const duration = parseInt(
+                (
+                  document.getElementById(
+                    "session-duration",
+                  ) as HTMLInputElement
+                ).value,
+              );
+              const price = (
+                document.getElementById("session-price") as HTMLInputElement
+              ).value;
+              const maxParticipants = parseInt(
+                (document.getElementById("session-max") as HTMLInputElement)
+                  .value,
+              );
+              const isActive =
+                (
+                  document.getElementById(
+                    "session-is-active",
+                  ) as HTMLSelectElement
+                ).value === "true";
+
+              if (isEditing && session) {
+                // Update logic would go here if useUpdateVrSession was fully implemented in the component
+                toast.info("Mise à jour en cours d'implémentation...");
+              } else {
+                create({
+                  title,
+                  description,
+                  duration_minutes: duration,
+                  price,
+                  currency: "FCFA",
+                  max_participants: maxParticipants,
+                  is_active: isActive,
+                });
+              }
+            }}
+          >
+            {isCreating ? (
+              <Loader2 className="h-4 w-4 animate-spin mr-2" />
+            ) : isEditing ? (
+              "Enregistrer"
+            ) : (
+              "Créer la session"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

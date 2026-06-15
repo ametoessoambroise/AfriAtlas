@@ -11,15 +11,12 @@ import { DashboardAnalytics } from "@/components/dashboard/DashboardAnalytics";
 import { NextBookingCard } from "@/components/dashboard/NextBookingCard";
 import { SubscriptionGauge } from "@/components/dashboard/SubscriptionGauge";
 import DashboardSkeleton from "@/components/dashboard/skeletons/DashboardSkeleton";
-import {
-  AlertCircle,
-  Plus,
-  RefreshCcw,
-  RefreshCw,
-} from "lucide-react";
+import { AlertCircle, Plus, RefreshCcw, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const {
     dashboard,
     orders,
@@ -75,7 +72,10 @@ export default function DashboardPage() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <button className="flex items-center hover:bg-primary/90 transition-all gap-2 px-4 py-2.5 rounded-xl border border-border bg-primary text-primary-foreground text-sm font-bold sm:text-xs lg:text-base shadow-sm">
+            <button 
+              onClick={() => navigate("/tripplanification")}
+              className="flex items-center hover:bg-primary/90 transition-all gap-2 px-4 py-2.5 rounded-xl border border-border bg-primary text-primary-foreground text-sm font-bold sm:text-xs lg:text-base shadow-sm"
+            >
               <Plus className="w-4 h-4" /> Planifier
               <span className="sm:block hidden">un voyage</span>
             </button>

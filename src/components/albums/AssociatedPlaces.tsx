@@ -84,7 +84,7 @@ export function PlacePickerModal({ albumId }: { albumId: string }) {
               >
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-lg overflow-hidden shrink-0 border border-border">
-                    <img src={place.primary_image?.url || "/placeholder.svg"} alt={place.name} className="h-full w-full object-cover" />
+                    <img src={place.primary_image?.url || "/placeholder.png"} alt={place.name} className="h-full w-full object-cover" />
                   </div>
                   <div>
                     <p className="text-sm font-bold">{place.name}</p>
@@ -145,7 +145,7 @@ export default function AssociatedPlaces({ albumId, places }: AssociatedPlacesPr
               className="flex items-center gap-4 p-4 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow group"
             >
               <div className="h-16 w-16 rounded-xl overflow-hidden shrink-0 border border-border shadow-inner">
-                <img src={place.primary_image?.url || "/placeholder.svg"} alt={place.name} className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <img src={place.primary_image?.url || "/placeholder.png"} alt={place.name} className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
               
               <div className="flex-1 min-w-0">

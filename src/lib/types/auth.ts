@@ -27,8 +27,8 @@ export interface RegisterRequest {
 export interface TokenResponse {
   access_token: string;
   token_type?: string;
+  refresh_token: string;
   user: UserResponse;
-  refresh_token?: string;
 }
 /**
  * Schema for user response with all fields.

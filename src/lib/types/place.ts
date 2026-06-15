@@ -225,6 +225,61 @@ export interface PlaceOwnerResponse {
   email: string;
 }
 /**
+ * Feature card for a place (Histoire, Culture, Paysages, Gastronomie, etc.).
+ * Corresponds to the PlaceFeature model / PlaceFeatureResponse Pydantic schema.
+ */
+export interface PlaceFeatureResponse {
+  id: string;
+  place_id: string;
+  feature_type: string;
+  title: string;
+  description: string;
+  image_url?: string | null;
+}
+/**
+ * Activity associated with a place.
+ * Corresponds to the PlaceActivity model / PlaceActivityResponse Pydantic schema.
+ */
+export interface PlaceActivityResponse {
+  id: string;
+  place_id: string;
+  title: string;
+  image_url?: string | null;
+  description: string;
+  level?: string | null;
+  status?: string | null;
+  period?: string | null;
+  timing?: string | null;
+}
+/**
+ * Seasonality entry inside PlaceClimateResponse.
+ */
+export interface ClimateSeasonalityEntry {
+  month: string;
+  status: "ideal" | "favorable" | "avoid";
+}
+/**
+ * Best-timing entry inside PlaceClimateResponse.
+ */
+export interface ClimateBestTimingEntry {
+  range: string;
+  label: string;
+}
+/**
+ * Climate and seasonality data for a place.
+ * Corresponds to the PlaceClimate model / PlaceClimateResponse Pydantic schema.
+ */
+export interface PlaceClimateResponse {
+  id: string;
+  place_id: string;
+  temperature_range?: string | null;
+  rainfall_yearly?: string | null;
+  humidity_range?: string | null;
+  sunshine_hours?: string | null;
+  seasonality?: ClimateSeasonalityEntry[] | null;
+  best_timings?: ClimateBestTimingEntry[] | null;
+}
+/**
  * Schema for place response with relationships.
  */
 export interface PlaceResponse {
@@ -260,6 +315,9 @@ export interface PlaceResponse {
   images?: PlaceImageResponse[];
   products?: PlaceNestedProduct[];
   vr_sessions?: VRSessionResponse[];
+  features?: PlaceFeatureResponse[];
+  activities?: PlaceActivityResponse[];
+  climate?: PlaceClimateResponse | null;
   /**
    * True si le lieu peut afficher une page catalogue (hôtel, resto, commerce…).
    */

@@ -46,9 +46,9 @@ interface KpiCardProps {
 
 function KpiCard({ icon, label, value, trend, color }: KpiCardProps) {
   return (
-    <div className={`bg-zinc-900/60 border border-white/8 rounded-2xl p-5 flex flex-col gap-3 hover:border-white/15 transition-colors`}>
+    <div className={`bg-zinc-900/60 border border-white/8 rounded-md p-5 flex flex-col gap-3 hover:border-white/15 transition-colors`}>
       <div className="flex items-center justify-between">
-        <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${color}`}>
+        <div className={`w-9 h-9 rounded-md flex items-center justify-center ${color}`}>
           {icon}
         </div>
         {trend && (
@@ -81,14 +81,14 @@ function PlaceSwitcher({
     <div className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 bg-zinc-900 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white hover:border-white/20 transition-colors"
+        className="flex items-center gap-2 bg-zinc-900 border border-white/10 rounded-md px-4 py-2.5 text-sm text-white hover:border-white/20 transition-colors"
       >
         <MapPin className="h-3.5 w-3.5 text-amber-400" />
         <span className="font-medium">{selected?.place_name ?? "Choisir un lieu"}</span>
         <ChevronDown className="h-3.5 w-3.5 text-white/40 ml-1" />
       </button>
       {open && (
-        <div className="absolute top-full left-0 mt-2 w-64 bg-zinc-900 border border-white/10 rounded-2xl shadow-2xl z-20 overflow-hidden">
+        <div className="absolute top-full left-0 mt-2 w-64 bg-zinc-900 border border-white/10 rounded-md shadow-2xl z-20 overflow-hidden">
           {claims.map((c) => (
             <button
               key={c.id}
@@ -113,7 +113,7 @@ function RevenueChart({ history, isLoading }: { history: OwnerRevenueListRespons
     .reverse(); // Standard ordering
 
   return (
-    <div className={`bg-zinc-900/60 border border-white/8 rounded-2xl p-6 ${isLoading ? "animate-pulse" : ""}`}>
+    <div className={`bg-zinc-900/60 border border-white/8 rounded-md p-6 ${isLoading ? "animate-pulse" : ""}`}>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="font-semibold text-white">Revenus VR</h3>
@@ -148,7 +148,7 @@ function RevenueChart({ history, isLoading }: { history: OwnerRevenueListRespons
 function ViewsChart() {
   const data = buildDays(14, 350, 200);
   return (
-    <div className="bg-zinc-900/60 border border-white/8 rounded-2xl p-6">
+    <div className="bg-zinc-900/60 border border-white/8 rounded-md p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="font-semibold text-white">Vues par jour</h3>
@@ -178,7 +178,7 @@ function RecentBookings() {
   const items = (sessions as any)?.items ?? sessions ?? [];
 
   return (
-    <div className="bg-zinc-900/60 border border-white/8 rounded-2xl p-6">
+    <div className="bg-zinc-900/60 border border-white/8 rounded-md p-6">
       <div className="flex items-center justify-between mb-5">
         <h3 className="font-semibold text-white flex items-center gap-2">
           <Gamepad2 className="h-4 w-4 text-indigo-400" />
@@ -191,14 +191,14 @@ function RecentBookings() {
 
       {isLoading ? (
         <div className="space-y-3">
-          {[...Array(3)].map((_, i) => <Skeleton key={i} className="h-14 w-full bg-white/5 rounded-xl" />)}
+          {[...Array(3)].map((_, i) => <Skeleton key={i} className="h-14 w-full bg-white/5 rounded-md" />)}
         </div>
       ) : items.length === 0 ? (
         <p className="text-sm text-white/30 text-center py-6">Aucune session enregistrée.</p>
       ) : (
         <div className="flex flex-col gap-2">
           {items.slice(0, 5).map((s: any) => (
-            <div key={s.id} className="flex items-center gap-4 bg-white/4 hover:bg-white/6 border border-white/6 rounded-xl px-4 py-3 transition-colors">
+            <div key={s.id} className="flex items-center gap-4 bg-white/4 hover:bg-white/6 border border-white/6 rounded-md px-4 py-3 transition-colors">
               <div className="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-500/20 flex items-center justify-center flex-shrink-0">
                 <Gamepad2 className="h-3.5 w-3.5 text-indigo-400" />
               </div>
@@ -251,7 +251,7 @@ function AlertsPanel({ claims }: { claims: PlaceClaimResponse[] }) {
   }
 
   return (
-    <div className="bg-zinc-900/60 border border-white/8 rounded-2xl p-6">
+    <div className="bg-zinc-900/60 border border-white/8 rounded-md p-6">
       <h3 className="font-semibold text-white flex items-center gap-2 mb-5">
         <AlertTriangle className="h-4 w-4 text-amber-400" />
         Alertes & Notifications
@@ -260,7 +260,7 @@ function AlertsPanel({ claims }: { claims: PlaceClaimResponse[] }) {
         {alerts.map((a) => (
           <div
             key={a.id}
-            className={`flex items-start gap-3 p-3 rounded-xl border ${
+            className={`flex items-start gap-3 p-3 rounded-md border ${
               a.type === "error"
                 ? "bg-red-500/8 border-red-500/20"
                 : a.id === "ok"
@@ -290,7 +290,7 @@ function OwnerWelcome({ name, placeCount }: { name: string; placeCount: number }
         {greeting}, <span className="text-amber-400">{name.split(" ")[0]}</span> 👋
       </h1>
       <p className="text-white/40 text-sm mt-1">
-        Vous gérez <span className="text-white/70 font-medium">{placeCount} lieu{placeCount !== 1 ? "x" : ""}</span> sur WorldAtlas.
+        Vous gérez <span className="text-white/70 font-medium">{placeCount} lieu{placeCount !== 1 ? "x" : ""}</span> sur Afriatlas.
       </p>
     </div>
   );
@@ -343,7 +343,7 @@ const OwnerDashboardPage = () => {
         </div>
         <Link
           to="/owner/places"
-          className="bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold px-6 py-3 rounded-xl transition-colors flex items-center gap-2 text-sm"
+          className="bg-amber-500 hover:bg-amber-400 text-zinc-900 font-bold px-6 py-3 rounded-md transition-colors flex items-center gap-2 text-sm"
         >
           <Package className="h-4 w-4" />
           Enregistrer un lieu
@@ -391,7 +391,7 @@ const OwnerDashboardPage = () => {
 
       {/* Active claim summary */}
       {activeClaim && (
-        <div className="bg-zinc-900/60 border border-white/8 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center gap-5">
+        <div className="bg-zinc-900/60 border border-white/8 rounded-md p-6 flex flex-col sm:flex-row sm:items-center gap-5">
           <div className="flex-1">
             <p className="text-xs text-white/30 uppercase tracking-widest mb-1">Lieu sélectionné</p>
             <h3 className="text-lg font-bold text-white">{activeClaim.place_name}</h3>

@@ -112,7 +112,7 @@ export default function DeliveryForm({
       </div>
 
       {isAddingNew ? (
-        <form onSubmit={handleCreateAddress} className="bg-surface-alt p-6 rounded-3xl border border-border space-y-4 animate-in fade-in zoom-in-95 duration-200">
+        <form onSubmit={handleCreateAddress} className="bg-surface-alt p-6 rounded-md border border-border space-y-4 animate-in fade-in zoom-in-95 duration-200">
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2 md:col-span-1">
               <label className="text-xs font-bold uppercase text-muted-foreground mb-1 block">Libellé (ex: Bureau)</label>
@@ -120,7 +120,7 @@ export default function DeliveryForm({
                 required
                 value={formData.label}
                 onChange={e => setFormData({...formData, label: e.target.value})}
-                className="w-full bg-background border border-border rounded-xl px-4 py-2 focus:outline-none focus:border-primary"
+                className="w-full bg-background border border-border rounded-md px-4 py-2 focus:outline-none focus:border-primary"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -129,7 +129,7 @@ export default function DeliveryForm({
                  required
                  value={formData.recipient_name}
                  onChange={e => setFormData({...formData, recipient_name: e.target.value})}
-                 className="w-full bg-background border border-border rounded-xl px-4 py-2"
+                 className="w-full bg-background border border-border rounded-md px-4 py-2"
                />
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function DeliveryForm({
                placeholder="+228 XX XX XX XX"
                value={formData.recipient_phone}
                onChange={e => setFormData({...formData, recipient_phone: e.target.value})}
-               className="w-full bg-background border border-border rounded-xl px-4 py-2"
+               className="w-full bg-background border border-border rounded-md px-4 py-2"
              />
           </div>
 
@@ -156,7 +156,7 @@ export default function DeliveryForm({
                     setFormData({...formData, street_address: e.target.value});
                     setSearchQuery(e.target.value);
                   }}
-                  className="w-full bg-background border border-border rounded-xl px-4 py-2 pr-24"
+                  className="w-full bg-background border border-border rounded-md px-4 py-2 pr-24"
                 />
                 <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
                    {isSearching && <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />}
@@ -173,7 +173,7 @@ export default function DeliveryForm({
              </div>
 
              {searchResults.length > 0 && (
-               <div className="absolute z-50 w-full mt-1 bg-background border border-border rounded-2xl shadow-xl max-h-48 overflow-y-auto">
+               <div className="absolute z-50 w-full mt-1 bg-background border border-border rounded-md shadow-xl max-h-48 overflow-y-auto">
                  {searchResults.map((result) => (
                    <button
                      key={result.id}
@@ -196,14 +196,14 @@ export default function DeliveryForm({
              <button 
                type="button"
                onClick={() => setIsAddingNew(false)}
-               className="flex-1 py-3 font-bold border border-border rounded-2xl hover:bg-background transition-colors"
+               className="flex-1 py-3 font-bold border border-border rounded-md hover:bg-background transition-colors"
              >
                Annuler
              </button>
              <button 
                type="submit"
                disabled={isCreatingAddress}
-               className="flex-1 py-3 font-bold bg-primary text-white rounded-2xl hover:opacity-90 transition-opacity disabled:opacity-50"
+               className="flex-1 py-3 font-bold bg-primary text-white rounded-md hover:opacity-90 transition-opacity disabled:opacity-50"
              >
                {isCreatingAddress ? "Enregistrement..." : "Confirmer"}
              </button>
@@ -215,7 +215,7 @@ export default function DeliveryForm({
             <button
               key={addr.id}
               onClick={() => onAddressSelect(addr.id)}
-              className={`p-4 rounded-2xl border text-left transition-all ${
+              className={`p-4 rounded-md border text-left transition-all ${
                 selectedAddressId === addr.id 
                 ? "border-primary bg-primary/5 ring-1 ring-primary" 
                 : "border-border hover:border-muted-foreground bg-card"
@@ -238,7 +238,7 @@ export default function DeliveryForm({
           ))}
           
           {addresses.length === 0 && (
-             <div className="col-span-2 py-8 text-center bg-surface-alt rounded-3xl border border-dashed border-border">
+             <div className="col-span-2 py-8 text-center bg-surface-alt rounded-md border border-dashed border-border">
                 <p className="text-sm text-muted-foreground italic mb-4">Aucune adresse enregistrée.</p>
                 <button 
                   onClick={() => setIsAddingNew(true)}

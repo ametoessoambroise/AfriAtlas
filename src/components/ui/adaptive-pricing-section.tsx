@@ -47,7 +47,7 @@ const PricingComponent: React.FC<PricingComponentProps> = ({
       <div className="max-w-7xl mx-auto px-6 py-20">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-6xl font-light text-foreground mb-6">
+          <h1 className="text-5xl font-light text-foreground mb-6">
             {title}
           </h1>
           <p className="text-xl text-muted-foreground font-light">

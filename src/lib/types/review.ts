@@ -9,7 +9,7 @@
  * Review statistics for a destination.
  */
 export interface DestinationReviewsSummary {
-  destination_id: number;
+  destination_id: string;
   average_rating: number;
   total_reviews: number;
   rating_distribution: {
@@ -30,7 +30,7 @@ export interface PaginatedReviewsResponse {
  * Lightweight schema for listing reviews.
  */
 export interface ReviewListResponse {
-  id: number;
+  id: string;
   rating: number;
   comment?: string | null;
   created_at: string;
@@ -40,7 +40,7 @@ export interface ReviewListResponse {
  * Minimal user info for review display.
  */
 export interface ReviewUserInfo {
-  id: number;
+  id: string;
   fullname: string;
   avatar_url?: string | null;
 }
@@ -49,9 +49,9 @@ export interface ReviewUserInfo {
  */
 export interface ReviewCreate {
   /**
-   * ID of the destination being reviewed
+   * UUID of the destination being reviewed
    */
-  destination_id: number;
+  destination_id: string;
   /**
    * Rating from 1 to 5 stars
    */
@@ -72,9 +72,9 @@ export interface ReviewModerateRequest {
  * Schema for review response with user info.
  */
 export interface ReviewResponse {
-  id: number;
-  user_id: number;
-  destination_id: number;
+  id: string;
+  user_id: string;
+  destination_id: string;
   rating: number;
   comment?: string | null;
   created_at: string;

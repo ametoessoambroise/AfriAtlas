@@ -75,7 +75,7 @@ const AdPremiumSpotlight = ({ ad }: AdPremiumSpotlightProps) => {
             transition={{ delay: 0.2 }}
             className="flex items-center gap-2 mb-6"
           >
-            <div className="w-8 h-8 rounded-xl bg-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
+            <div className="w-8 h-8 rounded-md bg-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
               <Megaphone className="h-4 w-4 text-zinc-950" />
             </div>
             <span className="text-xs font-black uppercase tracking-[0.3em] text-amber-500">
@@ -107,7 +107,7 @@ const AdPremiumSpotlight = ({ ad }: AdPremiumSpotlightProps) => {
             transition={{ delay: 0.5 }}
             className="flex md:items-center gap-2 md:gap-4 justify-between items-center flex-wrap"
           >
-            <Button className="h-12 md:h-14 px-4 md:px-8 rounded-2xl bg-white text-zinc-950 font-black uppercase italic text-center tracking-tighter hover:bg-zinc-200 transition-all flex items-center gap-2 group-2">
+            <Button className="h-12 md:h-14 px-4 md:px-8 rounded-md bg-white text-zinc-950 font-black uppercase italic text-center tracking-tighter hover:bg-zinc-200 transition-all flex items-center gap-2 group-2">
               Découvrir l'offre
               <ArrowRight className="h-5 w-5 group-2-hover:translate-x-1 transition-transform" />
             </Button>

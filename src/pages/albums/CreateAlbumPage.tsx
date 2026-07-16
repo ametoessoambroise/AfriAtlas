@@ -6,6 +6,7 @@ import { useAlbumMutations } from "@/hooks/queries/useAlbums";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/utils/errorHandler";
 import type { AlbumCreate } from "@/lib/types/album";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 
 const CreateAlbumPage = () => {
   const navigate = useNavigate();
@@ -44,38 +45,40 @@ const CreateAlbumPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4 flex flex-col items-center">
-      <div className="w-full">
+    <DashboardLayout>
+      <div className="p-6 lg:p-8 space-y-6 animate-in fade-in duration-700">
         {/* Header */}
-        <div className="mb-10">
+        <div className="flex flex-col gap-4 mb-2">
           <button
             onClick={handleBack}
-            className="group flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6 font-bold text-xs uppercase tracking-widest"
+            className="group flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-bold text-xs uppercase tracking-widest w-fit"
           >
             <div className="w-8 h-8 rounded-full border border-border flex items-center justify-center group-hover:border-primary/50 transition-colors">
               <ChevronLeft className="w-4 h-4" />
             </div>
-            Retour
+            Retour aux albums
           </button>
 
-          <div className="flex items-center gap-4 mb-2">
-            <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-primary/10 rounded-md flex items-center justify-center shadow-sm">
               <Camera className="w-6 h-6 text-primary" />
             </div>
-            <h1 className="text-3xl font-black tracking-tight uppercase">
-              Nouvelle Aventure
-            </h1>
+            <div>
+              <h1 className="text-2xl font-black text-foreground tracking-tight uppercase">
+                Nouvelle <span className="text-primary">Aventure</span>
+              </h1>
+              <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest mt-1 opacity-70">
+                Créez un espace dédié pour vos souvenirs les plus précieux au Togo.
+              </p>
+            </div>
           </div>
-          <p className="text-muted-foreground">
-            Créez un espace dédié pour vos souvenirs les plus précieux au Togo.
-          </p>
         </div>
 
         {/* Form */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-neutral-900 rounded-[2.5rem] border border-border shadow-2xl p-8 md:p-12"
+          className="bg-card rounded-md border border-border shadow-sm p-8 md:p-12 animate-in slide-in-from-bottom-4 duration-500 delay-100"
         >
           <AlbumForm
             onSubmit={handleSubmit}
@@ -83,7 +86,7 @@ const CreateAlbumPage = () => {
           />
         </motion.div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "WorldAtlas API",
-    "description": "REST API for WorldAtlas travel platform",
+    "title": "Afriatlas API",
+    "description": "REST API for Afriatlas travel platform",
     "version": "1.0.0"
   },
   "paths": {

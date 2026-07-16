@@ -1,5 +1,5 @@
 /**
- * ANALYTICS API Client — WorldAtlas Travel
+ * ANALYTICS API Client — Afriatlas Travel
  * ===================================
  */
 

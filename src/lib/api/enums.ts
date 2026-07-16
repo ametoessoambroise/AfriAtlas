@@ -1,5 +1,5 @@
 /**
- * WorldAtlas API — Union Types (Enums OpenAPI)
+ * Afriatlas API — Union Types (Enums OpenAPI)
  * AUTO-GENERATED — Ne pas modifier manuellement.
  */
 

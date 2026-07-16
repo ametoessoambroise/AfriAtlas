@@ -38,7 +38,7 @@ const RoleGuard: React.FC<RoleGuardProps> = ({
   if (!allowedRoles.includes(userRole)) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-zinc-950 text-center">
-        <div className="w-20 h-20 rounded-3xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-6">
+        <div className="w-20 h-20 rounded-md bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-6">
           <ShieldAlert className="w-10 h-10 text-red-500" />
         </div>
         <h1 className="text-2xl font-bold text-white mb-2">

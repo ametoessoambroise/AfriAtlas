@@ -30,7 +30,7 @@ export function SectionError({
   return (
     <div className="space-y-4">
       {title && <h3 className="text-lg font-black">{title}</h3>}
-      <div className="bg-destructive/5 border border-destructive/20 p-6 rounded-2xl text-center">
+      <div className="bg-destructive/5 border border-destructive/20 p-6 rounded-md text-center">
         <AlertCircle className="w-8 h-8 text-destructive mx-auto mb-2" />
         <p className="text-sm text-muted-foreground mb-3">{errorMessage}</p>
         {onRetry && (

@@ -32,7 +32,7 @@ export default function HeroSection() {
             border: 0,
           }}
           allow="autoplay; fullscreen"
-          title="Vidéo d'accueil WorldAtlas Travel"
+          title="Vidéo d'accueil Afriatlas Travel"
         />
         {/* Overlay sombre + Fallback image si besoin */}
         <div className="absolute inset-0 bg-black/55" />
@@ -59,7 +59,7 @@ export default function HeroSection() {
         {/* Titre */}
         <motion.h1
           variants={fadeUp}
-          className="mb-6 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+          className="mb-6 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-5xl lg:text-5xl"
         >
           Le Togo comme{" "}
           <span className="relative inline-block">

@@ -11,14 +11,14 @@ const DECORATIVE_IMAGES = [
 
 const EmptyAlbums = () => {
   return (
-    <div className="relative min-h-[60vh] flex flex-col items-center justify-center p-8 text-center overflow-hidden rounded-[2.5rem] border border-dashed border-border ">
+    <div className="relative min-h-[60vh] flex flex-col items-center justify-center p-8 text-center overflow-hidden rounded-md border border-dashed border-border ">
       {/* Decorative background grid */}
       <div className="absolute inset-0 grid grid-cols-2 gap-4 opacity-[0.09] pointer-events-none scale-110 -rotate-2">
         {DECORATIVE_IMAGES.map((img, i) => (
           <img
             key={i}
             src={img}
-            className="w-full h-full object-cover rounded-3xl"
+            className="w-full h-full object-cover rounded-md"
             alt=""
           />
         ))}
@@ -30,7 +30,7 @@ const EmptyAlbums = () => {
         transition={{ duration: 0.6 }}
         className="relative z-10 max-w-lg"
       >
-        <div className="mx-auto w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mb-8 rotate-3">
+        <div className="mx-auto w-20 h-20 bg-primary/10 rounded-md flex items-center justify-center mb-8 rotate-3">
           <Camera className="w-10 h-10 text-primary" />
         </div>
 

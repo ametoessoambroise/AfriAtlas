@@ -48,7 +48,7 @@ export function EmptyState({ title, description, actionLabel, onAction, classNam
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-muted/30 px-6 py-16 text-center",
+        "flex flex-col items-center justify-center rounded-md border border-dashed border-border bg-muted/30 px-6 py-16 text-center",
         className,
       )}
       role="status"
@@ -77,7 +77,7 @@ export function DestinationGridSkeleton({ count = 6, className }: GridLoadingPro
   return (
     <div className={cn("grid gap-6 md:grid-cols-2 lg:grid-cols-3", className)} aria-busy="true" aria-label="Chargement">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="overflow-hidden rounded-2xl border border-border bg-card">
+        <div key={i} className="overflow-hidden rounded-md border border-border bg-card">
           <Skeleton className="h-52 w-full rounded-none" />
           <div className="space-y-3 p-5">
             <Skeleton className="h-5 w-3/4" />

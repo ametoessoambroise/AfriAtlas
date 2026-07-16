@@ -14,7 +14,7 @@ export function SessionSummary({ session, date, timeSlot, participants = 1 }: Se
   const total = price * participants;
 
   return (
-    <div className="bg-muted/30 border border-border rounded-3xl p-6 space-y-6 top-8 sticky">
+    <div className="bg-muted/30 border border-border rounded-md p-6 space-y-6 top-8 sticky">
       <h3 className="text-xl font-bold">Résumé de la Session</h3>
       
       <div className="space-y-4">

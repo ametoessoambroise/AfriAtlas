@@ -2,19 +2,19 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { reviewsApi } from "@/lib/api";
 import type { ReviewCreate, ReviewUpdate, ReviewModerateRequest } from "@/lib/types";
 
-export const useDestinationReviews = (destinationId: string, page: number = 1) => {
+export const useDestinationReviews = (slug: string, page: number = 1) => {
   return useQuery({
-    queryKey: ["reviews", "destination", destinationId, page],
-    queryFn: () => reviewsApi.getDestinationReviews(destinationId, { page }),
-    enabled: !!destinationId,
+    queryKey: ["reviews", "destination", slug, page],
+    queryFn: () => reviewsApi.getDestinationReviews(slug, { page }),
+    enabled: !!slug,
   });
 };
 
-export const useDestinationReviewsSummary = (destinationId: string) => {
+export const useDestinationReviewsSummary = (slug: string) => {
   return useQuery({
-    queryKey: ["reviews", "summary", destinationId],
-    queryFn: () => reviewsApi.getDestinationReviewsSummary(destinationId),
-    enabled: !!destinationId,
+    queryKey: ["reviews", "summary", slug],
+    queryFn: () => reviewsApi.getDestinationReviewsSummary(slug),
+    enabled: !!slug,
   });
 };
 

@@ -13,7 +13,7 @@ export function SkeletonCard({
   return (
     <div
       className={cn(
-        "w-full rounded-[2rem] bg-white/[0.03] border border-white/5 overflow-hidden animate-pulse",
+        "w-full rounded-md bg-white/[0.03] border border-white/5 overflow-hidden animate-pulse",
         className,
       )}
     >
@@ -48,7 +48,7 @@ export function SkeletonCard({
               <div key={i} className="h-3 w-3 bg-white/[0.02] rounded-full" />
             ))}
           </div>
-          <div className="h-6 bg-white/[0.05] rounded-xl w-16" />
+          <div className="h-6 bg-white/[0.05] rounded-md w-16" />
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function StatCardSkeleton() {
   return (
-    <div className="bg-card border border-border p-6 rounded-[32px] shadow-sm flex flex-col h-full">
+    <div className="bg-card border border-border p-6 rounded-md shadow-sm flex flex-col h-full">
       <div className="flex items-center justify-between mb-4">
         <Skeleton className="w-16 h-4 rounded" />
         <Skeleton className="w-9 h-9 rounded-full" />

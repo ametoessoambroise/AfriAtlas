@@ -78,7 +78,7 @@ export interface AlbumPlaceResponse {
   visited_at?: string | null;
   latitude?: string | null;
   longitude?: string | null;
-  added_at: string;
+  added_at?: string | null;
   place?: PlaceListResponse | null;
 }
 /**
@@ -148,13 +148,13 @@ export interface AlbumImageCreate {
   longitude?: string | null;
 }
 /**
- * Schema for updating an album image.
+ * Schema for updating an existing album image.
  */
 export interface AlbumImageUpdate {
   caption?: string | null;
   taken_at?: string | null;
-  latitude?: number | null;
-  longitude?: number | null;
+  latitude?: string | null;
+  longitude?: string | null;
 }
 /**
  * Schema for album list item.

@@ -30,19 +30,28 @@ export default function MenuCatalogLayout({
            <p className="text-muted-foreground mt-1 text-sm md:text-base">Commandez vos plats et boissons favoris.</p>
         </div>
         
-        <div className="flex flex-wrap items-center gap-2 bg-muted/30 p-2 rounded-2xl border border-border/50">
+        <div className="flex flex-wrap items-center gap-2 bg-muted/30 p-2 rounded-md border border-border/50" role="tablist" aria-label="Catégories du menu">
           {categories.map((c) => (
             <button
               key={c}
               type="button"
+              role="tab"
+              aria-selected={menuCat === c}
               onClick={() => setMenuCat(c)}
-              className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
+              className={`relative rounded-full px-5 py-2.5 text-sm font-semibold transition-all outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                 menuCat === c
-                  ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                  ? "text-primary-foreground"
                   : "text-muted-foreground hover:bg-surface-alt hover:text-foreground"
               }`}
             >
-              {c}
+              {menuCat === c && (
+                <motion.div
+                  layoutId="active-cat-menu"
+                  className="absolute inset-0 bg-primary rounded-full shadow-md shadow-primary/20"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <span className="relative z-10">{c}</span>
             </button>
           ))}
           <button
@@ -76,14 +85,14 @@ export default function MenuCatalogLayout({
             ))}
           </div>
           {items.length === 0 ? (
-             <div className="py-20 text-center flex flex-col items-center justify-center bg-surface-alt/50 rounded-3xl border border-dashed border-border/80">
+             <div className="py-20 text-center flex flex-col items-center justify-center bg-surface-alt/50 rounded-md border border-dashed border-border/80">
                 <p className="text-lg font-medium text-foreground">Menu non disponible.</p>
              </div>
           ) : null}
         </div>
         
         <aside className="hidden w-[340px] shrink-0 lg:block">
-          <div className="card-destination overflow-hidden sticky top-[100px] h-[calc(100vh-140px)] shadow-xl shadow-foreground/5 border border-border/60 rounded-3xl">
+          <div className="card-destination overflow-hidden sticky top-[100px] h-[calc(100vh-140px)] shadow-xl shadow-foreground/5 border border-border/60 rounded-md">
             <CartSidebar />
           </div>
         </aside>

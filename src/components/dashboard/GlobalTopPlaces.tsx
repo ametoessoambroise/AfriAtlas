@@ -12,7 +12,7 @@ export const GlobalTopPlaces = memo(
   ({ places, isLoading }: GlobalTopPlacesProps) => {
     if (isLoading) {
       return (
-        <div className="bg-card rounded-[32px] p-6 border border-border space-y-4 animate-pulse">
+        <div className="bg-card rounded-md p-6 border border-border space-y-4 animate-pulse">
           <div className="w-1/2 h-4 bg-muted rounded" />
           {Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="flex gap-4 items-center">
@@ -30,7 +30,7 @@ export const GlobalTopPlaces = memo(
     const items = places?.slice(0, 5) || [];
 
     return (
-      <div className="bg-card rounded-[32px] p-6 border border-border h-full shadow-sm hover:shadow-md transition-shadow">
+      <div className="bg-card rounded-md p-6 border border-border h-full shadow-sm hover:shadow-md transition-shadow">
         <div className="flex items-center justify-between mb-6">
           <p className="font-black text-foreground">Destinations en Vogue</p>
           <Link
@@ -73,7 +73,7 @@ export const GlobalTopPlaces = memo(
 
         <Link
           to="/explore"
-          className="w-full mt-6 py-3 rounded-2xl bg-muted text-xs font-black text-foreground hover:bg-border transition-all flex items-center justify-center gap-2"
+          className="w-full mt-6 py-3 rounded-md bg-muted text-xs font-black text-foreground hover:bg-border transition-all flex items-center justify-center gap-2"
         >
           Découvrir plus de lieux
         </Link>

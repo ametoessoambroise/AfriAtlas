@@ -24,6 +24,7 @@ import {
   useRemoveFamilyMember,
 } from "@/hooks/queries/useSubscription";
 import type { FamilyGroupMemberResponse } from "@/lib/types";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 
 // ─── Avatar ──────────────────────────────────────────────────────────────────
 function MemberAvatar({ member }: { member: FamilyGroupMemberResponse }) {
@@ -43,7 +44,7 @@ function MemberAvatar({ member }: { member: FamilyGroupMemberResponse }) {
     .join("")
     .toUpperCase();
   return (
-    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold ring-2 ring-white/10">
+    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-black ring-2 ring-white/10">
       {initials}
     </div>
   );
@@ -63,8 +64,8 @@ function FamilyMemberList({
   const { mutate: remove, isPending } = useRemoveFamilyMember();
 
   const roleInfo = (member: FamilyGroupMemberResponse) => {
-    if (member.id === ownerId) return { label: "Propriétaire", icon: <Crown className="h-3 w-3 text-amber-400" />, color: "text-amber-300 bg-amber-500/10 border-amber-500/30" };
-    return { label: "Membre", icon: <Shield className="h-3 w-3 text-indigo-400" />, color: "text-indigo-300 bg-indigo-500/10 border-indigo-500/30" };
+    if (member.id === ownerId) return { label: "Propriétaire", icon: <Crown className="h-3 w-3 text-amber-500" />, color: "text-amber-500 bg-amber-500/10 border-amber-500/20" };
+    return { label: "Membre", icon: <Shield className="h-3 w-3 text-primary" />, color: "text-primary bg-primary/10 border-primary/20" };
   };
 
   return (
@@ -76,26 +77,26 @@ function FamilyMemberList({
           return (
             <div
               key={m.id}
-              className="flex items-center gap-4 bg-white/5 hover:bg-white/8 border border-white/8 rounded-2xl p-4 transition-colors"
+              className="flex items-center gap-4 bg-card hover:bg-muted/10 border border-border rounded-md p-4 transition-all duration-300"
             >
               <MemberAvatar member={m} />
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-white truncate">{m.fullname}</p>
-                <p className="text-xs text-white/40 truncate">{m.email}</p>
+                <p className="font-bold text-foreground truncate uppercase tracking-tight">{m.fullname}</p>
+                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest truncate">{m.email}</p>
                 {m.joined_at && (
-                  <p className="text-xs text-white/30 flex items-center gap-1 mt-0.5">
+                  <p className="text-[10px] text-muted-foreground/60 flex items-center gap-1 mt-1 font-bold uppercase tracking-widest">
                     <Clock className="h-3 w-3" />
                     Rejoint le {new Date(m.joined_at).toLocaleDateString("fr-FR")}
                   </p>
                 )}
               </div>
-              <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border flex items-center gap-1.5 ${role.color}`}>
+              <span className={`text-[10px] font-black px-3 py-1 rounded-lg border flex items-center gap-1.5 uppercase tracking-widest ${role.color}`}>
                 {role.icon} {role.label}
               </span>
               {canRemove && (
                 <button
                   onClick={() => setConfirmId(m.id)}
-                  className="ml-2 w-8 h-8 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 flex items-center justify-center transition-colors"
+                  className="ml-2 w-9 h-9 rounded-md bg-destructive/5 hover:bg-destructive hover:text-white border border-destructive/10 text-destructive flex items-center justify-center transition-all"
                   title="Retirer du groupe"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
@@ -108,24 +109,25 @@ function FamilyMemberList({
 
       {/* Confirm remove dialog */}
       <Dialog open={!!confirmId} onOpenChange={() => setConfirmId(null)}>
-        <DialogContent className="bg-zinc-900 border-zinc-800 text-white max-w-sm">
+        <DialogContent className="rounded-md border-border bg-card shadow-2xl">
           <DialogHeader>
-            <DialogTitle>Retirer ce membre ?</DialogTitle>
-            <DialogDescription className="text-zinc-400">
+            <DialogTitle className="text-xl font-black uppercase tracking-tight">Retirer ce membre ?</DialogTitle>
+            <DialogDescription className="font-medium text-muted-foreground">
               Ce membre n'aura plus accès aux avantages du groupe familial.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="gap-2">
-            <Button variant="outline" onClick={() => setConfirmId(null)} className="border-zinc-700 text-zinc-300">
+          <DialogFooter className="gap-3 mt-4">
+            <Button variant="outline" onClick={() => setConfirmId(null)} className="rounded-md h-12 font-black uppercase tracking-widest text-xs">
               Annuler
             </Button>
             <Button
               variant="destructive"
               disabled={isPending}
               onClick={() => { if (confirmId) { remove(confirmId); setConfirmId(null); } }}
+              className="rounded-md h-12 font-black uppercase tracking-widest text-xs"
             >
               {isPending && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-              Retirer
+              Retirer le membre
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -147,37 +149,39 @@ function InviteMemberForm({ maxMembers, currentCount }: { maxMembers: number; cu
   };
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-white flex items-center gap-2">
-          <UserPlus className="h-5 w-5 text-indigo-400" />
+    <div className="bg-card border border-border rounded-md p-8 shadow-sm">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-sm font-black uppercase tracking-widest text-foreground flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+            <UserPlus className="h-4 w-4" />
+          </div>
           Inviter un membre
         </h3>
-        <span className="text-xs text-white/40">
+        <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground bg-muted/30 px-3 py-1 rounded-full">
           {currentCount} / {maxMembers} membres
         </span>
       </div>
       {isFull ? (
-        <p className="text-sm text-amber-300/80 bg-amber-500/10 border border-amber-500/20 rounded-xl px-4 py-3">
+        <p className="text-[11px] font-bold text-amber-600 bg-amber-500/5 border border-amber-500/10 rounded-md px-5 py-4 uppercase tracking-widest">
           Groupe complet. Upgradez votre plan pour ajouter plus de membres.
         </p>
       ) : (
-        <form onSubmit={handleSubmit} className="flex gap-3">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
             <Input
               type="email"
               placeholder="adresse@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-indigo-500/50"
+              className="pl-12 h-12 rounded-md bg-muted/10 border-border focus:ring-primary/20 font-bold text-sm"
             />
           </div>
           <Button
             type="submit"
             disabled={isPending || !email.trim()}
-            className="bg-indigo-600 hover:bg-indigo-500 text-white px-5"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground h-12 px-8 rounded-md font-black uppercase tracking-widest text-xs shadow-lg shadow-primary/20 transition-all"
           >
             {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
             Inviter
@@ -200,12 +204,12 @@ function FamilyCreateForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto text-center">
-      <div className="w-20 h-20 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-6">
-        <Users className="h-9 w-9 text-indigo-400" />
+    <div className="max-w-md mx-auto text-center py-12">
+      <div className="w-20 h-20 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-8 shadow-sm">
+        <Users className="h-10 w-10 text-primary" />
       </div>
-      <h2 className="text-2xl font-bold text-white mb-2">Créer votre groupe familial</h2>
-      <p className="text-white/40 text-sm mb-8 leading-relaxed">
+      <h2 className="text-3xl font-black text-foreground tracking-tight uppercase mb-3">Groupe <span className="text-primary">Familial</span></h2>
+      <p className="text-muted-foreground font-medium mb-10 leading-relaxed">
         Donnez un nom à votre groupe et commencez à inviter vos proches à partager l'aventure.
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -215,15 +219,15 @@ function FamilyCreateForm() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-indigo-500/50 text-center"
+          className="h-14 rounded-md bg-card border-border text-center font-bold text-lg focus:ring-primary/20 shadow-sm"
         />
         <Button
           type="submit"
           disabled={isPending || !name.trim()}
-          className="bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 text-white py-5 font-semibold"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground h-14 rounded-md font-black uppercase tracking-widest text-xs shadow-xl shadow-primary/20 transition-all"
         >
           {isPending && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-          <Plus className="h-4 w-4 mr-2" />
+          <Plus className="h-5 w-5 mr-2" />
           Créer le groupe
         </Button>
       </form>
@@ -242,109 +246,110 @@ const FamilyPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-zinc-950 pt-28 pb-20 px-6">
-        <div className="max-w-2xl mx-auto space-y-4">
-          <Skeleton className="h-12 w-2/3 bg-white/5 rounded-xl" />
-          <Skeleton className="h-48 w-full bg-white/5 rounded-2xl" />
-          <Skeleton className="h-24 w-full bg-white/5 rounded-2xl" />
+      <DashboardLayout>
+        <div className="p-6 lg:p-8 space-y-6">
+          <Skeleton className="h-10 w-48 rounded-md" />
+          <Skeleton className="h-48 w-full rounded-md" />
+          <Skeleton className="h-64 w-full rounded-md" />
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-zinc-950 pt-28 pb-32 overflow-hidden">
-      {/* Bg deco */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-indigo-800/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[300px] bg-violet-800/8 rounded-full blur-[100px]" />
-      </div>
+    <DashboardLayout>
+      <div className="p-6 lg:p-8 space-y-6 animate-in fade-in duration-700">
+        {/* Header */}
+        <div className="flex flex-col gap-4 mb-2">
+          <div className="flex items-center gap-2 text-muted-foreground text-[10px] font-black uppercase tracking-widest">
+            <Link to="/pricing" className="hover:text-primary transition-colors flex items-center gap-1">
+               Abonnement
+            </Link>
+            <ChevronRight className="h-3 w-3" />
+            <span className="text-foreground">Groupe Famille</span>
+          </div>
 
-      <div className="relative max-w-2xl mx-auto px-6">
-
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-white/30 text-sm mb-10">
-          <Link to="/subscription" className="hover:text-white/60 transition-colors flex items-center gap-1">
-            <Home className="h-3.5 w-3.5" /> Abonnement
-          </Link>
-          <ChevronRight className="h-3.5 w-3.5" />
-          <span className="text-white/60">Groupe Famille</span>
+          <h1 className="text-2xl font-black text-foreground tracking-tight uppercase">
+            Groupe <span className="text-primary">Famille</span>
+          </h1>
         </div>
 
-        {/* No family plan gating */}
-        {!hasFamilyPlan ? (
-          <div className="text-center py-20">
-            <div className="w-20 h-20 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-6">
-              <Users className="h-9 w-9 text-indigo-400" />
-            </div>
-            <h2 className="text-2xl font-bold text-white mb-3">Plan Famille requis</h2>
-            <p className="text-white/40 text-sm mb-8 max-w-sm mx-auto leading-relaxed">
-              Le groupe familial est disponible uniquement avec le plan Famille. Upgradez pour inviter jusqu'à 5 membres.
-            </p>
-            <Link to="/subscription">
-              <Button className="bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 text-white px-8 py-5 font-semibold">
-                Voir les plans <ChevronRight className="h-4 w-4 ml-1" />
-              </Button>
-            </Link>
-          </div>
-        ) : /* API error other than 404 */ isError && (error as any)?.status !== 404 ? (
-          <div className="text-center py-16 text-white/50 flex flex-col items-center gap-3">
-            <AlertTriangle className="h-10 w-10 text-red-400" />
-            <p>Erreur lors du chargement du groupe. Réessayez.</p>
-          </div>
-        ) : /* No group yet → create form */ !group ? (
-          <FamilyCreateForm />
-        ) : (
-          /* Group exists */
-          <>
-            {/* Group header */}
-            <div className="bg-gradient-to-br from-indigo-900/40 to-violet-950/60 border border-indigo-700/30 rounded-2xl p-6 mb-6 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center">
-                  <Users className="h-6 w-6 text-indigo-400" />
+        <div className="animate-in slide-in-from-bottom-4 duration-500 delay-100 max-w-4xl">
+            {/* No family plan gating */}
+            {!hasFamilyPlan ? (
+              <div className="text-center py-20 bg-card border border-border rounded-md shadow-sm px-6">
+                <div className="w-20 h-20 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-8 shadow-sm">
+                  <Users className="h-10 w-10 text-primary" />
                 </div>
-                <div>
-                  <h1 className="text-xl font-bold text-white">{group.name}</h1>
-                  <p className="text-sm text-white/40">
-                    {group.member_count} membres · Créé le {new Date(group.created_at).toLocaleDateString("fr-FR")}
-                  </p>
+                <h2 className="text-2xl font-black uppercase tracking-tight mb-4">Plan Famille requis</h2>
+                <p className="text-muted-foreground font-medium mb-10 max-w-sm mx-auto leading-relaxed">
+                  Le groupe familial est disponible uniquement avec le plan Famille. Upgradez pour inviter jusqu'à 5 membres.
+                </p>
+                <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground h-14 rounded-md font-black uppercase tracking-widest text-xs shadow-xl shadow-primary/20 transition-all px-10">
+                  <Link to="/pricing">
+                    Voir les plans <ChevronRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </Button>
+              </div>
+            ) : isError && (error as any)?.status !== 404 ? (
+              <div className="text-center py-20 bg-destructive/5 border border-destructive/10 rounded-md flex flex-col items-center gap-4">
+                <AlertTriangle className="h-12 w-12 text-destructive" />
+                <p className="font-black uppercase tracking-widest text-xs text-destructive">Erreur lors du chargement du groupe. Réessayez.</p>
+              </div>
+            ) : !group ? (
+              <FamilyCreateForm />
+            ) : (
+              /* Group exists */
+              <div className="space-y-6">
+                {/* Group header card */}
+                <div className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-md p-8 flex items-center justify-between shadow-sm">
+                  <div className="flex items-center gap-6">
+                    <div className="w-14 h-14 rounded-md bg-primary text-primary-foreground flex items-center justify-center shadow-lg shadow-primary/20">
+                      <Users className="h-7 w-7" />
+                    </div>
+                    <div>
+                      <h1 className="text-2xl font-black uppercase tracking-tight text-foreground">{group.name}</h1>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mt-1 opacity-70">
+                        {group.member_count} membres · Créé le {new Date(group.created_at).toLocaleDateString("fr-FR")}
+                      </p>
+                    </div>
+                  </div>
+                  <Badge className="bg-primary text-primary-foreground border-none rounded-lg px-3 py-1.5 text-[10px] font-black uppercase tracking-widest">
+                    {group.is_active ? "Actif" : "Inactif"}
+                  </Badge>
+                </div>
+
+                {/* Invite form */}
+                <InviteMemberForm
+                  maxMembers={(group.subscription_plan as any)?.max_family_members ?? 5}
+                  currentCount={group.member_count}
+                />
+
+                {/* Members list */}
+                <div className="bg-card border border-border rounded-md p-8 shadow-sm">
+                  <h3 className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground mb-6 flex items-center gap-2">
+                    <Users className="h-4 w-4" />
+                    Membres du groupe
+                  </h3>
+                  <FamilyMemberList
+                    members={group.members}
+                    ownerId={(group.owner as any)?.id ?? ""}
+                    currentUserId={currentUserId}
+                  />
+                </div>
+
+                {/* Leave group */}
+                <div className="pt-6 text-center">
+                  <button className="text-[10px] font-black uppercase tracking-widest text-destructive/60 hover:text-destructive underline underline-offset-4 transition-all flex items-center gap-2 mx-auto">
+                    <LogOut className="h-3.5 w-3.5" />
+                    Quitter le groupe familial
+                  </button>
                 </div>
               </div>
-              <Badge className="bg-indigo-500/20 text-indigo-300 border-indigo-500/40 text-xs">
-                {group.is_active ? "Actif" : "Inactif"}
-              </Badge>
-            </div>
-
-            {/* Invite form */}
-            <InviteMemberForm
-              maxMembers={(group.subscription_plan as any)?.max_family_members ?? 5}
-              currentCount={group.member_count}
-            />
-
-            {/* Members list */}
-            <div className="mt-6">
-              <h3 className="font-semibold text-white mb-4 flex items-center gap-2">
-                <Users className="h-4 w-4 text-white/40" />
-                Membres du groupe
-              </h3>
-              <FamilyMemberList
-                members={group.members}
-                ownerId={(group.owner as any)?.id ?? ""}
-                currentUserId={currentUserId}
-              />
-            </div>
-
-            {/* Leave group */}
-            <div className="mt-10 border-t border-white/5 pt-8 text-center">
-              <button className="text-sm text-red-400/60 hover:text-red-400 underline underline-offset-2 transition-colors flex items-center gap-2 mx-auto">
-                <LogOut className="h-4 w-4" />
-                Quitter le groupe familial
-              </button>
-            </div>
-          </>
-        )}
+            )}
+        </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

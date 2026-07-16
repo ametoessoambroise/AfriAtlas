@@ -99,7 +99,7 @@ interface NotFoundProps {
 export default function NotFound({
   postcardImage = "https://images.unsplash.com/photo-1575986767340-5d17ae767ab0?w=800&q=80",
   postcardAlt = "Lomé, Togo — Vue du bord de mer",
-  curvedTextTop = "WorldAtlas Travel",
+  curvedTextTop = "Afriatlas Travel",
   curvedTextBottom = "Lomé • Togo",
   heading = "(404) Cette page s'est perdue quelque part au Togo.",
   subtext = "Pas de panique — même les meilleurs explorateurs font des détours. Revenez à l'accueil et reprenez la route.",

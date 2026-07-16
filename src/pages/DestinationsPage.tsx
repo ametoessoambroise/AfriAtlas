@@ -90,7 +90,7 @@ const DestinationsPage = () => {
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-[0.2em] text-white uppercase rounded-full bg-white/10 backdrop-blur-md border border-white/20">
               Découvrez le meilleur du Togo
             </span>
-            <h1 className="text-5xl md:text-7xl font-heading font-bold text-white mb-6 leading-[1.1]">
+            <h1 className="text-3xl md:text-5xl lg:text-5xl font-heading font-bold text-white mb-6 leading-[1.1]">
               Toutes les
               <br />
               <span className="text-secondary">destinations</span>
@@ -123,7 +123,7 @@ const DestinationsPage = () => {
         <div className="container px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
           <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">
                 Destinations populaires
               </h2>
               <div className="h-1 w-20 bg-secondary mt-3 rounded-full" />

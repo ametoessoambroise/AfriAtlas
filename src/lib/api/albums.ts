@@ -1,5 +1,5 @@
 /**
- * ALBUMS API Client — WorldAtlas Travel
+ * ALBUMS API Client — Afriatlas Travel
  * ================================
  * AUTO-GENERATED — Ne pas modifier manuellement.
  * Source    : openapi.json (Pydantic schemas FastAPI)

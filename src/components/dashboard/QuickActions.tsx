@@ -39,7 +39,7 @@ export const QuickActions = memo(() => {
   ];
 
   return (
-    <div className="bg-card rounded-[32px] p-6 border border-border h-full shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-card rounded-md p-6 border border-border h-full shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between mb-6">
         <p className="font-black text-foreground">Services Rapides</p>
         <button className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:scale-110 transition-transform">
@@ -55,7 +55,7 @@ export const QuickActions = memo(() => {
             className="flex items-center justify-between group focus:outline-none"
           >
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-2xl bg-muted border border-border flex items-center justify-center text-muted-foreground group-hover:bg-primary/5 group-hover:text-primary transition-all">
+              <div className="w-10 h-10 rounded-md bg-muted border border-border flex items-center justify-center text-muted-foreground group-hover:bg-primary/5 group-hover:text-primary transition-all">
                 {act.icon}
               </div>
               <div className="min-w-0">
@@ -72,11 +72,11 @@ export const QuickActions = memo(() => {
         ))}
       </div>
 
-      <div className="mt-8 p-4 bg-muted rounded-2xl border border-border">
+      <div className="mt-8 p-4 bg-muted rounded-md border border-border">
         <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-2 text-center">
           Besoin d'un itinéraire ?
         </p>
-        <button className="w-full py-2 bg-primary text-primary-foreground rounded-xl text-xs font-black shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all">
+        <button className="w-full py-2 bg-primary text-primary-foreground rounded-md text-xs font-black shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all">
           Générer un trajet
         </button>
       </div>

@@ -7,7 +7,7 @@ import type {
 import type { Destination, DestinationUiType } from "@/lib/models/ui";
 import { resolveImageUrl } from "@/lib/utils/imageUrl";
 
-export const PLACEHOLDER_IMAGE = "/placeholder.svg";
+export const PLACEHOLDER_IMAGE = "/placeholder.png";
 
 const TOGO_CENTER = { lat: 8.6195, lng: 0.8248 };
 

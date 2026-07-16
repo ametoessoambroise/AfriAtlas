@@ -75,7 +75,7 @@ export function OwnerDetailPanel({
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="bg-zinc-950 border-white/5 text-white w-full sm:max-w-md overflow-y-auto custom-scrollbar">
         <SheetHeader className="text-left space-y-4">
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center w-fit mx-auto mb-2 shadow-2xl shadow-amber-500/10">
+          <div className="p-4 rounded-md bg-white/5 border border-white/5 flex items-center justify-center w-fit mx-auto mb-2 shadow-2xl shadow-amber-500/10">
             <User className="h-8 w-8 text-amber-500" />
           </div>
           <div className="text-center">
@@ -88,7 +88,7 @@ export function OwnerDetailPanel({
           </div>
 
           <div className="grid grid-cols-2 gap-3 pb-4">
-            <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-center">
+            <div className="p-3 rounded-md bg-white/5 border border-white/5 text-center">
               <div className="text-xl font-bold text-white">
                 {summary?.total_transactions ?? 0}
               </div>
@@ -96,7 +96,7 @@ export function OwnerDetailPanel({
                 Transactions
               </div>
             </div>
-            <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-center">
+            <div className="p-3 rounded-md bg-white/5 border border-white/5 text-center">
               <div className="text-xl font-bold text-white">
                 {summary?.pending_count ?? 0}
               </div>
@@ -118,7 +118,7 @@ export function OwnerDetailPanel({
               {stats.map((stat, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] border border-white/5 group hover:bg-white/5 transition-colors"
+                  className="flex items-center justify-between p-4 rounded-md bg-white/[0.02] border border-white/5 group hover:bg-white/5 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-lg bg-zinc-900 border border-white/5 group-hover:border-white/10">
@@ -141,7 +141,7 @@ export function OwnerDetailPanel({
               <Building2 className="h-3 w-3" /> Répartition par Activité
             </h3>
             <div className="grid grid-cols-1 gap-3">
-              <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-transparent border-l-2 border-emerald-500">
+              <div className="flex items-center justify-between p-3 rounded-md bg-gradient-to-r from-emerald-500/10 to-transparent border-l-2 border-emerald-500">
                 <div className="flex items-center gap-3">
                   <Calendar className="h-4 w-4 text-emerald-400" />
                   <div>
@@ -158,7 +158,7 @@ export function OwnerDetailPanel({
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-blue-500/10 to-transparent border-l-2 border-blue-500">
+              <div className="flex items-center justify-between p-3 rounded-md bg-gradient-to-r from-blue-500/10 to-transparent border-l-2 border-blue-500">
                 <div className="flex items-center gap-3">
                   <ShoppingBag className="h-4 w-4 text-blue-400" />
                   <div>
@@ -181,7 +181,7 @@ export function OwnerDetailPanel({
         <div className="mt-10 mb-6">
           <Button
             variant="outline"
-            className="w-full bg-white/5 border-white/10 text-white hover:bg-white/10 group rounded-xl py-6 underline-offset-4 hover:underline"
+            className="w-full bg-white/5 border-white/10 text-white hover:bg-white/10 group rounded-md py-6 underline-offset-4 hover:underline"
           >
             Voir Historique Complet{" "}
             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

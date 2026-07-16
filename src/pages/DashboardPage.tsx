@@ -11,15 +11,12 @@ import { DashboardAnalytics } from "@/components/dashboard/DashboardAnalytics";
 import { NextBookingCard } from "@/components/dashboard/NextBookingCard";
 import { SubscriptionGauge } from "@/components/dashboard/SubscriptionGauge";
 import DashboardSkeleton from "@/components/dashboard/skeletons/DashboardSkeleton";
-import {
-  AlertCircle,
-  Plus,
-  RefreshCcw,
-  RefreshCw,
-} from "lucide-react";
+import { AlertCircle, Plus, RefreshCcw, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const {
     dashboard,
     orders,
@@ -49,7 +46,7 @@ export default function DashboardPage() {
           <Button
             onClick={() => refetch()}
             variant="outline"
-            className="rounded-xl"
+            className="rounded-md"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Réessayer
@@ -65,28 +62,26 @@ export default function DashboardPage() {
     <DashboardLayout>
       <div className="p-6 lg:p-8 space-y-6 animate-in fade-in duration-700">
         {/* ── PAGE HEADER ─────────────────────────────────────────────────── */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-2">
           <div>
-            <h1 className="text-2xl font-black text-primary font-premium">
-              Mes voyages
+            <h1 className="text-2xl font-black text-foreground tracking-tight uppercase">
+              Vue d'ensemble <span className="text-primary">Voyageur</span>
             </h1>
-            <p className="text-muted-foreground text-sm font-medium mt-0.5">
-              Voyagez à travers le monde et gardez une trace de vos aventures.
+            <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest mt-1 opacity-70">
+              Baromètre de vos aventures et réservations.
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <button className="flex items-center hover:bg-primary/90 transition-all gap-2 px-4 py-2.5 rounded-xl border border-border bg-primary text-primary-foreground text-sm font-bold sm:text-xs lg:text-base shadow-sm">
+            <button 
+              onClick={() => navigate("/tripplanification")}
+              className="flex items-center hover:bg-primary/90 transition-all gap-2 px-4 py-2.5 rounded-lg border border-border bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/10"
+            >
               <Plus className="w-4 h-4" /> Planifier
-              <span className="sm:block hidden">un voyage</span>
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm font-bold hover:bg-muted transition-all sm:text-xs lg:text-base">
-              <RefreshCcw className="w-4 h-4" /> Synchroniser
-              <span className="sm:block hidden">les réservations</span>
             </button>
           </div>
         </div>
 
-        {/* ── ROW 1 : Stats (4 cards full width) ──────────────────────────── */}
+        {/* Metric Cards (Row 1) */}
         <div className="animate-in slide-in-from-bottom-4 duration-500 delay-100">
           <StatsRow
             isLoading={isLoading && !dashboard}
@@ -103,72 +98,37 @@ export default function DashboardPage() {
           />
         </div>
 
-        {/* ── ROW 2 : Analytics + Reminders/Booking + Trips/GlobalPlaces ───── */}
-        {/*
-            Layout image :
-              - col gauche large  : Weekly Bookings (graphe)      → 5/12
-              - col centre        : Reminders (next booking)       → 4/12
-              - col droite étroite: Trips list (global top places) → 3/12
-        */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 animate-in slide-in-from-bottom-4 duration-500 delay-200">
-          {/* Weekly Bookings */}
-          <div className="lg:col-span-5">
-            <DashboardAnalytics
+        {/* Middle Row (Analytics + Budget/Gauge) */}
+        <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6 animate-in slide-in-from-bottom-4 duration-500 delay-200">
+           <DashboardAnalytics
               ordersCount={orders.length}
               bookingsCount={bookings.length}
             />
-          </div>
+            <SubscriptionGauge status={dashboard?.user?.subscription_status} />
+        </div>
 
-          {/* Reminders / Next Booking */}
-          <div className="lg:col-span-4">
+        {/* Bottom Row (Orders + Fulfillment/NextBooking) */}
+        <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6 animate-in slide-in-from-bottom-4 duration-500 delay-300">
+           <RecentOrders
+              orders={orders}
+              isLoading={isLoading && orders.length === 0}
+            />
             <NextBookingCard
               booking={bookings[0]}
               isLoading={isLoading && bookings.length === 0}
             />
-          </div>
-
-          {/* Trips / Top Places */}
-          <div className="lg:col-span-3">
-            <GlobalTopPlaces
-              places={topPlaces}
-              isLoading={isLoading && topPlaces.length === 0}
-            />
-          </div>
         </div>
 
-        {/* ── ROW 3 : Companions + Completion gauge + Quick Actions ─────────── */}
-        {/*
-            Layout image :
-              - col gauche        : Travel Companions (favorites)  → 5/12
-              - col centre        : Travel Completion (gauge)      → 4/12
-              - col droite        : Trip Starts In / Quick Actions → 3/12
-        */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 animate-in slide-in-from-bottom-4 duration-500 delay-300">
-          {/* Travel Companions */}
-          <div className="lg:col-span-5">
+        {/* Extra Row for Favorites/Top Places if needed, or remove to match new design strictly */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in slide-in-from-bottom-4 duration-500 delay-400">
             <RecentFavorites
               favorites={favorites}
               isLoading={isLoading && favorites.length === 0}
             />
-          </div>
-
-          {/* Travel Completion gauge */}
-          <div className="lg:col-span-4">
-            <SubscriptionGauge status={dashboard?.user?.subscription_status} />
-          </div>
-
-          {/* Quick Actions / Trip countdown */}
-          <div className="lg:col-span-3">
-            <QuickActions />
-          </div>
-        </div>
-
-        {/* ── ROW 4 : Recent Orders (full width) ──────────────────────────── */}
-        <div className="animate-in slide-in-from-bottom-4 duration-500 delay-400">
-          <RecentOrders
-            orders={orders}
-            isLoading={isLoading && orders.length === 0}
-          />
+            <GlobalTopPlaces
+              places={topPlaces}
+              isLoading={isLoading && topPlaces.length === 0}
+            />
         </div>
       </div>
     </DashboardLayout>

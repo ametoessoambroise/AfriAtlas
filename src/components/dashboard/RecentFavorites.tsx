@@ -13,11 +13,11 @@ export const RecentFavorites = memo(
   ({ favorites, isLoading }: RecentFavoritesProps) => {
     if (isLoading) {
       return (
-        <div className="bg-card rounded-[32px] p-6 border border-border space-y-4 animate-pulse">
+        <div className="bg-card rounded-md p-6 border border-border space-y-4 animate-pulse">
           <div className="w-1/2 h-4 bg-muted rounded" />
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="flex gap-3 items-center">
-              <div className="w-10 h-10 bg-muted rounded-xl" />
+              <div className="w-10 h-10 bg-muted rounded-md" />
               <div className="flex-1 space-y-2">
                 <div className="w-full h-3 bg-muted rounded" />
                 <div className="w-1/2 h-2 bg-muted rounded" />
@@ -31,7 +31,7 @@ export const RecentFavorites = memo(
     const items = favorites?.slice(0, 4) || [];
 
     return (
-      <div className="bg-card rounded-[32px] p-6 border border-border h-full shadow-sm hover:shadow-md transition-shadow">
+      <div className="bg-card rounded-md p-6 border border-border h-full shadow-sm hover:shadow-md transition-shadow">
         <div className="flex items-center justify-between mb-6">
           <p className="font-black text-foreground">Favoris Récents</p>
           <Link
@@ -50,7 +50,7 @@ export const RecentFavorites = memo(
                 to={`/places/${place.slug}`}
                 className="flex items-center gap-4 group focus:outline-none"
               >
-                <div className="w-12 h-12 rounded-2xl bg-muted border border-border flex items-center justify-center text-xl shadow-sm group-hover:scale-110 transition-transform overflow-hidden">
+                <div className="w-12 h-12 rounded-md bg-muted border border-border flex items-center justify-center text-xl shadow-sm group-hover:scale-110 transition-transform overflow-hidden">
                   <img
                     src={place.primary_image?.url || "/placeholder.jpg"}
                     alt={place.name}
@@ -85,7 +85,7 @@ export const RecentFavorites = memo(
 
         <Link
           to="/favorites"
-          className="w-full mt-8 py-3 rounded-2xl border border-border text-xs font-black text-foreground hover:bg-muted transition-all flex items-center justify-center gap-2"
+          className="w-full mt-8 py-3 rounded-md border border-border text-xs font-black text-foreground hover:bg-muted transition-all flex items-center justify-center gap-2"
         >
           Voir tous mes favoris
         </Link>

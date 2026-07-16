@@ -67,7 +67,7 @@ export function ImageUploadZone({
       <div
         {...getRootProps()}
         className={cn(
-          "relative border-2 border-dashed rounded-2xl p-8 transition-all cursor-pointer flex flex-col items-center justify-center text-center outline-none",
+          "relative border-2 border-dashed rounded-md p-8 transition-all cursor-pointer flex flex-col items-center justify-center text-center outline-none",
           isDragActive
             ? "border-primary bg-primary/5 scale-[0.99]"
             : "border-white/10 bg-white/[0.02] hover:bg-white/5 hover:border-white/20",
@@ -104,7 +104,7 @@ export function ImageUploadZone({
       {previews.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
           {previews.map((file, idx) => (
-            <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-white/10 group">
+            <div key={idx} className="relative aspect-square rounded-md overflow-hidden border border-white/10 group">
               <img
                 src={file.preview}
                 alt={`Preview ${idx}`}

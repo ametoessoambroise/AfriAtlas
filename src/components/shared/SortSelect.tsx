@@ -31,7 +31,7 @@ export function SortSelect({
   return (
     <div className={className}>
       <Select value={value} onValueChange={onValueChange}>
-        <SelectTrigger className="w-[200px] bg-zinc-950/50 border-white/10 text-white rounded-xl h-10 focus:ring-primary/20">
+        <SelectTrigger className="w-[200px] bg-zinc-950/50 border-white/10 text-white rounded-md h-10 focus:ring-primary/20">
           <div className="flex items-center gap-2">
             <ListFilter className="h-4 w-4 text-white/40" />
             <SelectValue placeholder={placeholder} />

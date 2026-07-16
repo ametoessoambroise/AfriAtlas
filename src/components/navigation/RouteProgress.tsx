@@ -11,7 +11,7 @@ export default function RouteProgress({ initialDistance, currentDistance }: Rout
   const percentage = Math.round(ratio * 100);
 
   return (
-    <div className="bg-card w-full p-3 rounded-xl border border-border/50 shadow-sm">
+    <div className="bg-card w-full p-3 rounded-md border border-border/50 shadow-sm">
       <div className="flex justify-between items-center mb-1.5">
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Progression</span>
         <span className="text-xs font-black text-primary">{percentage}%</span>

@@ -51,7 +51,7 @@ const AdNativeCard = ({ ad }: AdNativeCardProps) => {
     >
       <div
         className={cn(
-          "card-destination relative block h-full overflow-hidden rounded-2xl border",
+          "card-destination relative block h-full overflow-hidden rounded-md border",
           "border-amber-500/30 shadow-[0_0_30px_rgba(245,158,11,0.15)]",
           "bg-gradient-to-br from-card to-amber-950/5 group flex flex-col sm:flex-row",
         )}

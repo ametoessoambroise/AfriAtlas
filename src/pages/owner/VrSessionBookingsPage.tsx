@@ -90,22 +90,22 @@ export default function VrSessionBookingsPage() {
 
       {/* Session Quick Info */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-4">
+        <div className="bg-zinc-900/40 border border-white/5 rounded-md p-4">
           <div className="text-white/40 text-xs uppercase mb-1">Participants Totaux</div>
           <div className="text-2xl font-bold text-white flex items-center gap-2">
             <Users className="h-5 w-5 text-blue-400" />
             {bookings?.reduce((acc, b) => acc + b.num_participants, 0) || 0} / {session?.max_participants}
           </div>
         </div>
-        <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-4">
+        <div className="bg-zinc-900/40 border border-white/5 rounded-md p-4">
           <div className="text-white/40 text-xs uppercase mb-1">Prix Unitaire</div>
           <div className="text-2xl font-bold text-white">{session?.price} {session?.currency}</div>
         </div>
-        <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-4">
+        <div className="bg-zinc-900/40 border border-white/5 rounded-md p-4">
           <div className="text-white/40 text-xs uppercase mb-1">Type de Session</div>
           <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20 mt-1">Statique / 360°</Badge>
         </div>
-        <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-4 flex items-center justify-center">
+        <div className="bg-zinc-900/40 border border-white/5 rounded-md p-4 flex items-center justify-center">
           <Button onClick={handleExport} className="w-full bg-white/5 border border-white/10 hover:bg-white/10 text-white">
             <Download className="h-4 w-4 mr-2" /> Exporter Liste
           </Button>
@@ -113,7 +113,7 @@ export default function VrSessionBookingsPage() {
       </div>
 
       {/* Bookings Table */}
-      <div className="bg-zinc-900/50 border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+      <div className="bg-zinc-900/50 border border-white/10 rounded-md overflow-hidden shadow-2xl">
         <div className="p-6 border-b border-white/10 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-white">Liste des Réservations</h2>
           <div className="text-xs text-white/40 tracking-wider">

@@ -20,7 +20,7 @@ export default function ConfirmationPage() {
     queryKey: ["delivery", "last"],
     queryFn: () => deliveryApi.listAddresses().then(() => {
        // Simulation: On récupère les livraisons (le snippet backend ne montrait pas listDeliveries mais je l'ai ajouté dans le client)
-       // @ts-ignore - Mocking list logic if needed
+       //TODO: @ts-ignore - Mocking list logic if needed
        return { tracking_number: "ATL-" + Math.random().toString(36).substr(2, 9).toUpperCase() };
     }),
     enabled: !!orderId,
@@ -32,10 +32,10 @@ export default function ConfirmationPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-20">
-      <div className="bg-card rounded-[3rem] border border-border shadow-xl overflow-hidden">
+      <div className="bg-card rounded-md border border-border shadow-xl overflow-hidden">
         {/* Header Succès */}
         <div className="bg-primary p-12 text-center text-white">
-          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="w-10 h-10" />
           </div>
           <h1 className="text-4xl font-black mb-2">Merci pour votre confiance !</h1>
@@ -45,7 +45,7 @@ export default function ConfirmationPage() {
         <div className="p-8 md:p-12 space-y-12">
           {/* Section Suivi */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-surface-alt p-6 rounded-3xl border border-border">
+            <div className="bg-surface-alt p-6 rounded-md border border-border">
               <div className="flex items-center gap-3 mb-4">
                 <Package className="w-5 h-5 text-primary" />
                 <h3 className="font-bold">Livraison Togo Express</h3>
@@ -53,7 +53,7 @@ export default function ConfirmationPage() {
               <p className="text-xs text-muted-foreground mb-4 font-medium leading-relaxed">
                 Votre colis sera expédié vers votre adresse de livraison. Suivez son trajet en temps réel.
               </p>
-              <div className="bg-background p-4 rounded-2xl border border-border">
+              <div className="bg-background p-4 rounded-md border border-border">
                  <span className="text-[10px] font-bold uppercase text-muted-foreground block mb-1">N° de suivi</span>
                  <span className="text-lg font-black tracking-widest text-primary">
                    {deliveryQuery.data?.tracking_number}
@@ -62,7 +62,7 @@ export default function ConfirmationPage() {
             </div>
 
             <div className="flex flex-col justify-center gap-4">
-               <button className="flex items-center justify-between p-4 bg-background border border-border rounded-2xl hover:bg-surface-alt transition-colors group">
+               <button className="flex items-center justify-between p-4 bg-background border border-border rounded-md hover:bg-surface-alt transition-colors group">
                   <div className="flex items-center gap-3">
                      <Printer className="w-4 h-4 text-muted-foreground" />
                      <span className="text-sm font-bold">Télécharger la facture</span>
@@ -71,7 +71,7 @@ export default function ConfirmationPage() {
                </button>
                <button 
                  onClick={() => navigate("/destinations")}
-                 className="flex items-center justify-between p-4 bg-background border border-border rounded-2xl hover:bg-surface-alt transition-colors group"
+                 className="flex items-center justify-between p-4 bg-background border border-border rounded-md hover:bg-surface-alt transition-colors group"
                >
                   <div className="flex items-center gap-3">
                      <MapPin className="w-4 h-4 text-muted-foreground" />

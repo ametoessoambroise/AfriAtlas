@@ -46,7 +46,7 @@ const RestaurantPage = () => {
         {/* Gallery */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
           {restaurant.gallery.map((img, i) => (
-            <div key={i} className="rounded-xl overflow-hidden aspect-[4/3]">
+            <div key={i} className="rounded-md overflow-hidden aspect-[4/3]">
               <img src={img} alt={`Ambiance ${i + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
             </div>
           ))}

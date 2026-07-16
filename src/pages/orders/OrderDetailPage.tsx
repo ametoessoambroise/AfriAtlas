@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useOrderDetail, useCancelOrder } from "@/hooks/queries/useOrders";
 import { Skeleton } from "@/components/ui/skeleton";
 import { OrderStatusBadge } from "@/components/orders/OrderStatusBadge";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 
 export default function OrderDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -26,103 +27,119 @@ export default function OrderDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="container py-8 max-w-4xl mx-auto space-y-8">
-        <Skeleton className="h-10 w-48" />
-        <Skeleton className="h-96 w-full rounded-3xl" />
-      </div>
+      <DashboardLayout>
+        <div className="p-6 lg:p-8 space-y-6">
+          <Skeleton className="h-10 w-48 rounded-md" />
+          <Skeleton className="h-[600px] w-full rounded-md" />
+        </div>
+      </DashboardLayout>
     );
   }
 
   if (error || !order) {
     return (
-      <div className="container py-20 text-center">
-        <h1 className="text-2xl font-bold">Commande introuvable</h1>
-        <Button asChild className="mt-8 rounded-xl" variant="outline">
-          <Link to="/orders">Retour à mes commandes</Link>
-        </Button>
-      </div>
+      <DashboardLayout>
+        <div className="p-6 lg:p-8 text-center space-y-4">
+          <h1 className="text-2xl font-black uppercase tracking-tight">Commande introuvable</h1>
+          <Button asChild className="rounded-md px-8 h-12 font-black uppercase tracking-widest text-xs" variant="outline">
+            <Link to="/orders">Retour à mes commandes</Link>
+          </Button>
+        </div>
+      </DashboardLayout>
     );
   }
 
   const date = new Date(order.created_at);
 
   return (
-    <div className="container py-8 px-4 md:px-8 mx-auto max-w-4xl space-y-8">
-      <Button asChild variant="ghost" className="gap-2 rounded-xl text-muted-foreground hover:text-foreground">
-        <Link to="/orders">
-          <ChevronLeft className="h-4 w-4" />
-          Toutes les commandes
-        </Link>
-      </Button>
+    <DashboardLayout>
+      <div className="p-6 lg:p-8 space-y-6 animate-in fade-in duration-700">
+        {/* Header */}
+        <div className="flex flex-col gap-4 mb-2">
+          <button
+            onClick={() => navigate("/orders")}
+            className="group flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-bold text-xs uppercase tracking-widest w-fit"
+          >
+            <div className="w-8 h-8 rounded-full border border-border flex items-center justify-center group-hover:border-primary/50 transition-colors">
+              <ChevronLeft className="h-4 w-4" />
+            </div>
+            Toutes les commandes
+          </button>
 
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col md:flex-row gap-6 md:items-end justify-between border-b border-border pb-6">
-          <div>
-            <h1 className="text-3xl font-black mb-2">Commande #{order.id.split("-").pop()?.toUpperCase()}</h1>
-            <p className="text-muted-foreground">
-              Passée le {date.toLocaleDateString("fr-FR", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-            </p>
-          </div>
-          <div className="shrink-0 scale-150 origin-left md:origin-right">
-             <OrderStatusBadge status={order.status} />
+          <div className="flex flex-col md:flex-row gap-6 md:items-end justify-between">
+            <div>
+              <h1 className="text-2xl font-black text-foreground tracking-tight uppercase">
+                Commande <span className="text-primary">#{order.id.split("-").pop()?.toUpperCase()}</span>
+              </h1>
+              <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest mt-1 opacity-70">
+                Passée le {date.toLocaleDateString("fr-FR", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+              </p>
+            </div>
+            <div className="shrink-0">
+               <OrderStatusBadge status={order.status} />
+            </div>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 items-start">
+        <div className="grid lg:grid-cols-12 gap-8 items-start animate-in slide-in-from-bottom-4 duration-500 delay-100">
           
           {/* Main Content */}
-          <div className="md:col-span-2 space-y-8">
-            <div className="bg-card border border-border shadow-sm rounded-3xl p-6 md:p-8">
-              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <PackageCheck className="h-5 w-5 text-primary" />
+          <div className="lg:col-span-8 space-y-8">
+            <div className="bg-card border border-border shadow-sm rounded-md p-8 md:p-10">
+              <h2 className="text-xl font-black uppercase tracking-tight mb-8 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary shadow-sm">
+                  <PackageCheck className="h-5 w-5" />
+                </div>
                 Articles commandés
               </h2>
               
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {order.items?.map((item) => (
-                  <div key={item.id} className="flex gap-4 items-center justify-between py-4 border-b border-border/50 last:border-0 last:pb-0">
+                  <div key={item.id} className="flex gap-4 items-center justify-between py-6 border-b border-border/50 last:border-0">
                     <div>
-                      <p className="font-bold">Article ID: {item.product_id}</p>
-                      <p className="text-sm text-muted-foreground">Quantité: {item.quantity} x {parseFloat(item.unit_price).toFixed(2)} {order.currency || "€"}</p>
+                      <p className="font-black text-sm tracking-tight">Article ID: {item.product_id}</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mt-1">Quantité: {item.quantity} x {parseFloat(item.unit_price).toFixed(2)} {order.currency || "€"}</p>
                     </div>
-                    <div className="font-bold">
+                    <div className="font-black text-lg">
                       {parseFloat(item.total_price).toFixed(2)} {order.currency || "€"}
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="flex items-center justify-between pt-6 mt-4 border-t border-border">
-                <span className="text-muted-foreground font-medium text-lg">Total</span>
-                <span className="text-2xl font-black text-primary">
+              <div className="flex items-center justify-between pt-8 mt-4 border-t border-border/60">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Total de la commande</span>
+                <span className="text-3xl font-black text-primary">
                   {order.total_price ? parseFloat(order.total_price).toFixed(2) : "0.00"} {order.currency || "€"}
                 </span>
               </div>
             </div>
 
             {/* Address */}
-            <div className="bg-card border border-border shadow-sm rounded-3xl p-8">
-               <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-                 <Truck className="h-5 w-5 text-primary" />
-                 Détails de Livraison
+            <div className="bg-card border border-border shadow-sm rounded-md p-8 md:p-10">
+               <h2 className="text-xl font-black uppercase tracking-tight mb-6 flex items-center gap-3">
+                 <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary shadow-sm">
+                  <Truck className="h-5 w-5" />
+                 </div>
+                 Livraison
                </h2>
-               <div className="space-y-2 text-muted-foreground bg-muted/40 p-4 rounded-xl">
+               <div className="space-y-2 text-muted-foreground bg-muted/20 p-6 rounded-md border border-border/50">
                  {order.shipping_address ? (
-                   <pre className="font-sans whitespace-pre-wrap">{JSON.stringify(order.shipping_address, null, 2)}</pre>
+                   <pre className="font-bold text-xs leading-relaxed uppercase tracking-widest">{JSON.stringify(order.shipping_address, null, 2)}</pre>
                  ) : (
-                   <p className="text-sm italic">Aucune adresse de livraison enregistrée. (Produit dématérialisé ou en magasin).</p>
+                   <p className="text-xs font-black uppercase tracking-widest italic opacity-60">Aucune adresse de livraison enregistrée.</p>
                  )}
                </div>
             </div>
           </div>
 
           {/* Sidebar */}
-          <div className="md:col-span-1 space-y-6">
-            <div className="bg-muted/40 border border-border p-6 rounded-3xl">
-              <h3 className="font-bold mb-4 text-sm uppercase tracking-wider text-muted-foreground">Actions</h3>
+          <div className="lg:col-span-4 space-y-6">
+            <div className="bg-card border border-border p-8 rounded-md shadow-sm">
+              <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-6">Actions disponibles</h3>
               <div className="space-y-3">
                 {order.status === "pending" && (
-                  <Button className="w-full rounded-xl gap-2 font-bold bg-green-600 hover:bg-green-700 text-white">
+                  <Button className="w-full h-12 rounded-md gap-2 font-black uppercase tracking-widest text-xs bg-green-600 hover:bg-green-700 text-white shadow-lg shadow-green-600/20 transition-all">
                      <Euro className="h-4 w-4" /> Finaliser le paiement
                   </Button>
                 )}
@@ -130,7 +147,7 @@ export default function OrderDetailPage() {
                 {(order.status === "pending" || order.status === "paid") && (
                   <Button 
                     variant="outline" 
-                    className="w-full rounded-xl text-red-600 hover:bg-red-500 hover:text-white border-red-500/20 hover:border-red-500"
+                    className="w-full h-12 rounded-md font-black uppercase tracking-widest text-xs text-red-600 border-red-500/20 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all"
                     onClick={handleCancel}
                     disabled={cancelling}
                   >
@@ -143,6 +160,6 @@ export default function OrderDetailPage() {
 
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

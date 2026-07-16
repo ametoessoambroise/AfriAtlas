@@ -96,11 +96,11 @@ function DestinationSlideshow() {
   }, [images.length]);
 
   if (images.length === 0) {
-    return <div className="relative w-80 h-56 rounded-2xl bg-white/5 animate-pulse" />;
+    return <div className="relative w-80 h-56 rounded-md bg-white/5 animate-pulse" />;
   }
 
   return (
-    <div className="relative w-80 h-56 rounded-2xl shadow-xl border border-white/10 overflow-hidden group">
+    <div className="relative w-80 h-56 rounded-md shadow-xl border border-white/10 overflow-hidden group">
       {images.map((img, idx) => (
         <LazyImage
           key={idx}
@@ -129,7 +129,7 @@ export default function Footer() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Newsletter Section */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 mb-16 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 mb-16 rounded-md p-8 md:p-12 shadow-2xl relative overflow-hidden">
           <div className="grid items-center gap-8 md:grid-cols-2 relative z-10">
             <div>
               <h3 className="mb-4 text-2xl font-bold md:text-3xl">
@@ -151,11 +151,11 @@ export default function Footer() {
                   name="email"
                   autoComplete="email"
                   placeholder="Votre adresse e-mail"
-                  className="min-h-11 flex-1 rounded-xl border border-foreground/20 bg-background px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm"
+                  className="min-h-11 flex-1 rounded-md border border-foreground/20 bg-background px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm"
                 />
                 <button
                   type="button"
-                  className="min-h-11 rounded-xl bg-primary px-8 py-3 font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-primary/30 active:scale-[0.98] touch-manipulation"
+                  className="min-h-11 rounded-md bg-primary px-8 py-3 font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-primary/30 active:scale-[0.98] touch-manipulation"
                 >
                   S&apos;abonner
                 </button>
@@ -163,8 +163,8 @@ export default function Footer() {
             </div>
             <div className="hidden justify-end md:flex">
               <div className="relative">
-                <div className="bg-primary/20 absolute inset-0 -rotate-6 rounded-2xl" />
-                <div className="bg-amber-500/20 absolute inset-0 rotate-3 rounded-2xl" />
+                <div className="bg-primary/20 absolute inset-0 -rotate-6 rounded-md" />
+                <div className="bg-amber-500/20 absolute inset-0 rotate-3 rounded-md" />
                 <DestinationSlideshow />
               </div>
             </div>
@@ -178,11 +178,11 @@ export default function Footer() {
             <div className="mb-6 flex items-center space-x-3">
               <LazyImage
                 src="/favicon.ico"
-                alt="WorldAtlas"
+                alt="AfriAtlas"
                 containerClassName="w-[50px] h-[50px] rounded-lg overflow-hidden shrink-0"
               />
               <span className="text-2xl font-bold tracking-tight">
-                WorldAtlas{" "}
+                AfriAtlas{" "}
                 <span className="text-primary font-black">Travel</span>
               </span>
             </div>
@@ -196,10 +196,10 @@ export default function Footer() {
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-primary" />
                 <a
-                  href="mailto:contact@worldatlas.tg"
+                  href="mailto:contact@Afriatlas.tg"
                   className="hover:text-primary transition-colors"
                 >
-                  contact@worldatlas.tg
+                  contact@Afriatlas.tg
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -225,7 +225,7 @@ export default function Footer() {
                     key={item.label}
                     href={item.href}
                     className="flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-full bg-secondary text-secondary-foreground shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground touch-manipulation"
-                    aria-label={`WorldAtlas sur ${item.label}`}
+                    aria-label={`AfriAtlas sur ${item.label}`}
                   >
                     <Icon className="h-5 w-5" aria-hidden />
                   </a>
@@ -259,7 +259,7 @@ export default function Footer() {
         {/* Bottom Legal */}
         <div className="border-border/40 flex flex-col items-center justify-between border-t pt-8 md:flex-row">
           <p className="text-foreground/50 mb-4 text-sm md:mb-0 font-medium">
-            &copy; {new Date().getFullYear()} WorldAtlas Travel. Tous droits
+            &copy; {new Date().getFullYear()} AfriAtlas Travel. Tous droits
             réservés.
           </p>
           <div className="flex flex-wrap justify-center gap-6">

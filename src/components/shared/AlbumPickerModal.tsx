@@ -104,7 +104,7 @@ export function AlbumPickerModal({
                   key={album.id}
                   onClick={() => handleAddToAlbum(album.id)}
                   disabled={addPlaceToAlbum.isPending}
-                  className="w-full flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all group"
+                  className="w-full flex items-center justify-between p-4 rounded-md bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center font-bold text-xs">
@@ -142,7 +142,7 @@ export function AlbumPickerModal({
                 Créer un nouveau carnet
               </Button>
             ) : (
-              <div className="space-y-3 p-4 rounded-xl bg-white/5 border border-primary/20">
+              <div className="space-y-3 p-4 rounded-md bg-white/5 border border-primary/20">
                 <Input
                   placeholder="Nom du carnet (ex: Togo 2026)"
                   value={newAlbumTitle}

@@ -4,6 +4,7 @@ import {
   getAccessToken,
   getRefreshToken,
   setAccessToken,
+  setRefreshToken,
 } from "@/lib/api/token";
 import { isTokenExpired, getTokenTimeRemaining } from "@/lib/utils/jwt";
 
@@ -43,6 +44,12 @@ export function useTokenRefresh() {
 
         if (response.access_token) {
           setAccessToken(response.access_token);
+          
+          // Mettre à jour le refresh token si le backend en a renvoyé un nouveau (rotation)
+          if ((response as any).refresh_token) {
+            setRefreshToken((response as any).refresh_token);
+          }
+          
           console.log("✅ Token proactively refreshed");
 
           // Planifier le prochain refresh basé sur l'expiration du nouveau token

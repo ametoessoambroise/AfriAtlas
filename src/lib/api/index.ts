@@ -1,5 +1,5 @@
 /**
- * WorldAtlas API — clients HTTP (Vite : VITE_API_URL, voir ./env.ts)
+ * Afriatlas API — clients HTTP (Vite : VITE_API_URL, voir ./env.ts)
  */
 
 export { getApiBaseUrl } from "./env";

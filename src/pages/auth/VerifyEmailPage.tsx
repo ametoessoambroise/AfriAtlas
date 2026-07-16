@@ -39,7 +39,7 @@ export default function VerifyEmailPage() {
 
   return (
     <div className="min-h-[calc(100vh-72px)] flex items-center justify-center p-4">
-      <div className="w-full max-w-sm bg-card p-8 rounded-3xl shadow-xl border border-border text-center">
+      <div className="w-full max-w-sm bg-card p-8 rounded-md shadow-xl border border-border text-center">
         
         {status === "loading" && (
           <div className="animate-in fade-in zoom-in duration-300">
@@ -58,7 +58,7 @@ export default function VerifyEmailPage() {
              </div>
              <h2 className="text-xl font-bold mb-2">Email Confirmé !</h2>
              <p className="text-muted-foreground text-sm font-medium mb-8">
-               Votre compte WorldAtlas est désormais actif. Vous pouvez accéder à toutes les fonctionnalités.
+               Votre compte Afriatlas est désormais actif. Vous pouvez accéder à toutes les fonctionnalités.
              </p>
              <Link to="/login" className="btn-primary w-full py-3 inline-block font-bold">
                Aller à la connexion

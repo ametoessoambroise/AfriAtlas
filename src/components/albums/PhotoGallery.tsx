@@ -36,7 +36,7 @@ export default function PhotoGallery({ images, albumId }: PhotoGalleryProps) {
 
   if (images.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 bg-muted/20 rounded-3xl border-2 border-dashed border-border/50">
+      <div className="flex flex-col items-center justify-center py-20 bg-muted/20 rounded-md border-2 border-dashed border-border/50">
         <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-4">
           <Maximize2 className="h-8 w-8 text-muted-foreground" />
         </div>
@@ -68,7 +68,7 @@ export default function PhotoGallery({ images, albumId }: PhotoGalleryProps) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.05 }}
-            className="relative group break-inside-avoid overflow-hidden rounded-2xl bg-muted shadow-sm hover:shadow-xl transition-all duration-300 transform-gpu cursor-zoom-in"
+            className="relative group break-inside-avoid overflow-hidden rounded-md bg-muted shadow-sm hover:shadow-xl transition-all duration-300 transform-gpu cursor-zoom-in"
           >
             <Dialog>
               <DialogTrigger asChild>

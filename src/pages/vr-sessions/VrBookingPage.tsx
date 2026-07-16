@@ -1,277 +1,195 @@
-import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  CardElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
-import { toast } from "sonner";
-import { Lock, ShieldCheck, CreditCard, Loader2, Calendar as CalendarIcon, ChevronLeft, Info } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { SessionSummary } from "@/components/bookings/SessionSummary";
-import { useVrSession, useBookVrSession } from "@/hooks/queries/useVrSessions";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || "pk_test_sample");
+import { useVrSession, useBookVrSession } from "@/hooks/queries/useVrSessions";
+import { getPlaces } from "@/lib/api/places";
+import { listSubscriptionPlans } from "@/lib/api/subscriptions";
+
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, Loader2, Lock, ShieldCheck, Headset } from "lucide-react";
+
+import {
+  bookingSchema,
+  type BookingFormValues,
+} from "./components/bookingSchema";
+import { VrBookingSidebar } from "./components/VrBookingSidebar";
+import { VrBookingForm } from "./components/VrBookingForm";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 
 export default function VrBookingPage() {
-  const { id } = useParams<{ id: string }>();
+  const { slug, id } = useParams<{ slug: string; id: string }>();
   const navigate = useNavigate();
-  
-  const { data: session, isLoading } = useVrSession(id || "");
-  const { mutateAsync: bookSession } = useBookVrSession(id || "");
 
-  const [date, setDate] = useState("");
-  const [timeSlot, setTimeSlot] = useState("10:00");
-  const [participants, setParticipants] = useState(1);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const { data: session, isLoading: sessionLoading } = useVrSession(id || "");
+  const { mutateAsync: bookSession, isPending: isBooking } = useBookVrSession(
+    id || "",
+  );
+  const { data: placesResponse } = useQuery({
+    queryKey: ["places-list"],
+    queryFn: () => getPlaces({ page_size: 10 }),
+  });
+  const { data: plans } = useQuery({
+    queryKey: ["subscription-plans"],
+    queryFn: listSubscriptionPlans,
+  });
 
-  const handlePaymentSuccess = async () => {
-    if (!session?.place_slug || !date || !timeSlot) {
-      toast.error("Données de réservation incomplètes.");
-      return;
-    }
-    
-    setIsProcessing(true);
+  const places = placesResponse?.items || [];
+
+  const form = useForm<BookingFormValues>({
+    resolver: zodResolver(bookingSchema),
+    defaultValues: {
+      participation_type: "solo",
+      num_participants: 1,
+      experience_level: "beginner",
+      health_preferences: {
+        motion_sickness: false,
+        glasses: false,
+        loud_noise_sensitive: false,
+        other: false,
+      },
+    },
+  });
+
+  const { watch, handleSubmit } = form;
+  const values = watch();
+
+  const onSubmit = async (data: BookingFormValues) => {
+    if (!slug) return;
     try {
       await bookSession({
         body: {
-          booking_date: date,
-          time_slot: timeSlot,
-          num_participants: participants
+          booking_date: data.booking_date.toISOString(),
+          time_slot: data.time_slot,
+          num_participants: data.num_participants,
+          immersion_location_id: data.immersion_location_id,
+          participation_type: data.participation_type,
+          age_range: data.age_range,
+          nationality: data.nationality,
+          language: data.language,
+          experience_level: data.experience_level,
+          health_preferences: JSON.stringify(data.health_preferences),
+          subscription_plan_id: data.subscription_plan_id,
         },
-        slug: session.place_slug
+        slug,
       });
-      toast.success("Réservation confirmée avec succès !");
       navigate("/bookings");
-    } catch (error) {
-      // toast is already handled in the hook's onError
-    } finally {
-      setIsProcessing(false);
+    } catch {
+      // toast handled by hook
     }
   };
 
-  if (isLoading) {
+  if (sessionLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
+      <DashboardLayout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <Loader2 className="h-10 w-10 animate-spin text-primary" />
+        </div>
+      </DashboardLayout>
     );
   }
 
   if (!session) {
     return (
-      <div className="container py-20 text-center">
-        <h1 className="text-2xl font-bold">Session introuvable</h1>
-        <Button asChild className="mt-8 rounded-xl" variant="outline">
-          <Link to="/vr-sessions">Retour au catalogue</Link>
-        </Button>
-      </div>
+      <DashboardLayout>
+        <div className="p-6 lg:p-8 text-center space-y-4">
+          <h1 className="text-2xl font-black uppercase tracking-tight">Session introuvable</h1>
+          <Button asChild variant="outline" className="rounded-md px-8 h-12 font-black uppercase tracking-widest text-xs">
+            <Link to="/vr-sessions">Retour au catalogue</Link>
+          </Button>
+        </div>
+      </DashboardLayout>
     );
   }
 
-  const totalPrice = parseFloat(session.price) * participants;
+  const selectedPlaceName = places.find(
+    (p) => p.id === values.immersion_location_id,
+  )?.name;
+  const selectedPlan = plans?.find((p) => p.id === values.subscription_plan_id);
 
   return (
-    <div className="container py-8 px-4 md:px-8 mx-auto max-w-6xl">
-      <Button asChild variant="ghost" className="mb-8 gap-2 rounded-xl text-muted-foreground hover:text-foreground">
-        <Link to="/vr-sessions">
-          <ChevronLeft className="h-4 w-4" />
-          Retour au catalogue
-        </Link>
-      </Button>
+    <DashboardLayout>
+      <div className="p-6 lg:p-8 space-y-6 animate-in fade-in duration-700">
+        {/* Header */}
+        <div className="flex flex-col gap-4 mb-2">
+          <button
+            onClick={() => navigate(`/destinations/${slug}`)}
+            className="group flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-bold text-xs uppercase tracking-widest w-fit"
+          >
+            <div className="w-8 h-8 rounded-full border border-border flex items-center justify-center group-hover:border-primary/50 transition-colors">
+              <ChevronLeft className="h-4 w-4" />
+            </div>
+            Retour à la destination
+          </button>
 
-      <div className="mb-12">
-        <h1 className="text-3xl md:text-4xl font-black tracking-tight">{session.title}</h1>
-        <p className="text-lg text-muted-foreground mt-2">Réservez votre créneau pour cette expérience virtuelle.</p>
-      </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-black text-foreground tracking-tight uppercase">
+                Réservation <span className="text-primary">VR</span>
+              </h1>
+              <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest mt-1 opacity-70">
+                Configurez votre expérience virtuelle immersive.
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+               <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary shadow-sm">
+                  <Headset className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div className="grid lg:grid-cols-3 gap-12 items-start">
-        <div className="lg:col-span-2 space-y-8">
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold flex items-center gap-2">
-                <CalendarIcon className="h-6 w-6 text-primary" />
-                Informations de Réservation
-              </h2>
-              <div className="p-4 bg-primary/5 border border-primary/20 rounded-2xl flex items-start gap-3">
-                <Info className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <p className="text-sm text-primary/80 leading-relaxed">
-                  Sélectionnez une date et un créneau horaire. Assurez-vous d'avoir une connexion internet
-                  stable pour profiter pleinement de la visite virtuelle avec notre guide.
+        <div className="grid lg:grid-cols-12 gap-8 items-start animate-in slide-in-from-bottom-4 duration-500 delay-100">
+          <VrBookingSidebar
+            session={session}
+            values={values}
+            destinationSlug={slug}
+            selectedPlaceName={selectedPlaceName}
+            selectedPlan={selectedPlan}
+          />
+          <div className="lg:col-span-8 space-y-8">
+            <VrBookingForm
+              form={form}
+              session={session}
+              places={places}
+              plans={plans}
+              onSubmit={onSubmit}
+            />
+
+            {/* CTA section integrated in layout */}
+            <div className="bg-card border border-border rounded-md p-8 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">
+                  Total à régler aujourd'hui
+                </p>
+                <p className="text-3xl font-black text-primary">
+                  {selectedPlan && values.num_participants
+                    ? `${selectedPlan.price_monthly * values.num_participants} €`
+                    : "— €"}
                 </p>
               </div>
+              <button
+                onClick={handleSubmit(onSubmit)}
+                disabled={isBooking}
+                className="w-full md:w-auto h-14 flex items-center justify-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-widest text-xs rounded-md px-10 shadow-xl shadow-primary/20 transition-all active:scale-[0.98] disabled:opacity-60"
+              >
+                {isBooking ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <Lock className="h-5 w-5" />
+                )}
+                Réserver mon expérience
+              </button>
             </div>
-
-            <div className="grid sm:grid-cols-2 gap-6">
-              <div className="space-y-3">
-                <label className="text-sm font-semibold">Date souhaitée</label>
-                <div className="relative">
-                  <Input 
-                    type="date" 
-                    required 
-                    min={new Date().toISOString().split('T')[0]}
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    className="rounded-xl bg-card border-border h-12 px-4 shadow-sm"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <label className="text-sm font-semibold">Créneau</label>
-                <select 
-                  className="flex h-12 w-full rounded-xl border border-input bg-card px-3 py-2 text-sm shadow-sm transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-white"
-                  value={timeSlot}
-                  onChange={(e) => setTimeSlot(e.target.value)}
-                  required
-                >
-                  <option value="10:00">10:00 - Matin</option>
-                  <option value="14:00">14:00 - Après-midi</option>
-                  <option value="18:00">18:00 - Soirée</option>
-                </select>
-              </div>
-
-              <div className="space-y-3 sm:col-span-2">
-                <label className="text-sm font-semibold">Nombre de participants (Max {session.max_participants})</label>
-                <Input 
-                  type="number" 
-                  min={1} 
-                  max={session.max_participants}
-                  required
-                  value={participants}
-                  onChange={(e) => setParticipants(parseInt(e.target.value))}
-                  className="rounded-xl bg-card border-border h-12 px-4 shadow-sm max-w-[200px]"
-                />
-              </div>
-            </div>
-
-            <div className="pt-8 border-t border-white/10">
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                <Lock className="h-6 w-6 text-emerald-500" />
-                Paiement Sécurisé
-              </h2>
-              
-              <div className="p-1 px-1 mb-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <ShieldCheck className="h-4 w-4 text-emerald-500" />
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-bold">Transaction Chiffrée par Stripe</span>
-                </div>
-              </div>
-
-              <Elements stripe={stripePromise}>
-                <PaymentForm 
-                  amount={totalPrice} 
-                  isProcessing={isProcessing}
-                  disabled={!date}
-                  onSuccess={handlePaymentSuccess} 
-                />
-              </Elements>
-            </div>
+            
+            <p className="text-center text-[10px] font-bold text-muted-foreground uppercase tracking-widest flex items-center justify-center gap-2 opacity-60">
+              <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+              Paiement sécurisé · Confirmation immédiate par email
+            </p>
           </div>
         </div>
-
-        <div className="lg:col-span-1">
-          <SessionSummary 
-            session={session} 
-            date={date ? new Date(date) : undefined} 
-            timeSlot={timeSlot} 
-            participants={participants} 
-          />
-        </div>
       </div>
-    </div>
-  );
-}
-
-function PaymentForm({ amount, onSuccess, isProcessing: isBookingPending, disabled }: { 
-  amount: number; 
-  onSuccess: () => void; 
-  isProcessing: boolean;
-  disabled: boolean;
-}) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [isPaying, setIsPaying] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!stripe || !elements) return;
-
-    setIsPaying(true);
-    
-    // Simulations pour le test
-    try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      onSuccess();
-    } catch (err) {
-      toast.error("Le paiement a échoué. Veuillez réessayer.");
-    } finally {
-      setIsPaying(false);
-    }
-  };
-
-  const CARD_OPTIONS = {
-    style: {
-      base: {
-        color: "#ffffff",
-        fontFamily: "DM Sans, sans-serif",
-        fontSize: "16px",
-        "::placeholder": { color: "rgba(255,255,255,0.2)" },
-      },
-      invalid: { color: "#ef4444", iconColor: "#ef4444" },
-    },
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="p-6 rounded-3xl bg-zinc-900 border border-white/5 shadow-2xl relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-           <CreditCard className="h-24 w-24 text-white rotate-12" />
-        </div>
-        
-        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 block mb-4">
-          Détails de la Carte Bancaire
-        </label>
-        
-        <div className="py-4 px-2 bg-white/5 rounded-xl border border-white/5">
-          <CardElement options={CARD_OPTIONS} />
-        </div>
-        
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-             <div className="h-10 w-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
-                <ShieldCheck className="h-5 w-5 text-emerald-500" />
-             </div>
-             <div>
-                <p className="text-xs font-bold text-white uppercase tracking-tighter">Atlas Secure Pay</p>
-                <p className="text-[10px] text-white/40">Vos données sont protégées</p>
-             </div>
-          </div>
-          
-          <Button 
-            type="submit" 
-            disabled={!stripe || isPaying || isBookingPending || disabled}
-            className="w-full sm:w-auto px-10 h-14 rounded-2xl bg-primary hover:bg-primary/90 text-zinc-950 font-black text-lg shadow-xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
-          >
-            {isPaying || isBookingPending ? (
-              <Loader2 className="h-6 w-6 animate-spin" />
-            ) : (
-              `Payer ${amount.toLocaleString()} FCFA`
-            )}
-          </Button>
-        </div>
-      </div>
-      
-      <div className="flex items-center justify-center gap-6 py-4 border-t border-dashed border-white/5">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" className="h-5 opacity-30 grayscale brightness-200" />
-        <div className="flex items-center gap-1.5 text-[10px] text-white/30 uppercase font-black tracking-widest">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Verified Network
-        </div>
-      </div>
-    </form>
+    </DashboardLayout>
   );
 }

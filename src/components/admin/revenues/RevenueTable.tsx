@@ -78,14 +78,14 @@ export function RevenueTable({ data, isLoading, onUpdateStatus, onViewOwner }: R
     return (
       <div className="space-y-4">
         {[1, 2, 3, 4, 5].map((i) => (
-          <div key={i} className="h-16 rounded-xl bg-white/5 animate-pulse" />
+          <div key={i} className="h-16 rounded-md bg-white/5 animate-pulse" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-white/5 bg-zinc-900/40 overflow-hidden">
+    <div className="rounded-md border border-white/5 bg-zinc-900/40 overflow-hidden">
       <Table>
         <TableHeader className="bg-white/[0.02]">
           <TableRow className="border-white/5 hover:bg-transparent">

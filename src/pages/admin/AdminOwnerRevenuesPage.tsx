@@ -127,7 +127,7 @@ export default function AdminOwnerRevenuesPage() {
           <Button 
             variant="outline" 
             disabled={isExporting || revenuesLoading}
-            className="bg-white/5 border-white/5 text-white/50 hover:text-white hover:bg-white/10 h-11 px-5 rounded-xl border-dashed"
+            className="bg-white/5 border-white/5 text-white/50 hover:text-white hover:bg-white/10 h-11 px-5 rounded-md border-dashed"
             onClick={handleExport}
           >
             {isExporting ? (
@@ -138,7 +138,7 @@ export default function AdminOwnerRevenuesPage() {
             Exporter
           </Button>
           <Button 
-            className="bg-amber-500 text-zinc-950 hover:bg-amber-400 font-bold h-11 px-6 rounded-xl shadow-lg shadow-amber-500/20"
+            className="bg-amber-500 text-zinc-950 hover:bg-amber-400 font-bold h-11 px-6 rounded-md shadow-lg shadow-amber-500/20"
             onClick={() => refetchRevenues()}
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${revenuesLoading ? "animate-spin" : ""}`} /> Actualiser
@@ -156,7 +156,7 @@ export default function AdminOwnerRevenuesPage() {
       />
 
       {/* Control Bar (Filters) */}
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 bg-zinc-900/40 p-6 rounded-2xl border border-white/5">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 bg-zinc-900/40 p-6 rounded-md border border-white/5">
         <div className="flex flex-wrap items-center gap-4">
           <div className="space-y-1">
             <label className="text-[10px] uppercase font-bold text-white/20 ml-1">Période d'analyse</label>
@@ -166,7 +166,7 @@ export default function AdminOwnerRevenuesPage() {
           <div className="space-y-1">
             <label className="text-[10px] uppercase font-bold text-white/20 ml-1">Type de Période</label>
             <Select value={periodType} onValueChange={(val: any) => setPeriodType(val)}>
-              <SelectTrigger className="w-[180px] bg-zinc-950/50 border-white/10 text-white h-10 rounded-xl">
+              <SelectTrigger className="w-[180px] bg-zinc-950/50 border-white/10 text-white h-10 rounded-md">
                 <SelectValue placeholder="Format" />
               </SelectTrigger>
               <SelectContent className="bg-zinc-950 border-white/10 text-white">
@@ -180,7 +180,7 @@ export default function AdminOwnerRevenuesPage() {
           <div className="space-y-1">
             <label className="text-[10px] uppercase font-bold text-white/20 ml-1">Statut Paiement</label>
             <Select value={paymentStatus} onValueChange={(val: any) => setPaymentStatus(val)}>
-              <SelectTrigger className="w-[180px] bg-zinc-950/50 border-white/10 text-white h-10 rounded-xl">
+              <SelectTrigger className="w-[180px] bg-zinc-950/50 border-white/10 text-white h-10 rounded-md">
                 <SelectValue placeholder="Tous les statuts" />
               </SelectTrigger>
               <SelectContent className="bg-zinc-950 border-white/10 text-white">

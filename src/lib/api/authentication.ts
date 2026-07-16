@@ -1,5 +1,5 @@
 /**
- * AUTHENTICATION API Client — WorldAtlas Travel
+ * AUTHENTICATION API Client — Afriatlas Travel
  * ========================================
  * @module api/authentication
  */

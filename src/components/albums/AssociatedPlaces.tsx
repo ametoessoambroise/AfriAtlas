@@ -47,12 +47,12 @@ export function PlacePickerModal({ albumId }: { albumId: string }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="rounded-xl gap-2 border-primary/30 text-primary hover:bg-primary/5">
+        <Button variant="outline" className="rounded-md gap-2 border-primary/30 text-primary hover:bg-primary/5">
           <Plus className="h-4 w-4" />
           Ajouter un lieu
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md rounded-3xl">
+      <DialogContent className="sm:max-w-md rounded-md">
         <DialogHeader>
           <DialogTitle>Ajouter un lieu à l'album</DialogTitle>
           <DialogDescription>
@@ -66,7 +66,7 @@ export function PlacePickerModal({ albumId }: { albumId: string }) {
               placeholder="Rechercher (ex: Kpalimé, Lomé...)"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 rounded-xl"
+              className="pl-10 rounded-md"
             />
           </div>
 
@@ -80,11 +80,11 @@ export function PlacePickerModal({ albumId }: { albumId: string }) {
             {placesQuery.data?.map((place) => (
               <div 
                 key={place.id}
-                className="flex items-center justify-between p-3 rounded-xl border border-border hover:bg-muted/50 transition-colors group"
+                className="flex items-center justify-between p-3 rounded-md border border-border hover:bg-muted/50 transition-colors group"
               >
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-lg overflow-hidden shrink-0 border border-border">
-                    <img src={place.primary_image?.url || "/placeholder.svg"} alt={place.name} className="h-full w-full object-cover" />
+                    <img src={place.primary_image?.url || "/placeholder.png"} alt={place.name} className="h-full w-full object-cover" />
                   </div>
                   <div>
                     <p className="text-sm font-bold">{place.name}</p>
@@ -133,7 +133,7 @@ export default function AssociatedPlaces({ albumId, places }: AssociatedPlacesPr
       </div>
 
       {places.length === 0 ? (
-        <div className="p-8 text-center rounded-3xl bg-muted/20 border-2 border-dashed border-border/50">
+        <div className="p-8 text-center rounded-md bg-muted/20 border-2 border-dashed border-border/50">
           <MapPin className="h-10 w-10 text-muted-foreground/30 mx-auto mb-3" />
           <p className="text-sm text-muted-foreground">Aucun lieu associé à cet album pour l'instant.</p>
         </div>
@@ -142,10 +142,10 @@ export default function AssociatedPlaces({ albumId, places }: AssociatedPlacesPr
           {places.map((place) => (
             <div 
               key={place.id}
-              className="flex items-center gap-4 p-4 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow group"
+              className="flex items-center gap-4 p-4 rounded-md bg-card border border-border shadow-sm hover:shadow-md transition-shadow group"
             >
-              <div className="h-16 w-16 rounded-xl overflow-hidden shrink-0 border border-border shadow-inner">
-                <img src={place.primary_image?.url || "/placeholder.svg"} alt={place.name} className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              <div className="h-16 w-16 rounded-md overflow-hidden shrink-0 border border-border shadow-inner">
+                <img src={place.primary_image?.url || "/placeholder.png"} alt={place.name} className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
               
               <div className="flex-1 min-w-0">

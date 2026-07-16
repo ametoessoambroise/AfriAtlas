@@ -139,7 +139,7 @@ export default function SubscriptionPage() {
 
   return (
     <div
-      className="px-4 pt-40 min-h-screen mx-auto relative bg-neutral-100 overflow-hidden"
+      className="px-4 pt-40 min-h-screen mx-auto relative bg-background overflow-hidden"
       ref={pricingRef}
     >
       <div
@@ -157,7 +157,7 @@ export default function SubscriptionPage() {
           animationNum={0}
           timelineRef={pricingRef}
           customVariants={revealVariants}
-          className="md:text-6xl sm:text-4xl text-3xl font-medium text-gray-900 mb-6 leading-tight"
+          className="md:text-5xl sm:text-4xl text-3xl font-medium text-foreground-primary mb-6 leading-tight"
         >
           Choisissez votre prochaine{" "}
           <TimelineContent
@@ -165,7 +165,7 @@ export default function SubscriptionPage() {
             animationNum={1}
             timelineRef={pricingRef}
             customVariants={revealVariants}
-            className="border border-dashed border-blue-500 px-3 py-1 rounded-2xl bg-blue-100/50 capitalize inline-block text-blue-600"
+            className="border border-dashed border-blue-500 px-3 py-1 rounded-md bg-blue-100/50 capitalize inline-block text-blue-600"
           >
             aventure
           </TimelineContent>
@@ -176,7 +176,7 @@ export default function SubscriptionPage() {
           animationNum={2}
           timelineRef={pricingRef}
           customVariants={revealVariants}
-          className="sm:text-lg text-base text-gray-600 sm:w-[70%] w-[80%] mx-auto"
+          className="sm:text-lg text-base text-foreground-primary sm:w-[70%] w-[80%] mx-auto"
         >
           Débloquez des expériences exclusives et partagez-les avec vos proches.
           Quel que soit votre style de voyage, nous avons l'offre parfaite.
@@ -206,15 +206,15 @@ export default function SubscriptionPage() {
               customVariants={revealVariants}
             >
               <Card
-                className={`relative flex flex-col h-full border-neutral-200 shadow-md ${
+                className={`relative flex flex-col h-full border-border shadow-md ${
                   plan.popular
                     ? "ring-2 ring-blue-500 bg-blue-50/50"
-                    : "bg-white "
+                    : "bg-background"
                 } transition-all duration-300 hover:shadow-xl`}
               >
                 <CardHeader className="text-left pb-4">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-2xl font-bold text-gray-900 capitalize">
+                    <h3 className="text-2xl font-bold text-foreground-primary capitalize">
                       {plan.name}
                     </h3>
                     <div className="flex flex-col items-end gap-2">
@@ -224,17 +224,17 @@ export default function SubscriptionPage() {
                         </span>
                       )}
                       {isCurrentPlan && (
-                        <span className="bg-neutral-800 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-sm flex items-center gap-1">
+                        <span className="bg-background text-white px-3 py-1 rounded-full text-xs font-semibold shadow-sm flex items-center gap-1">
                           <Check size={14} /> Actuel
                         </span>
                       )}
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600 mb-4 h-10">
+                  <p className="text-sm text-foreground-primary mb-4 h-10">
                     {plan.description}
                   </p>
                   <div className="flex items-baseline">
-                    <span className="text-5xl font-bold text-gray-900 tracking-tight">
+                    <span className="text-5xl font-bold text-foreground-primary tracking-tight">
                       $
                       <NumberFlow
                         value={
@@ -243,7 +243,7 @@ export default function SubscriptionPage() {
                         className="text-5xl font-bold"
                       />
                     </span>
-                    <span className="text-gray-500 ml-1 font-medium">
+                    <span className="text-foreground-primary ml-1 font-medium">
                       /{isYearly ? "an" : "mois"}
                     </span>
                   </div>
@@ -260,7 +260,7 @@ export default function SubscriptionPage() {
                           isYearly ? plan.price_yearly : plan.price_monthly
                         }
                         label={`Choisir ${plan.name}`}
-                        className={`w-full py-4 text-lg rounded-xl font-semibold transition-all ${
+                        className={`w-full py-4 text-lg rounded-md font-semibold transition-all ${
                           plan.popular
                             ? "bg-gradient-to-t from-blue-500 to-blue-600 shadow-blue-500/20 shadow-lg border border-blue-400 text-white"
                             : "bg-gradient-to-t from-neutral-800 to-neutral-900 shadow-neutral-900/20 shadow-lg border border-neutral-700 text-white"
@@ -282,7 +282,7 @@ export default function SubscriptionPage() {
                             billing_period: isYearly ? "yearly" : "monthly",
                           });
                         }}
-                        className={`w-full py-4 text-lg flex items-center justify-center rounded-xl font-semibold transition-all ${
+                        className={`w-full py-4 text-lg flex items-center justify-center rounded-md font-semibold transition-all ${
                           plan.popular
                             ? "bg-gradient-to-t from-blue-500 to-blue-600 shadow-lg shadow-blue-500/20 border border-blue-400 text-white"
                             : "bg-gradient-to-t from-neutral-800 to-neutral-900 shadow-lg shadow-neutral-900/20 border border-neutral-700 text-white"
@@ -305,7 +305,7 @@ export default function SubscriptionPage() {
                       (feature: any, featureIndex: number) => (
                         <li key={featureIndex} className="flex items-start">
                           <span className="mr-3">{feature.icon}</span>
-                          <span className="text-sm text-gray-700 leading-relaxed">
+                          <span className="text-sm text-foreground-primary leading-relaxed">
                             {feature.text}
                           </span>
                         </li>
@@ -314,8 +314,8 @@ export default function SubscriptionPage() {
                   </ul>
 
                   {/* Included (Family size etc) */}
-                  <div className="space-y-4 pt-6 border-t border-neutral-200/60 mt-auto">
-                    <h4 className="font-semibold text-sm text-gray-900">
+                  <div className="space-y-4 pt-6 border-t border-border60 mt-auto">
+                    <h4 className="font-semibold text-sm text-foreground-primary">
                       {plan.includes[0]}
                     </h4>
                     <ul className="space-y-3 font-medium">

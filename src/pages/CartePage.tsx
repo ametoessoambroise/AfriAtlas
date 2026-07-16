@@ -27,7 +27,9 @@ const CartePage = () => {
 
   // Génération dynamique des catégories à partir des données
   const categories = useMemo(() => {
-    return [...new Set(destinations.map((d) => d.category))].filter(Boolean) as string[];
+    return [...new Set(destinations.map((d) => d.category))].filter(
+      Boolean,
+    ) as string[];
   }, [destinations]);
 
   // Filtrage combiné (Recherche + Catégorie)
@@ -62,10 +64,12 @@ const CartePage = () => {
 
   return (
     <PageWrapper>
-      <div className="relative w-full mt-20" style={{ height: "calc(100vh - 120px)" }}>
+      <div
+        className="relative w-full mt-20"
+        style={{ height: "calc(100vh - 120px)" }}
+      >
         {/* Full Screen Map avec Restriction sur le Togo */}
         <InteractiveMap>
-          
           {/* Composant de filtre flottant par dessus la carte */}
           <MapFilters
             search={search}
@@ -91,7 +95,6 @@ const CartePage = () => {
 
           {/* Point utilisateur (demande GPS Custom) */}
           <UserLocationDot />
-          
         </InteractiveMap>
       </div>
     </PageWrapper>

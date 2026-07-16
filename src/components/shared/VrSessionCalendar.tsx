@@ -70,7 +70,7 @@ export function VrSessionCalendar({
 
   if (sessionsLoading) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 bg-zinc-900/40 border border-white/5 rounded-2xl animate-pulse">
+      <div className="flex flex-col items-center justify-center p-12 bg-zinc-900/40 border border-white/5 rounded-md animate-pulse">
         <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
         <div className="h-4 w-32 bg-white/5 rounded" />
       </div>
@@ -79,7 +79,7 @@ export function VrSessionCalendar({
 
   if (!sessions?.length) {
     return (
-      <div className="p-8 text-center bg-background border border-white/5 rounded-2xl">
+      <div className="p-8 text-center bg-background border border-white/5 rounded-md">
         <div className="mb-4 inline-flex p-3 rounded-full bg-white/5">
           <CalendarIcon className="h-6 w-6 text-white/20" />
         </div>
@@ -103,7 +103,7 @@ export function VrSessionCalendar({
               key={session.id}
               onClick={() => setSelectedSessionId(session.id)}
               className={cn(
-                "flex items-center justify-between p-4 rounded-xl border transition-all text-left",
+                "flex items-center justify-between p-4 rounded-md border transition-all text-left",
                 selectedSessionId === session.id
                   ? "bg-primary/10 border-primary text-white"
                   : "bg-white/5 border-white/5 text-white/60 hover:bg-white/10",
@@ -131,7 +131,7 @@ export function VrSessionCalendar({
           <h4 className="text-sm font-bold text-white/40 uppercase tracking-widest mb-3">
             Choisir la date
           </h4>
-          <div className="bg-zinc-900/40 border border-white/5 rounded-2xl p-2 flex justify-center">
+          <div className="bg-zinc-900/40 border border-white/5 rounded-md p-2 flex justify-center">
             <Calendar
               mode="single"
               selected={selectedDate}
@@ -154,7 +154,7 @@ export function VrSessionCalendar({
                 key={slot}
                 onClick={() => setSelectedSlot(slot)}
                 className={cn(
-                  "p-3 rounded-xl border text-sm font-medium transition-all flex items-center justify-center gap-2",
+                  "p-3 rounded-md border text-sm font-medium transition-all flex items-center justify-center gap-2",
                   selectedSlot === slot
                     ? "bg-white text-zinc-950 border-white"
                     : "bg-white/5 border-white/5 text-white/60 hover:bg-white/10 hover:text-white",
@@ -167,7 +167,7 @@ export function VrSessionCalendar({
           </div>
 
           {/* Participants */}
-          <div className="mt-6 p-4 rounded-2xl bg-zinc-900/40 border border-white/5">
+          <div className="mt-6 p-4 rounded-md bg-zinc-900/40 border border-white/5">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Users className="h-4 w-4 text-white/40" />
@@ -214,7 +214,7 @@ export function VrSessionCalendar({
           disabled={
             bookMutation.isPending || !selectedSlot || !selectedSessionId
           }
-          className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-6 font-bold shadow-lg shadow-primary/20"
+          className="w-full bg-primary hover:bg-primary/90 text-white rounded-md py-6 font-bold shadow-lg shadow-primary/20"
         >
           {bookMutation.isPending ? (
             <Loader2 className="h-5 w-5 animate-spin" />

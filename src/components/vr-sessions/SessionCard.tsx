@@ -1,12 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  Users,
-  ChevronRight,
-} from "lucide-react";
+import { Calendar, Clock, MapPin, Users, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { VRSessionListResponse } from "@/lib/types";
 
@@ -16,8 +10,8 @@ interface SessionCardProps {
 
 export function SessionCard({ session }: SessionCardProps) {
   return (
-    <div className="flex flex-col md:flex-row gap-6 p-6 bg-card border border-border rounded-3xl shadow-sm hover:shadow-md transition-all group">
-      <div className="h-48 md:h-full md:w-64 rounded-2xl bg-muted overflow-hidden relative shrink-0">
+    <div className="flex flex-col md:flex-row gap-6 p-6 bg-card border border-border rounded-md shadow-sm hover:shadow-md transition-all group">
+      <div className="h-48 md:h-full md:w-64 rounded-md bg-muted overflow-hidden relative shrink-0">
         <div className="absolute inset-0 bg-primary/10 flex items-center justify-center">
           <Calendar className="h-10 w-10 text-primary/40" />
         </div>
@@ -49,11 +43,11 @@ export function SessionCard({ session }: SessionCardProps) {
         )}
 
         <div className="mt-6 flex flex-wrap items-center gap-4 text-sm font-medium">
-          <div className="flex items-center gap-2 bg-muted px-3 py-1.5 rounded-xl">
+          <div className="flex items-center gap-2 bg-muted px-3 py-1.5 rounded-md">
             <Clock className="h-4 w-4 text-muted-foreground" />
             <span>{session.duration_minutes} min</span>
           </div>
-          <div className="flex items-center gap-2 bg-muted px-3 py-1.5 rounded-xl">
+          <div className="flex items-center gap-2 bg-muted px-3 py-1.5 rounded-md">
             <Users className="h-4 w-4 text-muted-foreground" />
             <span>Max {session.max_participants} pers.</span>
           </div>
@@ -62,7 +56,7 @@ export function SessionCard({ session }: SessionCardProps) {
         <div className="mt-6 pt-6 border-t border-border flex justify-end">
           <Button
             asChild
-            className="rounded-xl px-8 w-full md:w-auto gap-2 group-hover:bg-primary/90"
+            className="rounded-md px-8 w-full md:w-auto gap-2 group-hover:bg-primary/90"
           >
             <Link to={`/vr-sessions/${session.id}/book`}>
               Réserver cette session

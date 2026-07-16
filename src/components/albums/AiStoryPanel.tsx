@@ -63,7 +63,7 @@ export default function AiStoryPanel({
   };
 
   return (
-    <Card className="overflow-hidden border-2 border-primary/10 shadow-xl rounded-3xl">
+    <Card className="overflow-hidden border-2 border-primary/10 shadow-xl rounded-md">
       <CardHeader className="bg-primary/5 pb-8">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
@@ -98,7 +98,7 @@ export default function AiStoryPanel({
                   <button
                     key={tone.id}
                     onClick={() => setSelectedTone(tone.id)}
-                    className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all ${
+                    className={`flex flex-col items-center justify-center p-4 rounded-md border-2 transition-all ${
                       selectedTone === tone.id
                         ? "border-primary bg-primary/5"
                         : "border-border bg-card hover:border-primary/40"
@@ -112,7 +112,7 @@ export default function AiStoryPanel({
             </div>
 
             {/* Content Display */}
-            <div className="relative min-h-[200px] p-6 rounded-2xl bg-muted/30 border border-border/50 font-serif leading-relaxed text-lg italic text-muted-foreground whitespace-pre-wrap">
+            <div className="relative min-h-[200px] p-6 rounded-md bg-muted/30 border border-border/50 font-serif leading-relaxed text-lg italic text-muted-foreground whitespace-pre-wrap">
               <AnimatePresence mode="wait">
                 {story ? (
                   <motion.div
@@ -138,7 +138,7 @@ export default function AiStoryPanel({
               <Button
                 onClick={handleGenerate}
                 disabled={isGenerating}
-                className="flex-1 h-12 rounded-xl gap-2 font-bold shadow-lg shadow-primary/20"
+                className="flex-1 h-12 rounded-md gap-2 font-bold shadow-lg shadow-primary/20"
               >
                 {isGenerating ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -157,7 +157,7 @@ export default function AiStoryPanel({
                   variant="outline"
                   size="icon"
                   onClick={() => setStory("")}
-                  className="h-12 w-12 rounded-xl border-border/50 hover:bg-red-50 text-red-500"
+                  className="h-12 w-12 rounded-md border-border/50 hover:bg-red-50 text-red-500"
                 >
                   <RotateCcw className="h-5 w-5" />
                 </Button>

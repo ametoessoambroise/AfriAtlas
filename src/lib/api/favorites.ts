@@ -1,5 +1,5 @@
 /**
- * FAVORITES API Client — WorldAtlas Travel
+ * FAVORITES API Client — Afriatlas Travel
  * ===================================
  * AUTO-GENERATED — Ne pas modifier manuellement.
  * Source    : openapi.json (Pydantic schemas FastAPI)

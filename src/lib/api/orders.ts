@@ -1,5 +1,5 @@
 /**
- * ORDERS API Client — WorldAtlas Travel
+ * ORDERS API Client — Afriatlas Travel
  * ================================
  * AUTO-GENERATED — Ne pas modifier manuellement.
  * Source    : openapi.json (Pydantic schemas FastAPI)

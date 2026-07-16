@@ -1,15 +1,7 @@
 import React, { memo } from "react";
-import {
-  ArrowUpRight,
-  TrendingUp,
-  Globe,
-  MapPin,
-  Compass,
-  CalendarDays,
-  Heart,
-  ShoppingBag,
-  Image as ImageIcon,
-} from "lucide-react";
+import { ArrowUpRight, Heart, ShoppingBag, Image as ImageIcon, CalendarDays } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { formatNumber } from "@/lib/utils/formatters";
 import StatCardSkeleton from "./skeletons/StatCardSkeleton";
@@ -18,83 +10,47 @@ interface StatCardProps {
   label: string;
   value: string | number;
   sub: string;
-  icon: React.ReactNode;
-  accent?: boolean;
+  trend: string;
   link?: string;
 }
 
-const StatCard = memo(
-  ({ label, value, sub, icon, accent, link }: StatCardProps) => {
-    const Content = (
-      <div
-        className={`rounded-[32px] p-6 h-full relative overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl group ${
-          accent
-            ? "bg-primary text-primary-foreground"
-            : "bg-card border border-border"
-        }`}
-      >
-        <div className="flex items-center justify-between mb-4 relative z-10">
-          <p
-            className={`text-sm font-bold ${
-              accent ? "opacity-80" : "text-muted-foreground"
-            }`}
-          >
+const StatCard = memo(({ label, value, sub, trend, link }: StatCardProps) => {
+  const Content = (
+    <Card className="border border-border shadow-none hover:border-primary/30 transition-colors">
+      <CardContent className="p-5">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-sm text-muted-foreground font-medium">
             {label}
-          </p>
-          <div
-            className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all group-hover:scale-110 ${
-              accent
-                ? "border-primary-foreground/30 text-primary-foreground"
-                : "border-border text-muted-foreground"
-            }`}
+          </span>
+          <Badge
+            variant="secondary"
+            className="bg-primary/10 text-primary border-0 text-xs font-semibold gap-1 dark:bg-primary/20"
           >
-            <ArrowUpRight className="w-4 h-4" />
-          </div>
+            <ArrowUpRight className="h-3 w-3" />
+            {trend}
+          </Badge>
         </div>
-
-        <p
-          className={`text-4xl font-black tracking-tight mb-3 font-premium relative z-10`}
-        >
+        <p className="text-3xl font-black text-foreground tracking-tight mb-2 font-premium">
           {typeof value === "number" ? formatNumber(value) : value}
         </p>
+        <p className="text-xs text-primary font-bold uppercase tracking-wider">
+          {sub}
+        </p>
+        <p className="text-[10px] text-muted-foreground mt-1 font-medium italic">Données en temps réel</p>
+      </CardContent>
+    </Card>
+  );
 
-        <div className="flex items-center gap-2 relative z-10">
-          <div
-            className={`w-6 h-6 rounded-full flex items-center justify-center ${
-              accent ? "bg-primary-foreground/20" : "bg-muted text-secondary"
-            }`}
-          >
-            <TrendingUp className="w-3.5 h-3.5" />
-          </div>
-          <span
-            className={`text-xs font-bold ${
-              accent ? "text-primary-foreground/70" : "text-muted-foreground"
-            }`}
-          >
-            {sub}
-          </span>
-        </div>
-
-        {/* Background Icon Decoration */}
-        <div
-          className={`absolute -bottom-4 -right-4 w-24 h-24 opacity-5 transition-transform duration-700 group-hover:scale-125 group-hover:rotate-12 ${accent ? "text-primary-foreground" : "text-primary"}`}
-        >
-          {icon}
-        </div>
-      </div>
+  if (link) {
+    return (
+      <Link to={link} className="block h-full outline-none">
+        {Content}
+      </Link>
     );
+  }
 
-    if (link) {
-      return (
-        <Link to={link} className="block h-full outline-none">
-          {Content}
-        </Link>
-      );
-    }
-
-    return Content;
-  },
-);
+  return Content;
+});
 
 interface StatsRowProps {
   stats?: {
@@ -122,30 +78,29 @@ export default function StatsRow({ stats, isLoading }: StatsRowProps) {
       label: "Favoris",
       link: "/favorites",
       value: stats.favorites_count,
-      sub: "Vos lieux préférés",
-      accent: true,
-      icon: <Heart className="w-full h-full" />,
+      sub: "Lieux préférés",
+      trend: "LIVE",
     },
     {
       label: "Albums",
       link: "/albums",
       value: stats.albums_count,
-      sub: "Souvenirs de voyage",
-      icon: <ImageIcon className="w-full h-full" />,
+      sub: "Souvenirs",
+      trend: "+1.2%",
     },
     {
       label: "Commandes",
       link: "/orders",
       value: stats.orders_count,
       sub: "Transactions",
-      icon: <ShoppingBag className="w-full h-full" />,
+      trend: "+5.4%",
     },
     {
       label: "Réservations",
       link: "/bookings",
       value: stats.bookings_count,
       sub: "Voyages prévus",
-      icon: <CalendarDays className="w-full h-full" />,
+      trend: "ACTIVE",
     },
   ];
 

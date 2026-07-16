@@ -54,7 +54,7 @@ export default function AlbumSidebar({ album, places }: AlbumSidebarProps) {
   return (
     <div className="space-y-6">
       {/* 1. Personnalisation */}
-      <div className="bg-white rounded-[2rem] border border-border shadow-sm p-6 space-y-8">
+      <div className="bg-background rounded-md border border-border shadow-sm p-6 space-y-8">
         <h3 className="font-black text-xl">Personnalise ton album</h3>
 
         {/* Thème */}
@@ -67,7 +67,7 @@ export default function AlbumSidebar({ album, places }: AlbumSidebarProps) {
               <button
                 key={theme.id}
                 onClick={() => setActiveTheme(theme.id)}
-                className={`flex items-center gap-2 p-2.5 rounded-xl border transition-all text-sm font-bold ${
+                className={`flex items-center gap-2 p-2.5 rounded-md border transition-all text-sm font-bold ${
                   activeTheme === theme.id
                     ? "border-primary bg-primary/5 text-primary"
                     : "border-border hover:border-primary/40 text-muted-foreground"
@@ -128,7 +128,7 @@ export default function AlbumSidebar({ album, places }: AlbumSidebarProps) {
           </div>
           <Button
             variant="outline"
-            className="w-full rounded-xl mt-2 text-xs font-bold border-border/50"
+            className="w-full rounded-md mt-2 text-xs font-bold border-border/50"
           >
             Voir plus
           </Button>
@@ -144,7 +144,7 @@ export default function AlbumSidebar({ album, places }: AlbumSidebarProps) {
               <button
                 key={font.id}
                 onClick={() => setActiveFont(font.id)}
-                className={`flex-1 py-2 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                className={`flex-1 py-2 rounded-md border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                   activeFont === font.id
                     ? "border-primary bg-primary/5 text-primary"
                     : "border-border hover:border-primary/40 text-muted-foreground"
@@ -192,20 +192,20 @@ export default function AlbumSidebar({ album, places }: AlbumSidebarProps) {
       </div>
 
       {/* 2. Lieux Associés (Preserving existing logic) */}
-      <div className="bg-white rounded-[2rem] border border-border shadow-sm p-6">
+      <div className="bg-background rounded-md border border-border shadow-sm p-6">
         {/* We use the existing AssociatedPlaces component here to preserve its functionality exactly */}
         <AssociatedPlaces albumId={album.id} places={places} />
       </div>
 
       {/* 3. Export & Share */}
-      <div className="bg-white rounded-[2rem] border border-border shadow-sm p-6 space-y-4">
+      <div className="bg-background rounded-md border border-border shadow-sm p-6 space-y-4">
         <h3 className="font-black text-xl mb-2">Partage & exporte</h3>
 
         <div className="grid grid-cols-2 gap-3">
           <Button
             variant="outline"
             onClick={() => handleExport("lien")}
-            className="rounded-xl justify-start gap-2 h-12 border-border/50 hover:bg-muted/50 font-bold text-xs"
+            className="rounded-md justify-start gap-2 h-12 border-border/50 hover:bg-muted/50 font-bold text-xs"
           >
             <Share2 className="w-4 h-4 text-muted-foreground" /> Partager le
             lien
@@ -213,7 +213,7 @@ export default function AlbumSidebar({ album, places }: AlbumSidebarProps) {
           <Button
             variant="outline"
             onClick={() => handleExport("pdf")}
-            className="rounded-xl justify-start gap-2 h-12 border-border/50 hover:bg-muted/50 font-bold text-xs"
+            className="rounded-md justify-start gap-2 h-12 border-border/50 hover:bg-muted/50 font-bold text-xs"
           >
             <Download className="w-4 h-4 text-muted-foreground" /> Télécharger
             PDF
@@ -221,18 +221,18 @@ export default function AlbumSidebar({ album, places }: AlbumSidebarProps) {
           <Button
             variant="outline"
             onClick={() => handleExport("video")}
-            className="rounded-xl justify-start gap-2 h-12 border-border/50 hover:bg-muted/50 font-bold text-xs"
+            className="rounded-md justify-start gap-2 h-12 border-border/50 hover:bg-muted/50 font-bold text-xs"
           >
             <Video className="w-4 h-4 text-muted-foreground" /> Exporter en
             vidéo
           </Button>
           <Button
             variant="outline"
-            onClick={() => handleExport("worldatlas")}
-            className="rounded-xl justify-start gap-2 h-12 border-border/50 hover:bg-muted/50 font-bold text-xs"
+            onClick={() => handleExport("Afriatlas")}
+            className="rounded-md justify-start gap-2 h-12 border-border/50 hover:bg-muted/50 font-bold text-xs"
           >
             <Globe2 className="w-4 h-4 text-muted-foreground" /> Publier sur
-            site
+            Afriatlas
           </Button>
         </div>
       </div>

@@ -1,8 +1,22 @@
 import React, { memo } from "react";
-import { ShoppingBag, ChevronRight, CheckCircle, Clock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Link, useNavigate } from "react-router-dom";
 import { OrderResponse } from "@/lib/types/order";
-import { formatCurrency, formatDate } from "@/lib/utils/formatters";
+import { formatCurrency } from "@/lib/utils/formatters";
+
+const statusStyles: Record<string, string> = {
+  "paid": "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400",
+  "pending": "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-400",
+  "cancelled": "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-900/20 dark:text-rose-400",
+};
+
+const statusLabels: Record<string, string> = {
+  "paid": "Confirmé",
+  "pending": "En attente",
+  "cancelled": "Annulé",
+};
 
 interface RecentOrdersProps {
   orders?: OrderResponse[];
@@ -10,96 +24,82 @@ interface RecentOrdersProps {
 }
 
 export const RecentOrders = memo(({ orders, isLoading }: RecentOrdersProps) => {
-  if (isLoading) {
-    return (
-      <div className="bg-card rounded-[32px] p-6 border border-border space-y-4 animate-pulse">
-        <div className="w-1/3 h-4 bg-muted rounded" />
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="flex justify-between items-center">
-            <div className="flex gap-3">
-              <div className="w-10 h-10 bg-muted rounded-xl" />
-              <div className="space-y-2">
-                <div className="w-24 h-3 bg-muted rounded" />
-                <div className="w-16 h-2 bg-muted rounded" />
-              </div>
-            </div>
-            <div className="w-12 h-4 bg-muted rounded" />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  const items = orders?.slice(0, 5) || [];
+  const navigate = useNavigate();
+  const items = orders?.slice(0, 8) || [];
 
   return (
-    <div className="bg-card rounded-[32px] p-6 border border-border h-full shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between mb-6">
-        <p className="font-black text-foreground">Commandes Récentes</p>
-        <Link
-          to="/orders"
-          className="text-primary hover:bg-primary/5 p-1.5 rounded-lg transition-all"
-        >
-          <ChevronRight className="w-4 h-4" />
-        </Link>
-      </div>
+    <Card className="border border-border shadow-none overflow-hidden">
+      <CardHeader className="pb-2 px-6 pt-6">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-bold text-foreground uppercase tracking-wider">
+            Dernières Commandes
+          </span>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="h-7 text-[10px] font-black uppercase tracking-widest"
+            onClick={() => navigate("/orders")}
+          >
+            Voir tout
+          </Button>
+        </div>
+      </CardHeader>
 
-      <div className="space-y-4">
-        {items.length > 0 ? (
-          items.map((order) => (
-            <Link
-              key={order.id}
-              to={`/orders/${order.id}`}
-              className="flex items-center justify-between group focus:outline-none"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-2xl bg-muted border border-border flex items-center justify-center text-muted-foreground group-hover:bg-primary/5 group-hover:text-primary transition-all">
-                  <ShoppingBag className="w-4 h-4" />
-                </div>
-                <div>
-                  <p className="text-sm font-black text-foreground group-hover:text-primary transition-colors">
-                    #{order.id.substring(0, 8)}
-                  </p>
-                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
-                    {formatDate(order.created_at)}
-                  </p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-black text-foreground">
-                  {formatCurrency(Number(order.total_price))}
-                </p>
-                <div className="flex items-center gap-1 justify-end mt-0.5">
-                  {order.status === "paid" ? (
-                    <CheckCircle className="w-3 h-3 text-secondary" />
-                  ) : (
-                    <Clock className="w-3 h-3 text-amber-500" />
-                  )}
-                  <span
-                    className={`text-[9px] font-black uppercase tracking-tighter ${order.status === "paid" ? "text-secondary" : "text-amber-500"}`}
+      <CardContent className="px-6 pb-6">
+        <div className="overflow-x-auto -mx-6 sm:mx-0">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="text-muted-foreground text-[10px] uppercase font-black tracking-widest text-left">
+                <th className="px-4 pb-3">Référence</th>
+                <th className="px-4 pb-3">Date</th>
+                <th className="px-4 pb-3">Montant</th>
+                <th className="px-4 pb-3">Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading ? (
+                Array.from({ length: 5 }).map((_, i) => (
+                  <tr key={i} className="border-t border-border/50 animate-pulse">
+                    <td colSpan={4} className="py-4 px-4"><div className="h-4 bg-muted rounded w-full" /></td>
+                  </tr>
+                ))
+              ) : items.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="py-12 text-center text-muted-foreground font-medium italic">
+                    Aucune commande trouvée.
+                  </td>
+                </tr>
+              ) : (
+                items.map((r) => (
+                  <tr 
+                    key={r.id} 
+                    className="border-t border-border/50 hover:bg-muted/30 transition-colors cursor-pointer"
+                    onClick={() => navigate(`/orders/${r.id}`)}
                   >
-                    {order.status === "paid" ? "Payé" : "En attente"}
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))
-        ) : (
-          <div className="text-center py-8">
-            <ShoppingBag className="w-8 h-8 text-muted mx-auto mb-2" />
-            <p className="text-xs font-bold text-muted-foreground">
-              Aucune commande récente
-            </p>
-          </div>
-        )}
-      </div>
-
-      <Link
-        to="/orders"
-        className="w-full mt-6 py-3 rounded-2xl bg-muted text-xs font-black text-foreground hover:bg-border transition-all flex items-center justify-center gap-2"
-      >
-        Voir tout l'historique
-      </Link>
-    </div>
+                    <td className="py-4 px-4 font-black text-primary text-xs">
+                      #{r.id.substring(0, 8).toUpperCase()}
+                    </td>
+                    <td className="py-4 px-4 text-[11px] font-bold text-muted-foreground">
+                      {new Date(r.created_at).toLocaleDateString("fr-FR")}
+                    </td>
+                    <td className="py-4 px-4 font-extrabold text-foreground">
+                      {formatCurrency(Number(r.total_price))}
+                    </td>
+                    <td className="py-4 px-4">
+                      <Badge 
+                        variant="outline"
+                        className={`text-[9px] font-black uppercase py-0.5 px-2 tracking-tighter ${statusStyles[r.status] ?? ""}`}
+                      >
+                        {statusLabels[r.status] || r.status}
+                      </Badge>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
   );
 });

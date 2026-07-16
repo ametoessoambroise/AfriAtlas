@@ -53,7 +53,7 @@ export function ReviewForm({ destinationId, onSuccess, className }: ReviewFormPr
   return (
     <form 
       onSubmit={handleSubmit}
-      className={cn("p-6 rounded-2xl bg-zinc-900/40 border border-white/5", className)}
+      className={cn("p-6 rounded-md bg-zinc-900/40 border border-white/5", className)}
     >
       <h3 className="text-lg font-bold text-white mb-4">Laissez un avis</h3>
       
@@ -87,13 +87,13 @@ export function ReviewForm({ destinationId, onSuccess, className }: ReviewFormPr
           placeholder="Partagez votre expérience (optionnel)..."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          className="bg-zinc-950/50 border-white/10 text-white min-h-[120px] rounded-xl focus:ring-primary/20 placeholder:text-white/20"
+          className="bg-zinc-950/50 border-white/10 text-white min-h-[120px] rounded-md focus:ring-primary/20 placeholder:text-white/20"
         />
         
         <Button
           type="submit"
           disabled={createReview.isPending}
-          className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-6 font-bold"
+          className="w-full bg-primary hover:bg-primary/90 text-white rounded-md py-6 font-bold"
         >
           {createReview.isPending ? (
             <Loader2 className="h-5 w-5 animate-spin" />

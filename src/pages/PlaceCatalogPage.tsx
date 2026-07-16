@@ -1,6 +1,8 @@
-import { useMemo, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useMemo, useState, useEffect } from "react";
+import { Navigate, useParams, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { ShoppingCart, ArrowLeft, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 import PageWrapper from "@/components/layout/PageWrapper";
 import { ApiErrorState, EmptyState } from "@/components/feedback/ApiQueryState";
@@ -26,10 +28,11 @@ import { useCart } from "@/hooks/queries/useCart";
 import { getErrorMessage, is404 } from "@/lib/utils/errorMessages";
 
 const PlaceCatalogPage = () => {
+  const navigate = useNavigate();
   const { slug } = useParams<{ slug: string }>();
   const placeQuery = usePlace(slug);
   const productsQuery = usePlaceProducts(slug);
-  const { itemCount: count } = useCart();
+  const { itemCount: count, subtotal, isAdding, isUpdating } = useCart();
 
   const [search, setSearch] = useState("");
   const [cat, setCat] = useState("Tous");
@@ -40,6 +43,13 @@ const PlaceCatalogPage = () => {
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(2);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  // Feedback visuel global lors des mutations du panier
+  useEffect(() => {
+    if (isAdding) {
+       // On peut imaginer un petit effet ici si nécessaire
+    }
+  }, [isAdding]);
 
   const place = placeQuery.data;
   const mode = place ? getCatalogMode(place.category) : "retail";
@@ -139,7 +149,7 @@ const PlaceCatalogPage = () => {
         {productsQuery.isLoading ? (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+              <div key={i} className="overflow-hidden rounded-md border border-border bg-card shadow-sm">
                 <Skeleton className="aspect-[4/3] w-full rounded-none" />
                 <div className="space-y-3 p-5">
                   <Skeleton className="h-5 w-3/4 rounded-full" />
@@ -159,7 +169,7 @@ const PlaceCatalogPage = () => {
             description="Les offres seront affichées ici dès publication par l’établissement."
             actionLabel="Retour à la fiche lieu"
             onAction={() => {
-              window.location.href = `/destinations/${slug}`;
+              navigate(`/destinations/${slug}`);
             }}
           />
         ) : mode === "retail" ? (
@@ -202,6 +212,28 @@ const PlaceCatalogPage = () => {
           />
         )}
       </div>
+
+      {/* Floating Cart Button (Mobile) */}
+      <AnimatePresence>
+        {count > 0 && showCartDrawer && !cartOpen && (
+          <motion.button
+            initial={{ scale: 0, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0, y: 20 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setCartOpen(true)}
+            className="fixed bottom-24 right-6 z-40 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl shadow-primary/40 lg:hidden"
+            aria-label="Voir le panier"
+          >
+            <div className="relative">
+              <ShoppingCart className="h-7 w-7" />
+              <span className="absolute -right-3 -top-3 flex h-6 w-6 items-center justify-center rounded-full bg-foreground text-[10px] font-black text-background ring-2 ring-primary">
+                {count}
+              </span>
+            </div>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Cart Drawer Transition (Mobile seulement si retail/menu) */}
       <AnimatePresence>

@@ -1,5 +1,5 @@
 /**
- * HEALTH API Client — WorldAtlas Travel
+ * HEALTH API Client — Afriatlas Travel
  * ================================
  * AUTO-GENERATED — Ne pas modifier manuellement.
  * Source    : openapi.json (Pydantic schemas FastAPI)

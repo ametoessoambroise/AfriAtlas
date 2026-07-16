@@ -28,7 +28,7 @@ export default function RetailCatalogLayout({
   return (
     <>
       {/* Barre d'outils et de Filtres */}
-      <div className="mb-8 flex flex-wrap items-center gap-4 bg-muted/40 p-4 rounded-2xl border border-border/50">
+      <div className="mb-8 flex flex-wrap items-center gap-4 bg-muted/40 p-4 rounded-md border border-border/50">
         <div className="relative min-w-[240px] max-w-sm flex-1">
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground/60" />
           <input
@@ -41,19 +41,28 @@ export default function RetailCatalogLayout({
         </div>
         
         {/* Category Tabs */}
-        <div className="flex flex-wrap gap-2 flex-1 items-center">
+        <div className="flex flex-wrap gap-2 flex-1 items-center" role="tablist" aria-label="Catégories de produits">
           {categories.map((c) => (
             <button
               key={c}
               type="button"
+              role="tab"
+              aria-selected={cat === c}
               onClick={() => setCat(c)}
-              className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
+              className={`relative rounded-full px-5 py-2.5 text-sm font-semibold transition-all outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                 cat === c
-                  ? "bg-primary text-primary-foreground shadow-md shadow-primary/20 scale-105"
+                  ? "text-primary-foreground"
                   : "bg-surface-alt text-muted-foreground hover:bg-border/60 hover:text-foreground"
               }`}
             >
-              {c}
+              {cat === c && (
+                <motion.div
+                  layoutId="active-cat-retail"
+                  className="absolute inset-0 bg-primary rounded-full shadow-md shadow-primary/20"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <span className="relative z-10">{c}</span>
             </button>
           ))}
         </div>
@@ -90,7 +99,7 @@ export default function RetailCatalogLayout({
             ))}
           </div>
           {items.length === 0 ? (
-             <div className="py-20 text-center flex flex-col items-center justify-center bg-surface-alt/50 rounded-3xl border border-dashed border-border/80">
+             <div className="py-20 text-center flex flex-col items-center justify-center bg-surface-alt/50 rounded-md border border-dashed border-border/80">
                 <p className="text-lg font-medium text-foreground">Aucun produit trouvé.</p>
                 <p className="text-sm text-muted-foreground mt-2 max-w-sm">Essayer avec d'autres mots-clés ou changer de catégorie.</p>
              </div>
@@ -99,7 +108,7 @@ export default function RetailCatalogLayout({
         
         {/* Sidebar Panier Desktop */}
         <aside className="hidden w-[340px] shrink-0 lg:block">
-          <div className="card-destination overflow-hidden sticky top-[100px] h-[calc(100vh-140px)] shadow-xl shadow-foreground/5 border border-border/60 rounded-3xl">
+          <div className="card-destination overflow-hidden sticky top-[100px] h-[calc(100vh-140px)] shadow-xl shadow-foreground/5 border border-border/60 rounded-md">
             <CartSidebar />
           </div>
         </aside>

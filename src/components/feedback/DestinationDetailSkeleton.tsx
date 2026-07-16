@@ -28,7 +28,7 @@ export function DestinationDetailSkeleton() {
               <Skeleton className="mb-4 h-7 w-1/4" />
               <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
                 {Array.from({ length: 6 }).map((_, i) => (
-                  <Skeleton key={i} className="aspect-[4/3] rounded-xl" />
+                  <Skeleton key={i} className="aspect-[4/3] rounded-md" />
                 ))}
               </div>
             </div>
@@ -42,15 +42,15 @@ export function DestinationDetailSkeleton() {
 
           {/* Sidebar (1/3) */}
           <div className="space-y-4">
-            <div className="space-y-4 rounded-2xl border border-border p-6">
+            <div className="space-y-4 rounded-md border border-border p-6">
               <Skeleton className="h-6 w-2/3" />
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-5/6" />
               <Skeleton className="h-4 w-3/4" />
               <Skeleton className="h-4 w-2/3" />
             </div>
-            <Skeleton className="h-12 w-full rounded-xl" />
-            <Skeleton className="h-12 w-full rounded-xl" />
+            <Skeleton className="h-12 w-full rounded-md" />
+            <Skeleton className="h-12 w-full rounded-md" />
           </div>
         </div>
       </div>

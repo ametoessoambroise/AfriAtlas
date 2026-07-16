@@ -69,7 +69,7 @@ export function EditAlbumDialog({ album, trigger }: EditAlbumDialogProps) {
           <Button
             variant="outline"
             size="sm"
-            className="gap-2 rounded-xl"
+            className="gap-2 rounded-md"
             onClick={(e) => e.stopPropagation()}
           >
             <Pencil className="h-4 w-4" />
@@ -96,7 +96,7 @@ export function EditAlbumDialog({ album, trigger }: EditAlbumDialogProps) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Mon voyage à Paris"
-              className="rounded-xl"
+              className="rounded-md"
               maxLength={100}
               required
             />
@@ -113,7 +113,7 @@ export function EditAlbumDialog({ album, trigger }: EditAlbumDialogProps) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Décrivez votre album..."
-              className="min-h-[120px] resize-none rounded-xl"
+              className="min-h-[120px] resize-none rounded-md"
               maxLength={1000}
             />
             <p className="text-xs text-muted-foreground text-right">
@@ -122,7 +122,7 @@ export function EditAlbumDialog({ album, trigger }: EditAlbumDialogProps) {
           </div>
 
           {/* Public/Private Toggle */}
-          <div className="flex items-center justify-between rounded-xl border border-border p-4 bg-muted/30">
+          <div className="flex items-center justify-between rounded-md border border-border p-4 bg-muted/30">
             <div className="space-y-0.5">
               <Label htmlFor="is_public" className="text-base font-medium">
                 Visibilité
@@ -153,14 +153,14 @@ export function EditAlbumDialog({ album, trigger }: EditAlbumDialogProps) {
               variant="outline"
               onClick={() => setOpen(false)}
               disabled={isSubmitting}
-              className="rounded-xl"
+              className="rounded-md"
             >
               Annuler
             </Button>
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-xl bg-primary"
+              className="rounded-md bg-primary"
             >
               {isSubmitting ? (
                 <>

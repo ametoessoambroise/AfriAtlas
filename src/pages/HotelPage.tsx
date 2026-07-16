@@ -6,6 +6,14 @@ import PageWrapper from '@/components/layout/PageWrapper';
 import { DESTINATIONS, ROOMS } from '@/lib/data/mockData';
 import { formatPrice } from '@/stores/cartStore';
 import 'leaflet/dist/leaflet.css';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const hotel = DESTINATIONS.find((d) => d.slug === 'hotel-2-fevrier')!;
 
@@ -58,7 +66,7 @@ const HotelPage = () => {
         {/* Gallery */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
           {hotel.gallery.map((img, i) => (
-            <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.1 }} className="rounded-xl overflow-hidden aspect-[4/3]">
+            <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.1 }} className="rounded-md overflow-hidden aspect-[4/3]">
               <img src={img} alt={`${hotel.name} ${i + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
             </motion.div>
           ))}
@@ -123,32 +131,48 @@ const HotelPage = () => {
           <div className="grid md:grid-cols-4 gap-4 mb-6">
             <div>
               <label className="block text-sm font-medium mb-1.5">Date d'arrivée</label>
-              <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-border text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              <Input
+                type="date"
+                value={checkIn}
+                onChange={(e) => setCheckIn(e.target.value)}
+                className="w-full h-11 rounded-md bg-card border-border"
+              />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1.5">Date de départ</label>
-              <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-border text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              <Input
+                type="date"
+                value={checkOut}
+                onChange={(e) => setCheckOut(e.target.value)}
+                className="w-full h-11 rounded-md bg-card border-border"
+              />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1.5">Voyageurs</label>
               <div className="flex items-center gap-3">
-                <button onClick={() => setGuests(Math.max(1, guests - 1))} className="w-10 h-10 rounded-xl border border-border flex items-center justify-center font-bold text-lg">-</button>
+                <button onClick={() => setGuests(Math.max(1, guests - 1))} className="w-10 h-10 rounded-md border border-border flex items-center justify-center font-bold text-lg">-</button>
                 <span className="font-semibold">{guests}</span>
-                <button onClick={() => setGuests(Math.min(6, guests + 1))} className="w-10 h-10 rounded-xl border border-border flex items-center justify-center font-bold text-lg">+</button>
+                <button onClick={() => setGuests(Math.min(6, guests + 1))} className="w-10 h-10 rounded-md border border-border flex items-center justify-center font-bold text-lg">+</button>
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1.5">Chambre</label>
-              <select value={selectedRoom || ''} onChange={(e) => setSelectedRoom(e.target.value || null)} className="w-full px-4 py-2.5 rounded-xl border border-border text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 bg-card">
-                <option value="">Choisir...</option>
-                {ROOMS.filter((r) => r.available).map((r) => (
-                  <option key={r.id} value={r.id}>{r.name} — {formatPrice(r.price)}/nuit</option>
-                ))}
-              </select>
+              <Select value={selectedRoom || ''} onValueChange={(val) => setSelectedRoom(val || null)}>
+                <SelectTrigger className="w-full h-11 rounded-md bg-card border-border">
+                  <SelectValue placeholder="Choisir..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {ROOMS.filter((r) => r.available).map((r) => (
+                    <SelectItem key={r.id} value={r.id}>
+                      {r.name} — {formatPrice(r.price)}/nuit
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
           {room && (
-            <div className="flex items-center justify-between p-4 bg-primary/5 rounded-xl mb-4">
+            <div className="flex items-center justify-between p-4 bg-primary/5 rounded-md mb-4">
               <div>
                 <p className="font-semibold">{room.name}</p>
                 <p className="text-sm text-muted-foreground">{nights} nuit{nights > 1 ? 's' : ''} × {formatPrice(room.price)}</p>
@@ -162,7 +186,7 @@ const HotelPage = () => {
         </div>
 
         {showSuccess && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="fixed bottom-6 right-6 bg-primary text-primary-foreground px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 z-50">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="fixed bottom-6 right-6 bg-primary text-primary-foreground px-6 py-4 rounded-md shadow-2xl flex items-center gap-3 z-50">
             <Check className="w-6 h-6" />
             <div>
               <p className="font-bold">Réservation confirmée !</p>
@@ -178,7 +202,7 @@ const HotelPage = () => {
             {hotel.amenities?.map((a) => {
               const Icon = amenityIcons[a] || Check;
               return (
-                <div key={a} className="flex items-center gap-3 p-4 bg-card rounded-xl border border-border">
+                <div key={a} className="flex items-center gap-3 p-4 bg-card rounded-md border border-border">
                   <Icon className="w-5 h-5 text-primary" />
                   <span className="text-sm font-medium">{a}</span>
                 </div>
@@ -190,7 +214,7 @@ const HotelPage = () => {
         {/* Mini map */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6">Localisation</h2>
-          <div className="h-[300px] rounded-2xl overflow-hidden border border-border">
+          <div className="h-[300px] rounded-md overflow-hidden border border-border">
             <MapContainer center={[hotel.coordinates.lat, hotel.coordinates.lng]} zoom={15} className="h-full w-full" scrollWheelZoom={false}>
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               <Marker position={[hotel.coordinates.lat, hotel.coordinates.lng]}>

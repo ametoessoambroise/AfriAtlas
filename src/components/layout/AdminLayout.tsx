@@ -113,8 +113,8 @@ function AdminSidebar({ onClose }: { onClose?: () => void }) {
       </div>
 
       {/* Admin Info */}
-      <div className="mx-4 mb-6 flex items-center gap-3 bg-white/[0.03] border border-white/5 rounded-2xl p-4">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-lg shadow-blue-500/10">
+      <div className="mx-4 mb-6 flex items-center gap-3 bg-white/[0.03] border border-white/5 rounded-md p-4">
+        <div className="w-10 h-10 rounded-md bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-lg shadow-blue-500/10">
           {initials}
         </div>
         <div className="min-w-0">
@@ -139,7 +139,7 @@ function AdminSidebar({ onClose }: { onClose?: () => void }) {
               key={href}
               to={href}
               onClick={onClose}
-              className={`flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
+              className={`flex items-center gap-3.5 px-4 py-3 rounded-md text-sm font-medium transition-all duration-300 ${
                 active
                   ? "bg-amber-500 text-zinc-950 shadow-lg shadow-amber-500/20"
                   : "text-white/40 hover:text-white/80 hover:bg-white/5"
@@ -254,11 +254,11 @@ const AdminLayout = () => {
                 className="bg-white/5 border border-white/5 rounded-full py-1.5 pl-9 pr-4 text-xs text-white focus:outline-none focus:border-amber-500/30 transition-all w-64"
               />
             </div>
-            <button className="relative w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 flex items-center justify-center text-white/40 hover:text-white transition-all group">
+            <button className="relative w-9 h-9 rounded-md bg-white/5 hover:bg-white/10 border border-white/5 flex items-center justify-center text-white/40 hover:text-white transition-all group">
               <Bell className="h-4 w-4 group-hover:rotate-12 transition-transform" />
               <span className="absolute top-2 right-2.5 w-1.5 h-1.5 rounded-full bg-amber-500 border border-zinc-950" />
             </button>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-zinc-700 to-zinc-900 border border-white/10" />
+            <div className="w-9 h-9 rounded-md bg-gradient-to-br from-zinc-700 to-zinc-900 border border-white/10" />
           </div>
         </header>
 

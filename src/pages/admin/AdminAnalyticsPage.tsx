@@ -50,7 +50,7 @@ export default function AdminAnalyticsPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3 bg-white/5 p-1.5 rounded-2xl border border-white/5">
+        <div className="flex items-center gap-3 bg-white/5 p-1.5 rounded-md border border-white/5">
           <AtlasDateRangePicker date={date} setDate={setDate} />
           <div className="w-px h-6 bg-white/10 mx-1" />
           <Button variant="ghost" className="text-white/40 hover:text-white" size="icon" onClick={() => refetch()}>
@@ -82,13 +82,13 @@ export default function AdminAnalyticsPage() {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-         <div className="flex items-center justify-center p-12 border border-dashed border-white/5 rounded-3xl opacity-40">
+         <div className="flex items-center justify-center p-12 border border-dashed border-white/5 rounded-md opacity-40">
             <p className="text-xs text-center">Analyses comportementales en attente de synchronisation API</p>
          </div>
-         <div className="flex items-center justify-center p-12 border border-dashed border-white/5 rounded-3xl opacity-40">
+         <div className="flex items-center justify-center p-12 border border-dashed border-white/5 rounded-md opacity-40">
             <p className="text-xs text-center">Flux de conversion tunnel en attente de synchronisation API</p>
          </div>
-         <div className="flex items-center justify-center p-12 border border-dashed border-white/5 rounded-3xl opacity-40">
+         <div className="flex items-center justify-center p-12 border border-dashed border-white/5 rounded-md opacity-40">
             <p className="text-xs text-center">Métriques de rétention en attente de synchronisation API</p>
          </div>
       </div>

@@ -55,7 +55,7 @@ export default function TravelMapWidget({
 
       <div className="grid md:grid-cols-2 gap-6 h-[400px]">
         {/* Map Container (2/3) */}
-        <div className="md:col-span-2 relative rounded-[2rem] overflow-hidden border border-border shadow-sm">
+        <div className="md:col-span-2 relative rounded-md overflow-hidden border border-border shadow-sm">
           <InteractiveMap>
             {/* Dashed line connecting places */}
             {coords.length > 1 && (
@@ -86,10 +86,10 @@ export default function TravelMapWidget({
                   fillOpacity: 1,
                 }}
               >
-                <Popup className="rounded-xl overflow-hidden p-0 border-0 shadow-xl">
+                <Popup className="rounded-md overflow-hidden p-0 border-0 shadow-xl">
                   <div className="w-48">
                     <img
-                      src={place.primary_image?.url || "/placeholder.svg"}
+                      src={place.primary_image?.url || "/placeholder.png"}
                       alt={place.name}
                       className="w-full h-24 object-cover"
                     />
@@ -115,7 +115,7 @@ export default function TravelMapWidget({
         </div>
 
         {/* Stats Sidebar (1/3)
-        <div className="bg-white border border-border rounded-[2rem] p-6 shadow-sm flex flex-col">
+        <div className="bg-white border border-border rounded-md p-6 shadow-sm flex flex-col">
           <div className="space-y-4 flex-1">
             {Object.entries(stats).map(([location, count], idx) => (
               <div key={idx} className="flex flex-col gap-1">
@@ -145,7 +145,7 @@ export default function TravelMapWidget({
 
           <Button
             variant="outline"
-            className="w-full rounded-xl border-border/50 mt-4 text-xs font-bold h-10 hover:bg-muted/50"
+            className="w-full rounded-md border-border/50 mt-4 text-xs font-bold h-10 hover:bg-muted/50"
           >
             Voir tous les pays
           </Button>

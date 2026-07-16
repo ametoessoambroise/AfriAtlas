@@ -13,7 +13,7 @@ function KpiCard({ title, value, icon: Icon, trend, color }: any) {
 
         <div className="flex items-center justify-between mb-4">
           <div
-            className={`p-3 rounded-xl bg-white/5 border border-white/5 text-${color}-400`}
+            className={`p-3 rounded-md bg-white/5 border border-white/5 text-${color}-400`}
           >
             <Icon className="h-6 w-6" />
           </div>

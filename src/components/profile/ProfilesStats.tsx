@@ -23,8 +23,8 @@ export function ProfileStats({ stats }: ProfileStatsProps) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
       {items.map((it, i) => (
-        <div key={i} className="bg-card border border-border p-4 rounded-3xl flex flex-col items-center text-center gap-2">
-          <div className={`p-3 rounded-2xl ${it.bg} ${it.color}`}>
+        <div key={i} className="bg-card border border-border p-4 rounded-md flex flex-col items-center text-center gap-2">
+          <div className={`p-3 rounded-md ${it.bg} ${it.color}`}>
             {it.icon}
           </div>
           <p className="text-2xl font-black">{it.val}</p>

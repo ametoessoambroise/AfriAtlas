@@ -16,7 +16,7 @@ export default function RerouteAlert({ deviated, onReroute }: RerouteAlertProps)
           exit={{ opacity: 0, height: 0 }}
           className="w-full overflow-hidden"
         >
-          <div className="bg-destructive text-destructive-foreground p-3 rounded-xl shadow-lg border border-destructive/20 flex flex-col gap-2 mt-2">
+          <div className="bg-destructive text-destructive-foreground p-3 rounded-md shadow-lg border border-destructive/20 flex flex-col gap-2 mt-2">
             <div className="flex items-start gap-2">
                <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
                <p className="text-sm font-bold leading-tight">Vous semblez vous être éloigné du trajet prévu.</p>

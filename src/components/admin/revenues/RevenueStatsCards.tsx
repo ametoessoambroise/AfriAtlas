@@ -61,7 +61,7 @@ export function RevenueStatsCards({
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-32 rounded-2xl bg-white/5 animate-pulse" />
+          <div key={i} className="h-32 rounded-md bg-white/5 animate-pulse" />
         ))}
       </div>
     );
@@ -81,7 +81,7 @@ export function RevenueStatsCards({
 
             <div className="flex items-center justify-between mb-4">
               <div
-                className={`p-3 rounded-xl bg-white/5 border border-white/5 text-${kpi.color}-400`}
+                className={`p-3 rounded-md bg-white/5 border border-white/5 text-${kpi.color}-400`}
               >
                 <kpi.icon className="h-5 w-5" />
               </div>

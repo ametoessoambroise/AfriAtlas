@@ -35,7 +35,7 @@ export default function RoutePanel({
     <div className="pointer-events-none absolute left-3 right-3 top-3 z-[1000] flex max-w-[min(100%,22rem)] flex-col gap-2 sm:left-4 sm:right-auto sm:max-w-[380px]">
       <div
         className={cn(
-          "pointer-events-auto rounded-2xl border border-border/60 bg-card/95 p-4 shadow-2xl backdrop-blur-xl",
+          "pointer-events-auto rounded-md border border-border/60 bg-card/95 p-4 shadow-2xl backdrop-blur-xl",
           "ring-1 ring-black/5 dark:ring-white/10",
         )}
       >
@@ -61,14 +61,14 @@ export default function RoutePanel({
         <div className="relative min-h-[5.5rem]">
           {routeError ? (
             <div
-              className="flex min-h-[5.5rem] flex-col items-center justify-center rounded-xl border border-destructive/30 bg-destructive/5 px-3 py-3 text-center"
+              className="flex min-h-[5.5rem] flex-col items-center justify-center rounded-md border border-destructive/30 bg-destructive/5 px-3 py-3 text-center"
               role="alert"
             >
               <p className="text-sm font-medium text-destructive">{routeError}</p>
               <p className="mt-1 text-xs text-muted-foreground">Vérifiez le mode de déplacement ou réessayez.</p>
             </div>
           ) : isLoading && !hasEta ? (
-            <div className="flex h-[5.5rem] w-full items-center justify-center gap-2 rounded-xl bg-muted/50 text-muted-foreground">
+            <div className="flex h-[5.5rem] w-full items-center justify-center gap-2 rounded-md bg-muted/50 text-muted-foreground">
               <Loader2 className="h-5 w-5 shrink-0 animate-spin" aria-hidden />
               <span className="text-sm font-medium">Calcul de l&apos;itinéraire…</span>
             </div>
@@ -77,7 +77,7 @@ export default function RoutePanel({
               <EtaDisplay distanceMeters={distance} durationSeconds={duration} />
               {isLoading ? (
                 <div
-                  className="absolute inset-0 flex items-center justify-center rounded-xl bg-background/70 backdrop-blur-[2px]"
+                  className="absolute inset-0 flex items-center justify-center rounded-md bg-background/70 backdrop-blur-[2px]"
                   aria-live="polite"
                   aria-busy="true"
                 >
@@ -87,7 +87,7 @@ export default function RoutePanel({
               ) : null}
             </div>
           ) : (
-            <div className="flex h-[5.5rem] w-full items-center justify-center rounded-xl bg-muted/50 text-sm font-medium text-muted-foreground">
+            <div className="flex h-[5.5rem] w-full items-center justify-center rounded-md bg-muted/50 text-sm font-medium text-muted-foreground">
               En attente du tracé…
             </div>
           )}

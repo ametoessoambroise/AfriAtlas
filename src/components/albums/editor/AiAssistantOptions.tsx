@@ -78,7 +78,7 @@ export default function AiAssistantOptions({ albumId }: { albumId: string }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
             onClick={() => handleAiAction(option.id)}
-            className={`relative group cursor-pointer overflow-hidden rounded-[2rem] border-2 bg-card hover:shadow-xl transition-all duration-300 ${
+            className={`relative group cursor-pointer overflow-hidden rounded-md border-2 bg-card hover:shadow-xl transition-all duration-300 ${
               activeAction === option.id
                 ? `border-${option.gradient.split("-")[1]}-500 shadow-md`
                 : "border-border/50 hover:border-primary/30"

@@ -56,7 +56,7 @@ export function RevenueChart({
               {description}
             </CardDescription>
           </div>
-          <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
+          <div className="p-2 rounded-md bg-emerald-500/10 text-emerald-400">
             <TrendingUp className="h-5 w-5" />
           </div>
         </div>

@@ -50,7 +50,7 @@ export default function MapFilters({
 
   return (
     <div className="absolute top-4 left-1/2 z-[1000] -translate-x-1/2 w-[90%] max-w-md pointer-events-auto" ref={containerRef}>
-      <div className="rounded-2xl bg-card/90 p-2 shadow-xl backdrop-blur-md border border-border/50 relative">
+      <div className="rounded-md bg-card/90 p-2 shadow-xl backdrop-blur-md border border-border/50 relative">
         <div className="relative mb-2">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
@@ -62,7 +62,7 @@ export default function MapFilters({
               setIsOpen(true);
             }}
             placeholder="Rechercher une destination..."
-            className="w-full rounded-xl bg-background py-2.5 pl-10 pr-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
+            className="w-full rounded-md bg-background py-2.5 pl-10 pr-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
           />
         </div>
         
@@ -74,7 +74,7 @@ export default function MapFilters({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="absolute left-0 right-0 top-[calc(100%+8px)] bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[320px] z-[1001]"
+              className="absolute left-0 right-0 top-[calc(100%+8px)] bg-card/95 backdrop-blur-xl border border-border/50 rounded-md shadow-2xl overflow-hidden flex flex-col max-h-[320px] z-[1001]"
             >
               {destinations.length === 0 ? (
                 <div className="p-5 text-center text-sm font-medium text-muted-foreground">

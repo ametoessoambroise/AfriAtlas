@@ -34,7 +34,7 @@ export default function AuthLayout({
           </Link>
           <div className="flex items-center gap-2 mb-4">
              <div className="bg-primary px-3 py-1 text-sm font-extrabold uppercase tracking-widest rounded-sm text-primary-foreground">
-               WorldAtlas Travel
+               Afriatlas Travel
              </div>
           </div>
           <h2 className="text-4xl font-black leading-tight text-white drop-shadow-lg">

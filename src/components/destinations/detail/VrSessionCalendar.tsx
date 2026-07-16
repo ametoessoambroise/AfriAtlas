@@ -1,25 +1,19 @@
 import { Gamepad2, Calendar as CalendarIcon, Clock } from "lucide-react";
-import { useVrSessions } from "@/hooks/queries/useVrSessions";
+import { useVrSessions, useCreateVrSession } from "@/hooks/queries/useVrSessions";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 import type { VRSessionListResponse } from "@/lib/types";
-import { VrBookingModal } from "./VrBookingModal";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { VR_TIME_SLOTS } from "@/constants/TimeSlots";
 
 export default function VrSessionCalendar({ slug }: { slug: string }) {
   const { data: sessionsResponse, isLoading, isError } = useVrSessions(slug);
+  const { mutateAsync: createSession, isPending: isCreating } = useCreateVrSession(slug);
+  const navigate = useNavigate();
   const sessions = sessionsResponse || [];
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <div className="mt-8">
-      <VrBookingModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        sessions={sessions}
-        placeSlug={slug}
-      />
 
       {/* ── Header label — même style qu'AlbumForm section header ── */}
       <div className="flex items-center gap-2 mb-1">
@@ -112,17 +106,45 @@ export default function VrSessionCalendar({ slug }: { slug: string }) {
 
           {/* CTA */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-1">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-              disabled={sessions.length === 0}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-sm transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
+            <Button
+              onClick={async (e) => {
+                e.preventDefault();
+                if (sessions.length > 0) {
+                  navigate(`/vr-sessions/${slug}/${sessions[0].id}/book`);
+                } else {
+                  try {
+                    // Create a default session on the fly
+                    const newSession = await createSession({
+                      title: "Session d'immersion VR (Automatique)",
+                      description: "Session générée automatiquement pour cette destination.",
+                      duration_minutes: 45,
+                      price: "25.00",
+                      currency: "EUR",
+                      max_participants: 10,
+                      is_active: true
+                    });
+                    if (newSession && newSession.id) {
+                      navigate(`/vr-sessions/${slug}/${newSession.id}/book`);
+                    }
+                  } catch (error) {
+                    console.error("Failed to create VR session:", error);
+                  }
+                }
+              }}
+              disabled={isCreating}
+              className={`inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-sm transition-all hover:opacity-90 active:scale-[0.98] min-h-[44px]`}
             >
-              <CalendarIcon className="h-4 w-4" />
-              Réserver mon casque VR
-            </button>
+              {isCreating ? (
+                <span className="animate-pulse">Création de la session...</span>
+              ) : (
+                <>
+                  <CalendarIcon className="h-4 w-4" />
+                  Réserver mon casque VR
+                </>
+              )}
+            </Button>
             <p className="text-xs text-muted-foreground">
-              Réservé aux membres vérifiés. Places limitées.
+              Ouvert à tous les voyageurs. Places limitées.
             </p>
           </div>
         </div>

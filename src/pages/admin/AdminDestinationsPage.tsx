@@ -71,30 +71,30 @@ export default function AdminDestinationsPage() {
         
         <div className="flex items-center gap-3">
           <BulkActions />
-          <Button className="bg-white text-black hover:bg-white/90 font-bold rounded-xl px-6">
+          <Button className="bg-white text-black hover:bg-white/90 font-bold rounded-md px-6">
             Nouvelle Destination
           </Button>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 bg-white/5 p-4 rounded-3xl border border-white/5 backdrop-blur-md">
+      <div className="flex flex-col sm:flex-row gap-4 bg-white/5 p-4 rounded-md border border-white/5 backdrop-blur-md">
         <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/20" />
           <Input 
             placeholder="Recherche dynamique (nom, ville)..." 
-            className="bg-black/20 border-white/5 pl-12 h-12 text-white text-sm focus-visible:ring-amber-500/20 rounded-2xl"
+            className="bg-black/20 border-white/5 pl-12 h-12 text-white text-sm focus-visible:ring-amber-500/20 rounded-md"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <div className="flex gap-2">
-            <Button variant="outline" className="border-white/5 bg-white/5 text-white/60 hover:text-white h-12 px-6 rounded-2xl">
+            <Button variant="outline" className="border-white/5 bg-white/5 text-white/60 hover:text-white h-12 px-6 rounded-md">
                 Toutes catégories
             </Button>
         </div>
       </div>
 
-      <div className="bg-zinc-900/40 border border-white/5 rounded-[2rem] overflow-hidden backdrop-blur-xl shadow-2xl">
+      <div className="bg-zinc-900/40 border border-white/5 rounded-md overflow-hidden backdrop-blur-xl shadow-2xl">
         <Table>
           <TableHeader className="bg-white/[0.02] border-b border-white/5">
             <TableRow className="hover:bg-transparent h-16">
@@ -114,7 +114,7 @@ export default function AdminDestinationsPage() {
                 <TableCell className="pl-6"><Checkbox className="border-white/20 data-[state=checked]:bg-amber-500" /></TableCell>
                 <TableCell>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex-shrink-0 overflow-hidden">
+                    <div className="w-12 h-12 rounded-md bg-white/5 border border-white/5 flex-shrink-0 overflow-hidden">
                       {item.primary_image ? (
                         <img src={item.primary_image.url} alt="" className="w-full h-full object-cover" />
                       ) : (
@@ -159,19 +159,19 @@ export default function AdminDestinationsPage() {
                 <TableCell className="text-right pr-6">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-10 w-10 rounded-xl p-0 text-white/40 hover:text-white hover:bg-white/5">
+                      <Button variant="ghost" className="h-10 w-10 rounded-md p-0 text-white/40 hover:text-white hover:bg-white/5">
                         <MoreVertical className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10 text-white p-2 rounded-2xl w-44 shadow-2xl">
-                      <DropdownMenuItem className="flex items-center gap-3 cursor-pointer py-2.5 rounded-xl hover:bg-white/5">
+                    <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10 text-white p-2 rounded-md w-44 shadow-2xl">
+                      <DropdownMenuItem className="flex items-center gap-3 cursor-pointer py-2.5 rounded-md hover:bg-white/5">
                         <Edit className="h-4 w-4 text-blue-400" /> <span className="font-bold text-xs uppercase tracking-tighter">Édition</span>
                       </DropdownMenuItem>
-                      <DropdownMenuItem className="flex items-center gap-3 cursor-pointer py-2.5 rounded-xl hover:bg-white/5">
+                      <DropdownMenuItem className="flex items-center gap-3 cursor-pointer py-2.5 rounded-md hover:bg-white/5">
                         <ExternalLink className="h-4 w-4 text-emerald-400" /> <span className="font-bold text-xs uppercase tracking-tighter">Aperçu</span>
                       </DropdownMenuItem>
                       <div className="h-px bg-white/5 my-1" />
-                      <DropdownMenuItem className="flex items-center gap-3 cursor-pointer py-2.5 text-red-400 rounded-xl hover:bg-red-400/10 hover:text-red-400">
+                      <DropdownMenuItem className="flex items-center gap-3 cursor-pointer py-2.5 text-red-400 rounded-md hover:bg-red-400/10 hover:text-red-400">
                         <Trash2 className="h-4 w-4" /> <span className="font-bold text-xs uppercase tracking-tighter">Supprimer</span>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -189,18 +189,18 @@ export default function AdminDestinationsPage() {
           <div className="flex items-center gap-3">
             <Button 
                 variant="outline" size="icon" 
-                className="border-white/5 bg-white/5 text-white disabled:opacity-20 rounded-xl h-10 w-10"
+                className="border-white/5 bg-white/5 text-white disabled:opacity-20 rounded-md h-10 w-10"
                 onClick={() => setPage(prev => Math.max(1, prev - 1))}
                 disabled={page === 1}
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <div className="bg-amber-500 h-10 min-w-[40px] px-4 flex items-center justify-center rounded-xl text-zinc-950 font-black text-xs">
+            <div className="bg-amber-500 h-10 min-w-[40px] px-4 flex items-center justify-center rounded-md text-zinc-950 font-black text-xs">
               {page}
             </div>
             <Button 
                 variant="outline" size="icon" 
-                className="border-white/5 bg-white/5 text-white disabled:opacity-20 rounded-xl h-10 w-10"
+                className="border-white/5 bg-white/5 text-white disabled:opacity-20 rounded-md h-10 w-10"
                 onClick={() => setPage(prev => prev + 1)}
                 disabled={data && page >= data.total_pages}
             >
@@ -220,7 +220,7 @@ function FeaturedToggle({ isFeatured, slug }: { isFeatured: boolean; slug: strin
     <button 
       disabled={isPending}
       onClick={() => mutate({ slug, body: { is_featured: !isFeatured } as any })}
-      className={`p-2 rounded-xl transition-all ${isFeatured ? 'bg-amber-500/20 text-amber-500' : 'bg-white/5 text-white/20 hover:text-white/40'} disabled:opacity-50`}
+      className={`p-2 rounded-md transition-all ${isFeatured ? 'bg-amber-500/20 text-amber-500' : 'bg-white/5 text-white/20 hover:text-white/40'} disabled:opacity-50`}
     >
       <Star className={`h-4 w-4 ${isFeatured ? 'fill-amber-500' : ''}`} />
     </button>
@@ -235,7 +235,7 @@ function VerifiedToggle({ currentStatus, slug }: { currentStatus: string; slug: 
     <button 
       disabled={isPending}
       onClick={() => mutate({ slug, body: { status: isVerified ? 'draft' : 'published' } as any })}
-      className={`p-2 rounded-xl transition-all ${isVerified ? 'bg-emerald-500/20 text-emerald-500' : 'bg-white/5 text-white/20 hover:text-white/40'} disabled:opacity-50`}
+      className={`p-2 rounded-md transition-all ${isVerified ? 'bg-emerald-500/20 text-emerald-500' : 'bg-white/5 text-white/20 hover:text-white/40'} disabled:opacity-50`}
     >
       {isVerified ? <CheckCircle2 className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
     </button>
@@ -246,20 +246,20 @@ function BulkActions() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="border-white/5 bg-white/5 text-white/60 hover:text-white rounded-xl gap-3 h-11 px-5 border border-white/5">
+                <Button variant="outline" className="border-white/5 bg-white/5 text-white/60 hover:text-white rounded-md gap-3 h-11 px-5 border border-white/5">
                     <span className="text-xs font-bold uppercase tracking-tighter">Actions Groupées</span>
                     <ChevronRight className="h-3.5 w-3.5 rotate-90 text-white/20" />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10 text-white w-56 p-2 rounded-2xl shadow-2xl">
-                <DropdownMenuItem className="gap-3 cursor-pointer py-3 rounded-xl focus:bg-white/5 font-bold text-xs uppercase tracking-tighter">
+            <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10 text-white w-56 p-2 rounded-md shadow-2xl">
+                <DropdownMenuItem className="gap-3 cursor-pointer py-3 rounded-md focus:bg-white/5 font-bold text-xs uppercase tracking-tighter">
                    <CheckCircle2 className="h-4 w-4 text-emerald-400" /> Vérifier la sélection
                 </DropdownMenuItem>
-                <DropdownMenuItem className="gap-3 cursor-pointer py-3 rounded-xl focus:bg-white/5 font-bold text-xs uppercase tracking-tighter">
+                <DropdownMenuItem className="gap-3 cursor-pointer py-3 rounded-md focus:bg-white/5 font-bold text-xs uppercase tracking-tighter">
                    <Star className="h-4 w-4 text-amber-400" /> Mettre en avant
                 </DropdownMenuItem>
                 <div className="h-px bg-white/5 my-1" />
-                <DropdownMenuItem className="gap-3 cursor-pointer py-3 text-red-500 focus:bg-red-500/10 focus:text-red-500 rounded-xl font-bold text-xs uppercase tracking-tighter">
+                <DropdownMenuItem className="gap-3 cursor-pointer py-3 text-red-500 focus:bg-red-500/10 focus:text-red-500 rounded-md font-bold text-xs uppercase tracking-tighter">
                    <Trash2 className="h-4 w-4" /> Supprimer définitivement
                 </DropdownMenuItem>
             </DropdownMenuContent>

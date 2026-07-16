@@ -8,7 +8,7 @@ export function PendingClaimsAlert({ count }: { count: number }) {
 
   return (
     <Link to="/admin/claims" className="block">
-      <Button className="w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-6 h-12 rounded-2xl animate-pulse">
+      <Button className="w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-6 h-12 rounded-md animate-pulse">
         <ShieldAlert className="h-5 w-5 mr-3" />
         {count} Revendications de lieux en attente de validation
       </Button>

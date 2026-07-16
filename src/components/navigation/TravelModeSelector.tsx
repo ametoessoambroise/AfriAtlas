@@ -15,7 +15,7 @@ export default function TravelModeSelector({ mode, onModeChange }: TravelModeSel
 
   return (
     <div
-      className="mb-4 flex gap-0.5 rounded-xl border border-border/50 bg-muted/40 p-1 shadow-inner"
+      className="mb-4 flex gap-0.5 rounded-md border border-border/50 bg-muted/40 p-1 shadow-inner"
       role="group"
       aria-label="Moyen de déplacement"
     >

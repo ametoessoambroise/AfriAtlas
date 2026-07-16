@@ -78,11 +78,11 @@ export default function StripePaymentForm({
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-surface-alt p-6 rounded-3xl border border-border">
+        <div className="bg-surface-alt p-6 rounded-md border border-border">
           <label className="text-xs font-bold uppercase text-muted-foreground mb-4 block">
             Détails de la Carte
           </label>
-          <div className="p-4 bg-background border border-border rounded-xl">
+          <div className="p-4 bg-background border border-border rounded-md">
             <CardElement options={CARD_ELEMENT_OPTIONS} />
           </div>
           <div className="mt-4 flex items-start gap-2 text-[10px] text-muted-foreground">

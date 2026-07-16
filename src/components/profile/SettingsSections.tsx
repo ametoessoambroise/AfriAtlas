@@ -64,9 +64,9 @@ export function SecurityPanel() {
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-300">
       {/* Mot de passe */}
-      <section className="bg-card border border-border p-8 rounded-[40px] space-y-6">
+      <section className="bg-card border border-border p-8 rounded-md space-y-6">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-primary/10 text-primary rounded-2xl">
+          <div className="p-2.5 bg-primary/10 text-primary rounded-md">
             <Key className="w-6 h-6" />
           </div>
           <div>
@@ -84,7 +84,7 @@ export function SecurityPanel() {
                 required
                 value={passwordData.current_password}
                 onChange={e => setPasswordData({ ...passwordData, current_password: e.target.value })}
-                className="w-full bg-background border border-border rounded-2xl px-4 py-3 focus:border-primary outline-none transition-all"
+                className="w-full bg-background border border-border rounded-md px-4 py-3 focus:border-primary outline-none transition-all"
               />
             </div>
             <div>
@@ -94,7 +94,7 @@ export function SecurityPanel() {
                 required
                 value={passwordData.new_password}
                 onChange={e => setPasswordData({ ...passwordData, new_password: e.target.value })}
-                className="w-full bg-background border border-border rounded-2xl px-4 py-3 focus:border-primary outline-none transition-all"
+                className="w-full bg-background border border-border rounded-md px-4 py-3 focus:border-primary outline-none transition-all"
               />
             </div>
             <div>
@@ -104,7 +104,7 @@ export function SecurityPanel() {
                 required
                 value={passwordData.confirm_password}
                 onChange={e => setPasswordData({ ...passwordData, confirm_password: e.target.value })}
-                className="w-full bg-background border border-border rounded-2xl px-4 py-3 focus:border-primary outline-none transition-all"
+                className="w-full bg-background border border-border rounded-md px-4 py-3 focus:border-primary outline-none transition-all"
               />
             </div>
           </div>
@@ -120,9 +120,9 @@ export function SecurityPanel() {
       </section>
 
       {/* Sessions actives */}
-      <section className="bg-card border border-border p-8 rounded-[40px] space-y-6">
+      <section className="bg-card border border-border p-8 rounded-md space-y-6">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-blue-500/10 text-blue-500 rounded-2xl">
+          <div className="p-2.5 bg-blue-500/10 text-blue-500 rounded-md">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
@@ -131,7 +131,7 @@ export function SecurityPanel() {
           </div>
         </div>
 
-        <div className="bg-surface-alt p-6 rounded-3xl border border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="bg-surface-alt p-6 rounded-md border border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
             <p className="text-sm font-bold">Sécurité renforcée</p>
             <p className="text-xs text-muted-foreground">Cette action révoquera tous les tokens sauf celui-ci.</p>
@@ -139,7 +139,7 @@ export function SecurityPanel() {
           <button
             disabled={isLoggingOutAll}
             onClick={handleLogoutAll}
-            className="w-full md:w-auto px-6 py-3 border border-border rounded-2xl text-xs font-black uppercase tracking-wider hover:bg-background transition-colors flex items-center justify-center gap-2"
+            className="w-full md:w-auto px-6 py-3 border border-border rounded-md text-xs font-black uppercase tracking-wider hover:bg-background transition-colors flex items-center justify-center gap-2"
           >
             {isLoggingOutAll ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogOut className="w-4 h-4" />}
             Déconnecter tout le monde
@@ -178,9 +178,9 @@ export function PreferencesPanel() {
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
       {/* Apparence & Langue */}
-      <section className="bg-card border border-border p-8 rounded-[40px] space-y-6">
+      <section className="bg-card border border-border p-8 rounded-md space-y-6">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-yellow-500/10 text-yellow-500 rounded-2xl">
+          <div className="p-2.5 bg-yellow-500/10 text-yellow-500 rounded-md">
             {theme === "dark" ? <Moon className="w-6 h-6" /> : <Sun className="w-6 h-6" />}
           </div>
           <div>
@@ -190,7 +190,7 @@ export function PreferencesPanel() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex items-center justify-between p-6 bg-surface-alt rounded-3xl border border-border/50">
+          <div className="flex items-center justify-between p-6 bg-surface-alt rounded-md border border-border/50">
             <div className="space-y-1">
               <Label className="text-sm font-bold block">Mode Sombre</Label>
               <p className="text-[10px] text-muted-foreground">Interface nocturne</p>
@@ -201,12 +201,12 @@ export function PreferencesPanel() {
             />
           </div>
 
-          <div className="flex items-center justify-between p-6 bg-surface-alt rounded-3xl border border-border/50">
+          <div className="flex items-center justify-between p-6 bg-surface-alt rounded-md border border-border/50">
             <div className="space-y-1">
               <Label className="text-sm font-bold block">Langue</Label>
               <p className="text-[10px] text-muted-foreground">Langue de l'application</p>
             </div>
-            <select className="bg-background border border-border rounded-xl px-3 py-1.5 text-xs font-bold outline-none focus:border-primary transition-all">
+            <select className="bg-background border border-border rounded-md px-3 py-1.5 text-xs font-bold outline-none focus:border-primary transition-all">
               <option value="fr">Français</option>
               <option value="en">English</option>
             </select>
@@ -215,9 +215,9 @@ export function PreferencesPanel() {
       </section>
 
       {/* Notifications */}
-      <section className="bg-card border border-border p-8 rounded-[40px] space-y-6">
+      <section className="bg-card border border-border p-8 rounded-md space-y-6">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-green-500/10 text-green-500 rounded-2xl">
+          <div className="p-2.5 bg-green-500/10 text-green-500 rounded-md">
             <Bell className="w-6 h-6" />
           </div>
           <div>
@@ -232,9 +232,9 @@ export function PreferencesPanel() {
             { id: "push", label: "Alertes Push", desc: "Notifications instantanées sur l'application", icon: <Bell className="w-4 h-4" /> },
             { id: "offers", label: "Offres Flash", desc: "Promotions exclusives Atlas Voyages", icon: <ShieldCheck className="w-4 h-4" /> },
           ].map((item) => (
-            <div key={item.id} className="flex items-center justify-between p-6 bg-surface-alt rounded-3xl border border-border/50">
+            <div key={item.id} className="flex items-center justify-between p-6 bg-surface-alt rounded-md border border-border/50">
               <div className="flex items-center gap-4">
-                <div className="p-2 bg-background rounded-xl text-muted-foreground">
+                <div className="p-2 bg-background rounded-md text-muted-foreground">
                   {item.icon}
                 </div>
                 <div className="space-y-0.5">
@@ -266,9 +266,9 @@ export function PrivacyPanel() {
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
-      <section className="bg-card border border-border p-8 rounded-[40px] space-y-6">
+      <section className="bg-card border border-border p-8 rounded-md space-y-6">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-indigo-500/10 text-indigo-500 rounded-2xl">
+          <div className="p-2.5 bg-indigo-500/10 text-indigo-500 rounded-md">
             <Eye className="w-6 h-6" />
           </div>
           <div>
@@ -283,9 +283,9 @@ export function PrivacyPanel() {
             { id: "share", label: "Partage de données", desc: "Partager l'historique avec les partenaires", icon: <Database className="w-4 h-4" /> },
             { id: "analytics", label: "Analyses anonymes", desc: "Aidez-nous à améliorer Atlas Voyages", icon: <ShieldCheck className="w-4 h-4" /> },
           ].map((item) => (
-            <div key={item.id} className="flex items-center justify-between p-6 bg-surface-alt rounded-3xl border border-border/50">
+            <div key={item.id} className="flex items-center justify-between p-6 bg-surface-alt rounded-md border border-border/50">
               <div className="flex items-center gap-4">
-                <div className="p-2 bg-background rounded-xl text-muted-foreground">
+                <div className="p-2 bg-background rounded-md text-muted-foreground">
                   {item.icon}
                 </div>
                 <div className="space-y-0.5">

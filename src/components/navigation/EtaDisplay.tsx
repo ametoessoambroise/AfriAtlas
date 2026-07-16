@@ -18,7 +18,7 @@ export default function EtaDisplay({ durationSeconds, distanceMeters }: EtaDispl
     km >= 1 ? `${km.toFixed(1)} km` : `${Math.round(distanceMeters)} m`;
 
   return (
-    <div className="flex w-full flex-col gap-1 rounded-xl border border-border/60 bg-gradient-to-br from-card to-muted/20 p-4 shadow-sm">
+    <div className="flex w-full flex-col gap-1 rounded-md border border-border/60 bg-gradient-to-br from-card to-muted/20 p-4 shadow-sm">
       <h3 className="mb-2 text-sm font-semibold text-muted-foreground">Résumé du trajet</h3>
       
       <div className="flex items-center justify-between">

@@ -1,5 +1,5 @@
 /**
- * ADVERTISEMENTS API Client — WorldAtlas Travel
+ * ADVERTISEMENTS API Client — Afriatlas Travel
  * ========================================
  * AUTO-GENERATED — Ne pas modifier manuellement.
  * Source    : openapi.json (Pydantic schemas FastAPI)
@@ -23,7 +23,7 @@ import { fetchWithAuth } from "./api-client";
  * @auth   Bearer token required
  */
 export async function getUserAdvertisements(params?: { status_filter?: T.AdStatus | null }): Promise<Array<Record<string, unknown>>> {
-  const url = `${getApiBaseUrl()}/api/v1/advertisements/ads`;
+  const url = `${getApiBaseUrl()}/api/v1/advertisements/ads/me`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",

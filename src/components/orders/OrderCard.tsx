@@ -13,8 +13,8 @@ interface OrderCardProps {
 
 export function OrderCard({ order }: OrderCardProps) {
   return (
-    <div className="bg-card border border-border rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row gap-6 items-center">
-      <div className="h-20 w-20 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shrink-0">
+    <div className="bg-card border border-border rounded-md p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row gap-6 items-center">
+      <div className="h-20 w-20 bg-primary/10 text-primary rounded-md flex items-center justify-center shrink-0">
         <ShoppingBag className="h-8 w-8" />
       </div>
 
@@ -38,7 +38,7 @@ export function OrderCard({ order }: OrderCardProps) {
       </div>
 
       <div className="w-full md:w-auto shrink-0 flex justify-end">
-        <Button asChild variant="outline" className="w-full md:w-auto rounded-xl">
+        <Button asChild variant="outline" className="w-full md:w-auto rounded-md">
           <Link to={`/orders/${order.id}`}>
             Voir la commande
             <ChevronRight className="ml-2 h-4 w-4" />

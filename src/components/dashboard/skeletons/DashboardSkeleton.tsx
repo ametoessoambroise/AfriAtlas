@@ -30,7 +30,7 @@ export default function DashboardSkeleton() {
           <div className="lg:col-span-4 h-[340px]">
             <WidgetSkeleton height="100%" />
           </div>
-          <div className="lg:col-span-3 h-[340px] bg-card rounded-[32px] p-6 border border-border space-y-6">
+          <div className="lg:col-span-3 h-[340px] bg-card rounded-md p-6 border border-border space-y-6">
             <div className="flex justify-between items-center mb-2">
               <Skeleton className="w-32 h-5 rounded" />
               <Skeleton className="w-8 h-8 rounded-lg" />
@@ -43,7 +43,7 @@ export default function DashboardSkeleton() {
 
         {/* Row 3: Grid (Top Places, Gauge, Quick Actions) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-5 bg-card rounded-[32px] p-6 border border-border space-y-5">
+          <div className="lg:col-span-5 bg-card rounded-md p-6 border border-border space-y-5">
              <div className="flex justify-between items-center mb-2">
               <Skeleton className="w-40 h-5 rounded" />
               <Skeleton className="w-8 h-8 rounded-lg" />

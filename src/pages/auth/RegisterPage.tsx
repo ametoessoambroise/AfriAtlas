@@ -11,6 +11,7 @@ import { getErrorMessage } from "@/lib/utils/errorMessages";
 import AuthLayout from "@/components/auth/AuthLayout";
 import OAuthButtons from "@/components/auth/OAuthButtons";
 import PasswordStrength from "@/components/auth/PasswordStrength";
+import { Input } from "@/components/ui/input";
 
 const registerSchema = z.object({
   first_name: z.string().min(2, "Le prénom doit contenir au moins 2 caractères."),
@@ -92,7 +93,7 @@ export default function RegisterPage() {
                  {...register("first_name")}
                  type="text"
                  placeholder="Prénom"
-                 className={`w-full bg-surface-alt border ${errors.first_name ? 'border-destructive' : 'border-border/60'} rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
+                 className={`w-full bg-surface-alt border ${errors.first_name ? 'border-destructive' : 'border-border/60'} rounded-md py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
                />
              </div>
              {errors.first_name && <p className="text-xs text-destructive mt-1 font-medium">{errors.first_name.message}</p>}
@@ -103,7 +104,7 @@ export default function RegisterPage() {
                {...register("last_name")}
                type="text"
                placeholder="Nom"
-               className={`w-full bg-surface-alt border ${errors.last_name ? 'border-destructive' : 'border-border/60'} rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-primary`}
+               className={`w-full bg-surface-alt border ${errors.last_name ? 'border-destructive' : 'border-border/60'} rounded-md py-3 px-4 text-sm focus:outline-none focus:border-primary`}
              />
              {errors.last_name && <p className="text-xs text-destructive mt-1 font-medium">{errors.last_name.message}</p>}
           </div>
@@ -116,7 +117,7 @@ export default function RegisterPage() {
                {...register("email")}
                type="email"
                placeholder="Adresse email"
-               className={`w-full bg-surface-alt border ${errors.email ? 'border-destructive' : 'border-border/60'} rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
+               className={`w-full bg-surface-alt border ${errors.email ? 'border-destructive' : 'border-border/60'} rounded-md py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
              />
            </div>
            {errors.email && <p className="text-xs text-destructive mt-1 font-medium">{errors.email.message}</p>}
@@ -125,11 +126,11 @@ export default function RegisterPage() {
         <div>
            <div className="relative">
              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-             <input
+             <Input
                {...register("password")}
                type="password"
                placeholder="Mot de passe"
-               className={`w-full bg-surface-alt border ${errors.password ? 'border-destructive' : 'border-border/60'} rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
+               className={`w-full bg-surface-alt border ${errors.password ? 'border-destructive' : 'border-border/60'} rounded-md h-12 pl-10 pr-4 text-sm focus:ring-primary/20 font-bold`}
              />
            </div>
            <PasswordStrength password={pwValue} />
@@ -143,7 +144,7 @@ export default function RegisterPage() {
                {...register("password_confirm")}
                type="password"
                placeholder="Confirmer le mot de passe"
-               className={`w-full bg-surface-alt border ${errors.password_confirm ? 'border-destructive' : 'border-border/60'} rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
+               className={`w-full bg-surface-alt border ${errors.password_confirm ? 'border-destructive' : 'border-border/60'} rounded-md py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
              />
            </div>
            {errors.password_confirm && <p className="text-xs text-destructive mt-1 font-medium">{errors.password_confirm.message}</p>}
@@ -162,7 +163,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={isRegistering}
-          className="w-full btn-primary py-3 flex justify-center mt-4 font-bold"
+          className="w-full btn-primary py-3 flex justify-center mt-4 font-bold rounded-md"
         >
           {isRegistering ? <Loader2 className="w-5 h-5 animate-spin" /> : "S'inscrire"}
         </button>

@@ -167,16 +167,16 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary text-primary-foreground font-semibold rounded-full px-8 py-3 transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5;
+    @apply bg-primary text-primary-foreground font-semibold rounded-md px-8 py-3 transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5;
   }
 
   .btn-outline-white {
-    @apply border-2 border-white/80 text-white font-semibold rounded-full px-8 py-3 transition-all duration-200 hover:bg-white/10;
+    @apply border-2 border-white/80 text-white font-semibold rounded-md px-8 py-3 transition-all duration-200 hover:bg-white/10;
   }
 
   /* Légère teinte jungle + bordure subtile */
   .card-destination {
-    @apply bg-card rounded-2xl border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+    @apply bg-card rounded-md border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
     box-shadow: 0 1px 3px hsla(160, 55%, 10%, 0.08);
   }
 
@@ -186,17 +186,17 @@
 
   /* Badge : vert forêt en light, vert bioluminescent en dark */
   .badge-rating {
-    @apply bg-primary text-primary-foreground rounded-full px-2.5 py-0.5 text-sm font-semibold;
+    @apply bg-primary text-primary-foreground rounded-md px-2.5 py-0.5 text-sm font-semibold;
   }
 
   /* Badge secondaire : or tropical */
   .badge-secondary {
-    @apply bg-secondary text-secondary-foreground rounded-full px-2.5 py-0.5 text-sm font-semibold;
+    @apply bg-secondary text-secondary-foreground rounded-md px-2.5 py-0.5 text-sm font-semibold;
   }
 
   /* Badge accent : flamant pour promos / alertes */
   .badge-accent {
-    @apply bg-accent text-accent-foreground rounded-full px-2.5 py-0.5 text-sm font-semibold;
+    @apply bg-accent text-accent-foreground rounded-md px-2.5 py-0.5 text-sm font-semibold;
   }
 
   /* Titres éditoriaux – Cormorant en italique pour l'effet magazine */
@@ -228,7 +228,7 @@
 
   /* Titres premium – Georgia stack */
   .font-premium {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: Georgia, "Times New Roman", Times, serif;
   }
 
   /* Utility for hiding scrollbar but keeping functionality */
@@ -238,6 +238,27 @@
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+
+  .premium-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .premium-shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsla(var(--primary), 0.05),
+      transparent
+    );
+    animation: shimmer 2s infinite;
   }
 }
 
@@ -249,4 +270,20 @@
 .dark .overlay {
   backdrop-filter: blur(1px);
   background-color: rgba(12, 18, 32, 0.65);
+}
+
+*::selection {
+  @apply bg-primary text-background;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-foreground;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-full;
 }

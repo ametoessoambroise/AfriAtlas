@@ -74,7 +74,7 @@ export function FavoriteButton({ destination }: ButtonsProps) {
     <button
       onClick={handleToggle}
       disabled={isPending}
-      className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-3 text-sm font-semibold transition-all hover:bg-surface-alt hover:border-primary/40 shadow-sm disabled:opacity-60"
+      className="flex items-center gap-2 rounded-md border border-border bg-card px-4 py-3 text-sm font-semibold transition-all hover:bg-surface-alt hover:border-primary/40 shadow-sm disabled:opacity-60"
       aria-label={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
     >
       {isPending ? (
@@ -156,7 +156,7 @@ export function AlbumPickerModal({ destination }: ButtonsProps) {
     <>
       <button
         onClick={handleOpen}
-        className="flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 py-3 text-sm font-semibold transition-all hover:bg-surface-alt hover:border-primary/40 shadow-sm"
+        className="flex items-center justify-center gap-2 rounded-md border border-border bg-card px-4 py-3 text-sm font-semibold transition-all hover:bg-surface-alt hover:border-primary/40 shadow-sm"
       >
         <FolderPlus className="h-5 w-5 text-muted-foreground" />
         <span>À un album</span>
@@ -266,7 +266,7 @@ export function NavigateButton({ destination }: ButtonsProps) {
   return (
     <Link
       to={`/map/${destination.slug}`}
-      className="flex items-center justify-center gap-2 rounded-xl border border-transparent bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-md transition-all hover:bg-primary/90 hover:shadow-lg active:scale-95"
+      className="flex items-center justify-center gap-2 rounded-md border border-transparent bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-md transition-all hover:bg-primary/90 hover:shadow-lg active:scale-95"
     >
       <Navigation className="h-5 w-5" />
       Lancer l'itinéraire

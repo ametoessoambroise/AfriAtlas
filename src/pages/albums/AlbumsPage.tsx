@@ -1,54 +1,141 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Camera, Plus } from "lucide-react";
-import { Link } from "react-router-dom";
+import {
+  Camera,
+  Plus,
+  Search,
+  Filter,
+  LayoutGrid,
+  List as ListIcon,
+  ChevronDown,
+  Calendar,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import AlbumsGrid from "@/components/albums/AlbumsGrid";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 
 const AlbumsPage = () => {
-  return (
-    <div className="min-h-screen pt-24 pb-20 px-4">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-                <Camera className="w-5 h-5 text-primary" />
-              </div>
-              <span className="text-sm font-black uppercase tracking-[0.3em] text-primary">
-                Souvenirs
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight">
-              Mes Albums <br />
-              <span className="text-muted-foreground/40 italic">de Voyage</span>
-            </h1>
-          </motion.div>
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [dateFilter, setDateFilter] = useState("all");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <Link
-              to="/albums/new"
-              className="btn-primary flex items-center gap-2 px-8 py-4 rounded-2xl shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all text-xs font-black uppercase tracking-widest"
+  return (
+    <DashboardLayout>
+      <div className="p-6 lg:p-8 space-y-6 animate-in fade-in duration-700">
+        {/* ── PAGE HEADER ─────────────────────────────────────────────────── */}
+        <div className="flex items-center justify-between mb-2">
+          <div>
+            <h1 className="text-2xl font-black text-foreground tracking-tight uppercase">
+              Mes <span className="text-primary">Albums</span> de Voyage
+            </h1>
+            <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest mt-1 opacity-70">
+              Organisez et revivez vos plus beaux souvenirs de voyage.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => navigate("/albums/new")}
+              className="flex items-center hover:bg-primary/90 transition-all gap-2 px-4 py-2.5 rounded-md border border-border bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/10"
             >
-              <Plus className="w-4 h-4" />
-              Nouvel Album
-            </Link>
-          </motion.div>
+              <Plus className="w-4 h-4" /> Nouvel Album
+            </button>
+          </div>
         </div>
 
-        {/* Filters/Stats could go here if needed */}
+        {/* Filters Bar */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 mb-4 animate-in slide-in-from-bottom-4 duration-500 delay-100">
+          <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto">
+            {/* Search */}
+            <div className="relative w-full md:w-80">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder="Rechercher un album..."
+                className="pl-12 h-12 rounded-md border-border bg-card shadow-sm focus:ring-primary/20 text-xs font-bold"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
 
-        {/* Albums Grid */}
-        <AlbumsGrid />
+            {/* Status Filter */}
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-full md:w-48 h-12 rounded-md border border-border bg-card text-xs font-bold uppercase tracking-widest">
+                <div className="flex items-center gap-3">
+                  <Filter className="w-4 h-4 text-primary" />
+                  <SelectValue placeholder="Tous les statuts" />
+                </div>
+              </SelectTrigger>
+              <SelectContent className="rounded-md border border-border bg-card shadow-xl">
+                <SelectItem value="all" className="text-xs font-bold uppercase tracking-widest py-3">Tous les statuts</SelectItem>
+                <SelectItem value="public" className="text-xs font-bold uppercase tracking-widest py-3">Public</SelectItem>
+                <SelectItem value="private" className="text-xs font-bold uppercase tracking-widest py-3">Privé</SelectItem>
+              </SelectContent>
+            </Select>
+
+            {/* Date Filter */}
+            <Select value={dateFilter} onValueChange={setDateFilter}>
+              <SelectTrigger className="w-full md:w-48 h-12 rounded-md border border-border bg-card text-xs font-bold uppercase tracking-widest">
+                <div className="flex items-center gap-3">
+                  <Calendar className="w-4 h-4 text-primary" />
+                  <SelectValue placeholder="Toutes les dates" />
+                </div>
+              </SelectTrigger>
+              <SelectContent className="rounded-md border border-border bg-card shadow-xl">
+                <SelectItem value="all" className="text-xs font-bold uppercase tracking-widest py-3">Toutes les dates</SelectItem>
+                <SelectItem value="2026" className="text-xs font-bold uppercase tracking-widest py-3">2026</SelectItem>
+                <SelectItem value="2025" className="text-xs font-bold uppercase tracking-widest py-3">2025</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* View Toggle */}
+          <div className="flex items-center gap-2 p-1 bg-card border border-border rounded-md shadow-sm self-end lg:self-auto">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={cn(
+                "p-2.5 rounded-lg transition-all",
+                viewMode === "grid"
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                  : "text-muted-foreground hover:bg-muted/10",
+              )}
+            >
+              <LayoutGrid className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setViewMode("list")}
+              className={cn(
+                "p-2.5 rounded-lg transition-all",
+                viewMode === "list"
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                  : "text-muted-foreground hover:bg-muted/10",
+              )}
+            >
+              <ListIcon className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Albums Grid/List */}
+        <div className="animate-in slide-in-from-bottom-4 duration-500 delay-200">
+          <AlbumsGrid
+            searchQuery={searchQuery}
+            statusFilter={statusFilter}
+            dateFilter={dateFilter}
+            viewMode={viewMode}
+          />
+        </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

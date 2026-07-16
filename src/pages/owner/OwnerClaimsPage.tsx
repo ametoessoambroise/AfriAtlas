@@ -121,15 +121,15 @@ export default function OwnerClaimsPage() {
       </Card>
 
       {/* Claims List */}
-      <div className="bg-zinc-900/50 border border-white/10 rounded-xl overflow-hidden shadow-xl">
+      <div className="bg-zinc-900/50 border border-white/10 rounded-md overflow-hidden shadow-xl">
         <Table>
           <TableHeader className="bg-white/5">
-            <TableRow className="border-white/10">
-              <TableHead className="text-white/40 uppercase text-[10px] tracking-widest px-6">Lieu demandé</TableHead>
-              <TableHead className="text-white/40 uppercase text-[10px] tracking-widest px-6">Date demande</TableHead>
-              <TableHead className="text-white/40 uppercase text-[10px] tracking-widest px-6">Statut</TableHead>
-              <TableHead className="text-white/40 uppercase text-[10px] tracking-widest px-6">Notes Admin</TableHead>
-              <TableHead className="text-right px-6" />
+            <TableRow className="border-white/10 hover:bg-transparent">
+              <TableHead className="text-white/40 uppercase text-[10px] font-black tracking-widest px-6 h-14">Lieu demandé</TableHead>
+              <TableHead className="text-white/40 uppercase text-[10px] font-black tracking-widest px-6 h-14">Date demande</TableHead>
+              <TableHead className="text-white/40 uppercase text-[10px] font-black tracking-widest px-6 h-14">Statut</TableHead>
+              <TableHead className="text-white/40 uppercase text-[10px] font-black tracking-widest px-6 h-14">Notes Admin</TableHead>
+              <TableHead className="text-right px-6 h-14" />
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -224,24 +224,26 @@ function NewClaimForm({ onClose }: { onClose: () => void }) {
       </DialogHeader>
 
       <div className="space-y-4">
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+...
         <div className="space-y-2">
-          <label className="text-xs text-white/40 uppercase font-bold tracking-widest">Choisir le lieu</label>
-          <select 
-            className="w-full bg-white/5 border border-white/10 rounded-xl h-11 px-4 text-white outline-none focus:border-amber-500/50"
-            value={selectedPlaceId}
-            onChange={(e) => setSelectedPlaceId(e.target.value)}
-          >
-            <option value="">Sélectionner un établissement...</option>
-            {allPlaces?.items.map(p => (
-              <option key={p.id} value={p.id}>{p.name}</option>
-            ))}
-          </select>
+          <label className="text-[10px] font-black text-white/40 uppercase tracking-widest block px-1">Choisir le lieu</label>
+          <Select value={selectedPlaceId} onValueChange={setSelectedPlaceId}>
+            <SelectTrigger className="w-full bg-white/5 border border-white/10 rounded-md h-11 px-4 text-white outline-none focus:ring-amber-500/20">
+              <SelectValue placeholder="Sélectionner un établissement..." />
+            </SelectTrigger>
+            <SelectContent className="bg-zinc-950 border-white/10 text-white">
+              {allPlaces?.items.map(p => (
+                <SelectItem key={p.id} value={p.id} className="focus:bg-white/10 focus:text-white">{p.name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="space-y-2">
           <label className="text-xs text-white/40 uppercase font-bold tracking-widest">Justification (Message)</label>
           <textarea 
-            className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white min-h-[80px] outline-none focus:border-amber-500/50"
+            className="w-full bg-white/5 border border-white/10 rounded-md p-3 text-white min-h-[80px] outline-none focus:border-amber-500/50"
             placeholder="Décrivez brièvement votre rôle ou la situation..."
             value={justification}
             onChange={(e) => setJustification(e.target.value)}
@@ -250,7 +252,7 @@ function NewClaimForm({ onClose }: { onClose: () => void }) {
 
         <div className="space-y-2">
           <label className="text-xs text-white/40 uppercase font-bold tracking-widest">Documents justificatifs</label>
-          <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 text-center hover:border-amber-500/30 transition-colors cursor-pointer bg-white/[0.02]">
+          <div className="border-2 border-dashed border-white/10 rounded-md p-8 text-center hover:border-amber-500/30 transition-colors cursor-pointer bg-white/[0.02]">
             <Upload className="h-8 w-8 text-white/20 mx-auto mb-3" />
             <div className="text-sm font-medium text-white">Cliquez pour uploader</div>
             <p className="text-[10px] text-white/30 mt-1 uppercase tracking-tighter">PDF, JPG ou PNG (Max 5MB)</p>

@@ -1,5 +1,5 @@
 /**
- * ANALYTICS Types — WorldAtlas Travel
+ * ANALYTICS Types — Afriatlas Travel
  * ================================
  * Based on Pydantic schemas.
  */

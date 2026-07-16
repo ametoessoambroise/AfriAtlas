@@ -32,7 +32,7 @@ const PricingSwitchSkeleton = () => (
 
 const PlanCardSkeleton = ({ popular = false }: { popular?: boolean }) => (
   <div
-    className={`relative flex flex-col h-full rounded-xl border border-neutral-200 shadow-md bg-white p-6 ${
+    className={`relative flex flex-col h-full rounded-md border border-neutral-200 shadow-md bg-white p-6 ${
       popular ? "ring-2 ring-blue-200" : ""
     }`}
   >
@@ -53,7 +53,7 @@ const PlanCardSkeleton = ({ popular = false }: { popular?: boolean }) => (
     </div>
 
     {/* CTA Button */}
-    <ShimmerBox className="h-14 w-full rounded-xl mb-8" />
+    <ShimmerBox className="h-14 w-full rounded-md mb-8" />
 
     {/* Features */}
     <ul className="space-y-4 mb-8 flex-1">
@@ -100,7 +100,7 @@ export function PricingSkeleton() {
         <div className="text-center mb-10 max-w-3xl mx-auto relative z-10 space-y-4">
           <div className="flex flex-col items-center gap-3">
             <ShimmerBox className="h-12 w-80 sm:w-[480px]" />
-            <ShimmerBox className="h-10 w-36 rounded-2xl" />
+            <ShimmerBox className="h-10 w-36 rounded-md" />
           </div>
           <div className="flex flex-col items-center gap-2 mt-4">
             <ShimmerBox className="h-5 w-72 sm:w-96" />

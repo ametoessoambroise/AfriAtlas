@@ -71,7 +71,7 @@ export function EditImageCaptionDialog({
         )}
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[520px] p-0 gap-0 overflow-hidden rounded-2xl border border-border bg-background">
+      <DialogContent className="sm:max-w-[520px] p-0 gap-0 overflow-hidden rounded-md border border-border bg-background">
         {/* ── En-tête ── */}
         <div className="px-6 pt-6 pb-5">
           <h2 className="font-semibold text-foreground">

@@ -51,20 +51,18 @@ export async function createReview(data: ReviewCreate): Promise<ReviewResponse> 
  * Lister avis d'une destination (paginé)
  */
 export async function getDestinationReviews(
-  destinationId: string, 
+  slug: string, 
   params?: { page?: number; per_page?: number }
 ): Promise<PaginatedReviewsResponse> {
   const qs = params ? `?${new URLSearchParams(params as any)}` : "";
-  // Route corrigée pour correspondre au prefix /reviews du backend
-  return request<PaginatedReviewsResponse>(`/reviews/destinations/${destinationId}/reviews${qs}`);
+  return request<PaginatedReviewsResponse>(`/places/${slug}/reviews${qs}`);
 }
 
 /**
  * Résumé des notes d'une destination
  */
-export async function getDestinationReviewsSummary(destinationId: string): Promise<DestinationReviewsSummary> {
-  // Route corrigée pour correspondre au prefix /reviews du backend
-  return request<DestinationReviewsSummary>(`/reviews/destinations/${destinationId}/reviews/summary`);
+export async function getDestinationReviewsSummary(slug: string): Promise<DestinationReviewsSummary> {
+  return request<DestinationReviewsSummary>(`/places/${slug}/reviews/summary`);
 }
 
 /**

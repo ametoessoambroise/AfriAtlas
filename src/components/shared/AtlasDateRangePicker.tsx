@@ -32,7 +32,7 @@ export function AtlasDateRangePicker({
             id="date"
             variant="outline"
             className={cn(
-              "w-fit min-w-[260px] justify-between text-left font-bold rounded-xl h-11 transition-all",
+              "w-fit min-w-[260px] justify-between text-left font-bold rounded-md h-11 transition-all",
               variant === "outline" ? "bg-zinc-900/40 border-white/5 text-white/60 hover:bg-white/5 hover:border-white/10 hover:text-white" : "",
               !date && "text-muted-foreground",
             )}
@@ -58,7 +58,7 @@ export function AtlasDateRangePicker({
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto p-0 bg-zinc-950 border-white/10 shadow-2xl shadow-black rounded-2xl overflow-hidden"
+          className="w-auto p-0 bg-zinc-950 border-white/10 shadow-2xl shadow-black rounded-md overflow-hidden"
           align="start"
         >
           <Calendar

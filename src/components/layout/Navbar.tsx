@@ -20,6 +20,7 @@ const getNavLinks = (user: any) => {
     { label: "Destinations", href: "/destinations" },
     { label: "Explorer", href: "/carte" },
     { label: "Albums", href: "/albums" },
+    { label: "Voyager", href: "/tripplanification" },
     { label: "Abonnements", href: "/pricing" },
   ];
 
@@ -109,7 +110,7 @@ const MobileMenu = ({
               to="/"
               onClick={onClose}
               className="flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 touch-manipulation"
-              aria-label="WorldAtlas Travel, accueil"
+              aria-label="AfriAtlas Travel, accueil"
             >
               <img
                 src="/favicon.ico"
@@ -119,7 +120,7 @@ const MobileMenu = ({
                 className="h-12 bg-white w-12 rounded-full object-cover"
               />
               <span className="text-sm font-semibold uppercase tracking-widest text-white/90">
-                WorldAtlas
+                AfriAtlas
               </span>
             </Link>
           </div>
@@ -151,7 +152,7 @@ const MobileMenu = ({
           {/* Divider + footer */}
           <div className="mt-auto border-t border-white/8 pt-6">
             <p className="text-white/20 text-xs tracking-widest uppercase">
-              WorldAtlas Travel
+              AfriAtlas Travel
             </p>
           </div>
         </motion.div>
@@ -273,15 +274,15 @@ function NavBar() {
     <>
       <div
         className={cn(
-          "fixed top-2 z-[9999] w-full flex px-2 sm:px-4 lg:px-8 transition-all duration-300",
+          "fixed top-2 z-[9999] w-full flex items-center justify-center px-2 sm:px-4 lg:px-8 transition-all duration-300",
           isScrolled && "top-0 sm:top-2",
         )}
       >
         <motion.div
-          className="relative flex items-center border border-white/15 backdrop-blur-md overflow-hidden mx-auto"
+          className="relative w-full flex items-center border border-white/15 backdrop-blur-md overflow-hidden mx-auto"
           animate={isScrolled ? "shrunk" : "expanded"}
           variants={{
-            expanded: {
+            expanded: { 
               width: "100%",
               transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
             },
@@ -313,7 +314,7 @@ function NavBar() {
             <Link
               to="/"
               className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent touch-manipulation"
-              aria-label="WorldAtlas Travel, accueil"
+              aria-label="AfriAtlas Travel, accueil"
             >
               <motion.img
                 src="/favicon.ico"
@@ -351,7 +352,7 @@ function NavBar() {
                   },
                 }}
               >
-                WorldAtlas
+                AfriAtlas
               </motion.span>
             </Link>
           </motion.div>

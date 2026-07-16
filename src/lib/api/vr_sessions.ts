@@ -1,5 +1,5 @@
 /**
- * VR SESSIONS API Client — WorldAtlas Travel
+ * VR SESSIONS API Client — Afriatlas Travel
  * =====================================
  * AUTO-GENERATED — Ne pas modifier manuellement.
  * Source    : openapi.json (Pydantic schemas FastAPI)
@@ -14,14 +14,15 @@ import { getAccessToken } from "./token";
 import { ApiError } from "./error-handler";
 
 // ---------------------------------------------------------------------------
-
 /**
  * List Vr Sessions
  * List all VR sessions for a place.
  * @method GET /api/v1/places/{slug}/vr-sessions
  */
-export async function listVrSessions(params: { slug: string }): Promise<Array<T.VRSessionListResponse>> {
-  const url = `${getApiBaseUrl()}/api/v1/places/${params.slug}/vr-sessions`;
+export async function listVrSessions(params?: { slug: string }): Promise<Array<T.VRSessionListResponse>> {
+  const url = params?.slug 
+    ? `${getApiBaseUrl()}/api/v1/places/${params.slug}/vr-sessions`
+    : `${getApiBaseUrl()}/api/v1/vr-sessions/all`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -43,6 +44,34 @@ export async function listVrSessions(params: { slug: string }): Promise<Array<T.
   return res.json() as Promise<Array<T.VRSessionListResponse>>;
 }
 
+
+/**
+ * Get Vr Session
+ * Get details of a specific VR session.
+ * @method GET /api/v1/vr-sessions/{session_id}
+ */
+export async function getVrSession(sessionId: string): Promise<T.VRSessionResponse> {
+  const url = `${getApiBaseUrl()}/api/v1/vr-sessions/${sessionId}`;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${getAccessToken()}`,
+  };
+
+  const init: RequestInit = {
+    method: "GET",
+    headers,
+  };
+
+  const res = await fetch(url, init);
+
+  if (!res.ok) {
+    const errorBody = await res.text().catch(() => res.statusText);
+    throw new ApiError(res.status, errorBody, url, "VR_SESSIONS");
+  }
+
+  return res.json() as Promise<T.VRSessionResponse>;
+}
 /**
  * Create Vr Session
  * Create a new VR session for a place (owner/admin only).

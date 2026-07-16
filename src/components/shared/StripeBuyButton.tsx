@@ -45,7 +45,7 @@ export function StripeBuyButton({
         variant={variant === "primary" ? "default" : variant}
         className={cn(
           variant === "primary" ? "bg-primary hover:bg-primary/90 text-zinc-950 font-black shadow-lg shadow-primary/20" : "",
-          "rounded-xl",
+          "rounded-md",
           className
         )}
       >
@@ -54,7 +54,7 @@ export function StripeBuyButton({
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="bg-zinc-950 border-white/10 text-white sm:max-w-[400px] p-0 overflow-hidden rounded-[2rem]">
+        <DialogContent className="bg-zinc-950 border-white/10 text-white sm:max-w-[400px] p-0 overflow-hidden rounded-md">
           <Elements stripe={stripePromise}>
             <PaymentModalContent 
                 amount={amount} 
@@ -131,7 +131,7 @@ function PaymentModalContent({ amount, onSuccess }: { amount: number; onSuccess:
 
       <form onSubmit={handleSubmit} className="p-6 space-y-6">
         <div className="space-y-4">
-          <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+          <div className="p-4 rounded-md bg-white/5 border border-white/10">
             <label className="text-[10px] font-bold uppercase tracking-widest text-white/30 block mb-3">Détails de la carte</label>
             <div className="py-2">
                 <CardElement options={CARD_OPTIONS} />
@@ -147,7 +147,7 @@ function PaymentModalContent({ amount, onSuccess }: { amount: number; onSuccess:
         <Button
           type="submit"
           disabled={!stripe || isProcessing}
-          className="w-full bg-primary hover:bg-primary/90 text-zinc-950 font-black py-6 rounded-xl shadow-xl shadow-primary/10"
+          className="w-full bg-primary hover:bg-primary/90 text-zinc-950 font-black py-6 rounded-md shadow-xl shadow-primary/10"
         >
           {isProcessing ? (
             <Loader2 className="h-5 w-5 animate-spin" />

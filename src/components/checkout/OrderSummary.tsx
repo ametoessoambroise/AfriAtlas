@@ -19,7 +19,7 @@ export default function OrderSummary({
   const total = subtotal + tva + deliveryFee;
 
   return (
-    <div className="bg-card rounded-3xl border border-border overflow-hidden shadow-sm">
+    <div className="bg-card rounded-md border border-border overflow-hidden shadow-sm">
       <button 
          onClick={() => setIsExpanded(!isExpanded)}
          className="w-full flex items-center justify-between p-6 hover:bg-surface-alt transition-colors"

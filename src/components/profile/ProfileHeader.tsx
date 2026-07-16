@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export function ProfileHeader({ user }: { user: UserResponse }) {
   return (
-    <div className="bg-card border border-border p-8 rounded-[40px] shadow-sm flex flex-col items-center text-center">
+    <div className="bg-card border border-border p-8 rounded-md shadow-sm flex flex-col items-center text-center">
       <div className="relative group mb-6">
         <div className="w-32 h-32 rounded-full border-4 border-background shadow-2xl overflow-hidden bg-surface-alt">
           {user.avatar_url ? (

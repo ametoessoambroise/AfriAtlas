@@ -32,7 +32,7 @@ export function TopDestinations() {
           {sortedPlaces.map((place, i) => (
             <div
               key={place.id}
-              className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5 group hover:bg-white/10 transition-colors"
+              className="flex items-center justify-between p-3 rounded-md bg-white/5 border border-white/5 group hover:bg-white/10 transition-colors"
             >
               <div className="flex items-center gap-3">
                 <div className="text-lg font-black text-white/10 group-hover:text-amber-500/20 transition-colors w-6">

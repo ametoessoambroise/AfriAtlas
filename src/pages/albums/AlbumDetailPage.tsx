@@ -1,18 +1,24 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Map, Share2, MoreHorizontal, LayoutGrid } from "lucide-react";
-import PageWrapper from "@/components/layout/PageWrapper";
+import {
+  ArrowLeft,
+  Map,
+  Share2,
+  MoreHorizontal,
+  LayoutGrid,
+} from "lucide-react";
 import { useAlbum } from "@/hooks/queries/useAlbums";
 import { ApiErrorState } from "@/components/feedback/ApiQueryState";
 import { AlbumDetailSkeleton } from "@/components/feedback/AlbumDetailSkeleton";
 import type { PlaceListResponse } from "@/lib/types";
 import { getErrorMessage, is404 } from "@/lib/utils/errorMessages";
 import { Button } from "@/components/ui/button";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 
 // Editor Components
 import SmartAlbumHero from "@/components/albums/editor/SmartAlbumHero";
@@ -32,12 +38,14 @@ export default function AlbumDetailPage() {
 
   if (albumQuery.isError || !albumQuery.data) {
     return (
-      <PageWrapper>
-        <div className="container py-16">
+      <DashboardLayout>
+        <div className="p-6 lg:p-8">
           {is404(albumQuery.error) ? (
-            <div className="flex flex-col items-center text-center justify-center min-h-[40vh]">
-              <p className="mb-4 text-2xl font-bold">Album introuvable</p>
-              <Link to="/albums" className="btn-primary">Retour aux albums</Link>
+            <div className="flex flex-col items-center text-center justify-center min-h-[40vh] space-y-4">
+              <p className="text-2xl font-black uppercase tracking-tight">Album introuvable</p>
+              <Button asChild variant="outline" className="rounded-md px-8 h-12 font-black uppercase tracking-widest text-xs">
+                <Link to="/albums">Retour aux albums</Link>
+              </Button>
             </div>
           ) : (
             <ApiErrorState
@@ -46,66 +54,83 @@ export default function AlbumDetailPage() {
             />
           )}
         </div>
-      </PageWrapper>
+      </DashboardLayout>
     );
   }
 
   const album = albumQuery.data;
 
   const associatedPlaces = (album.places || [])
-    .map(ap => ap.place)
+    .map((ap) => ap.place)
     .filter((p): p is PlaceListResponse => !!p);
 
   return (
-    <PageWrapper>
-      {/* Dynamic Header / Navigation */}
-      <div className="bg-card/50 backdrop-blur-lg sticky top-0 z-40 border-b border-border/50">
-        <div className="container h-20 flex items-center justify-between">
-          <Link to="/albums" className="flex items-center gap-2 text-sm font-bold hover:text-primary transition-colors">
-            <ArrowLeft className="h-4 w-4" />
-            Tout mes albums
-          </Link>
-          
+    <DashboardLayout>
+      <div className="p-6 lg:p-8 space-y-6 animate-in fade-in duration-700">
+        {/* Dynamic Header / Navigation */}
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex flex-col gap-4">
+            <Link
+              to="/albums"
+              className="group flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-bold text-xs uppercase tracking-widest w-fit"
+            >
+              <div className="w-8 h-8 rounded-full border border-border flex items-center justify-center group-hover:border-primary/50 transition-colors">
+                <ArrowLeft className="h-4 w-4" />
+              </div>
+              Tout mes albums
+            </Link>
+            
+            <h1 className="text-2xl font-black text-foreground tracking-tight uppercase">
+              Détails de <span className="text-primary">l'Album</span>
+            </h1>
+          </div>
+
           <div className="flex items-center gap-3">
-             <Button variant="ghost" size="icon" className="rounded-full h-10 w-10">
-                <Share2 className="h-4 w-4" />
-             </Button>
-             <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full h-10 w-10">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="rounded-xl">
-                   <DropdownMenuItem className="gap-2">
-                      <Map className="h-4 w-4" /> Voir sur la carte
-                   </DropdownMenuItem>
-                   <DropdownMenuItem className="gap-2 text-destructive focus:text-destructive">
-                      Supprimer l'album
-                   </DropdownMenuItem>
-                </DropdownMenuContent>
-             </DropdownMenu>
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-md h-10 w-10 border-border bg-card shadow-sm"
+            >
+              <Share2 className="h-4 w-4" />
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="rounded-md h-10 w-10 border-border bg-card shadow-sm"
+                >
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="rounded-md border-border bg-card shadow-xl">
+                <DropdownMenuItem className="gap-2 font-bold text-xs uppercase tracking-widest py-3">
+                  <Map className="h-4 w-4 text-primary" /> Voir sur la carte
+                </DropdownMenuItem>
+                <DropdownMenuItem className="gap-2 text-destructive focus:text-destructive font-bold text-xs uppercase tracking-widest py-3">
+                  Supprimer l'album
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
-      </div>
 
-      <div className="container py-12">
-        <div className="grid gap-8 lg:grid-cols-12 items-start">
+        <div className="grid gap-8 xl:grid-cols-[1fr_350px] items-start animate-in slide-in-from-bottom-4 duration-500 delay-100">
           {/* Main Content (Left Column) */}
-          <div className="lg:col-span-8 space-y-8">
-             <SmartAlbumHero album={album} />
-             <AiAssistantOptions albumId={album.id} />
-             <AlbumPhotoManager album={album} />
-             <TravelMapWidget places={associatedPlaces} />
-             <AiStoryGenerator albumId={album.id} existingStory={null} />
+          <div className="space-y-8">
+            <SmartAlbumHero album={album} />
+            <AiAssistantOptions albumId={album.id} />
+            <AlbumPhotoManager album={album} />
+            <TravelMapWidget places={associatedPlaces} />
+            <AiStoryGenerator albumId={album.id} existingStory={null} />
           </div>
 
           {/* Sidebar (Right Column) */}
-          <div className="lg:col-span-4 sticky top-24 space-y-8">
-             <AlbumSidebar album={album} places={associatedPlaces} />
+          <div className="sticky top-24 space-y-8">
+            <AlbumSidebar album={album} places={associatedPlaces} />
           </div>
         </div>
       </div>
-    </PageWrapper>
+    </DashboardLayout>
   );
 }

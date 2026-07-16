@@ -1,5 +1,5 @@
 /**
- * Delivery Types — WorldAtlas Travel
+ * Delivery Types — Afriatlas Travel
  * Mapped from backend Pydantic schemas.
  */
 

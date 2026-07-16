@@ -42,7 +42,7 @@ export function PremiumGate({
   return (
     <div
       className={cn(
-        "relative group overflow-hidden rounded-3xl bg-zinc-900/40 border border-white/5 p-8 text-center flex flex-col items-center justify-center min-h-[300px]",
+        "relative group overflow-hidden rounded-md bg-zinc-900/40 border border-white/5 p-8 text-center flex flex-col items-center justify-center min-h-[300px]",
         className,
       )}
     >
@@ -70,7 +70,7 @@ export function PremiumGate({
 
         <div className="flex flex-col gap-3">
           <Link to="/pricing">
-            <Button className="w-full bg-primary hover:bg-primary/90 text-zinc-950 font-black py-6 rounded-xl shadow-lg shadow-primary/20 group">
+            <Button className="w-full bg-primary hover:bg-primary/90 text-zinc-950 font-black py-6 rounded-md shadow-lg shadow-primary/20 group">
               Passer à PRO
               <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>

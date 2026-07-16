@@ -1,4 +1,4 @@
-# Design System Master - WorldAtlas Travel
+# Design System Master - Afriatlas Travel
 
 ## 1. Identité de Marque
 **Concept** : "The Modern Explorer"

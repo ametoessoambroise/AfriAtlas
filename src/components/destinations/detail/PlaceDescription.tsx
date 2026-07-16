@@ -5,11 +5,19 @@ interface PlaceDescriptionProps {
   destination: Destination;
 }
 
-export default function PlaceDescription({ destination }: PlaceDescriptionProps) {
+export default function PlaceDescription({
+  destination,
+}: PlaceDescriptionProps) {
   return (
     <div className="space-y-8">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-        <h2 className="mb-4 text-3xl font-extrabold tracking-tight">À propos</h2>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <h2 className="mb-4 text-3xl font-extrabold tracking-tight">
+          À propos
+        </h2>
         <div className="prose prose-slate dark:prose-invert max-w-none">
           <p className="leading-relaxed text-muted-foreground text-lg">
             {destination.longDescription}
@@ -17,8 +25,12 @@ export default function PlaceDescription({ destination }: PlaceDescriptionProps)
         </div>
       </motion.div>
 
-      {(destination.amenities && destination.amenities.length > 0) && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+      {destination.amenities && destination.amenities.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
           <h2 className="mb-4 text-2xl font-bold">Commodités</h2>
           <div className="flex flex-wrap gap-2">
             {destination.amenities.map((a) => (
@@ -33,8 +45,12 @@ export default function PlaceDescription({ destination }: PlaceDescriptionProps)
         </motion.div>
       )}
 
-      {(destination.tags && destination.tags.length > 0) && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+      {destination.tags && destination.tags.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
           <h2 className="mb-4 text-2xl font-bold">Tags</h2>
           <div className="flex flex-wrap gap-2">
             {destination.tags.map((tag) => (

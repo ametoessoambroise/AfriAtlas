@@ -64,17 +64,17 @@ export default function AdminClaimsPage() {
         onValueChange={setActiveTab}
       >
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-          <TabsList className="bg-white/5 border border-white/5 p-1 rounded-2xl h-12">
+          <TabsList className="bg-white/5 border border-white/5 p-1 rounded-md h-12">
             <TabsTrigger
               value="pending"
-              className="rounded-xl px-6 data-[state=active]:bg-indigo-500 data-[state=active]:text-white text-white/40 font-bold text-xs uppercase tracking-widest transition-all"
+              className="rounded-md px-6 data-[state=active]:bg-indigo-500 data-[state=active]:text-white text-white/40 font-bold text-xs uppercase tracking-widest transition-all"
             >
               <Clock className="w-3.5 h-3.5 mr-2" />
               File d'attente
             </TabsTrigger>
             <TabsTrigger
               value="history"
-              className="rounded-xl px-6 data-[state=active]:bg-indigo-500 data-[state=active]:text-white text-white/40 font-bold text-xs uppercase tracking-widest transition-all"
+              className="rounded-md px-6 data-[state=active]:bg-indigo-500 data-[state=active]:text-white text-white/40 font-bold text-xs uppercase tracking-widest transition-all"
             >
               <History className="w-3.5 h-3.5 mr-2" />
               Historique
@@ -85,7 +85,7 @@ export default function AdminClaimsPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/20" />
             <Input
               placeholder="Filtrer les demandes..."
-              className="bg-white/5 border-white/5 pl-10 h-10 text-xs rounded-xl focus-visible:ring-indigo-500/20"
+              className="bg-white/5 border-white/5 pl-10 h-10 text-xs rounded-md focus-visible:ring-indigo-500/20"
             />
           </div>
         </div>
@@ -138,7 +138,7 @@ function ClaimsQueue({ status }: { status: string }) {
 
   if (claims.length === 0)
     return (
-      <div className="flex flex-col items-center justify-center p-20 text-center gap-2 bg-white/[0.02] border border-dashed border-white/10 rounded-[2rem]">
+      <div className="flex flex-col items-center justify-center p-20 text-center gap-2 bg-white/[0.02] border border-dashed border-white/10 rounded-md">
         <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-2">
           <ShieldCheck className="h-6 w-6 text-white/20" />
         </div>
@@ -194,7 +194,7 @@ function ClaimCard({ claim }: { claim: any }) {
       </CardHeader>
 
       <CardContent className="p-5 pt-0 flex-1 space-y-4">
-        <div className="p-3 bg-white/5 rounded-xl border border-white/5">
+        <div className="p-3 bg-white/5 rounded-md border border-white/5">
           <div className="flex items-center gap-2 mb-1.5">
             <User className="h-3 w-3 text-white/20" />
             <span className="text-[10px] text-white/40 font-bold uppercase tracking-tighter">
@@ -212,14 +212,14 @@ function ClaimCard({ claim }: { claim: any }) {
             isOpen={reviewOpen}
             onOpenChange={setReviewOpen}
           >
-            <Button className="flex-1 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-xl h-10 font-bold text-xs">
+            <Button className="flex-1 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-md h-10 font-bold text-xs">
               Examiner
             </Button>
           </ReviewPanel>
           <Button
             variant="ghost"
             size="icon"
-            className="h-10 w-10 rounded-xl text-white/20 hover:text-white hover:bg-white/5"
+            className="h-10 w-10 rounded-md text-white/20 hover:text-white hover:bg-white/5"
           >
             <ExternalLink className="h-4 w-4" />
           </Button>
@@ -263,7 +263,7 @@ function ReviewPanel({
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="bg-zinc-950 border-white/10 text-white sm:max-w-[500px] p-0 overflow-hidden rounded-[2rem]">
+      <DialogContent className="bg-zinc-950 border-white/10 text-white sm:max-w-[500px] p-0 overflow-hidden rounded-md">
         <DialogHeader className="p-8 pb-0">
           <DialogTitle className="text-2xl font-black italic uppercase tracking-tighter">
             Vérification de Preuve
@@ -279,7 +279,7 @@ function ReviewPanel({
 
         <div className="p-8 space-y-6">
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+            <div className="p-4 bg-white/5 rounded-md border border-white/5">
               <p className="text-[10px] text-white/20 font-bold uppercase mb-2">
                 Justificatif ID
               </p>
@@ -287,7 +287,7 @@ function ReviewPanel({
                 <FileText className="h-4 w-4" /> doc_identite.pdf
               </div>
             </div>
-            <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+            <div className="p-4 bg-white/5 rounded-md border border-white/5">
               <p className="text-[10px] text-white/20 font-bold uppercase mb-2">
                 Preuve Propriété
               </p>
@@ -303,7 +303,7 @@ function ReviewPanel({
             </label>
             <Textarea
               placeholder="Expliquez la raison de l'approbation ou du rejet..."
-              className="bg-white/5 border-white/5 min-h-[100px] rounded-2xl resize-none text-white focus-visible:ring-indigo-500/20"
+              className="bg-white/5 border-white/5 min-h-[100px] rounded-md resize-none text-white focus-visible:ring-indigo-500/20"
               value={adminNotes}
               onChange={(e) => setAdminNotes(e.target.value)}
             />
@@ -314,7 +314,7 @@ function ReviewPanel({
           <Button
             disabled={isPending || !adminNotes.trim()}
             variant="ghost"
-            className="flex-1 h-12 rounded-xl text-red-500 hover:bg-red-500/10 hover:text-red-500 font-bold text-xs uppercase"
+            className="flex-1 h-12 rounded-md text-red-500 hover:bg-red-500/10 hover:text-red-500 font-bold text-xs uppercase"
             onClick={() => handleAction("rejected")}
           >
             {isPending ? (
@@ -325,7 +325,7 @@ function ReviewPanel({
           </Button>
           <Button
             disabled={isPending}
-            className="flex-1 h-12 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-black text-xs uppercase"
+            className="flex-1 h-12 rounded-md bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-black text-xs uppercase"
             onClick={() => handleAction("approved")}
           >
             {isPending ? (

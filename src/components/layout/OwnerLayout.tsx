@@ -67,7 +67,7 @@ function SidebarPlaceSwitcher({
       <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2 px-2">
         Lieu actif
       </p>
-      <div className="bg-white/5 border border-white/8 rounded-xl px-3 py-2.5 flex items-center gap-2">
+      <div className="bg-white/5 border border-white/8 rounded-md px-3 py-2.5 flex items-center gap-2">
         <MapPin className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
         <span className="text-sm text-white/80 font-medium truncate">
           {activePlaceName ?? claims[0]?.place_name ?? "—"}
@@ -98,11 +98,11 @@ function OwnerSidebar({ onClose }: { onClose?: () => void }) {
         <Link to="/" className="flex items-center gap-2.5" onClick={onClose}>
           <img
             src="/favicon.ico"
-            alt="WorldAtlas"
+            alt="AfriAtlas"
             className="w-7 h-7 rounded-full object-cover"
           />
           <span className="text-xs font-bold tracking-widest uppercase text-white/70">
-            WorldAtlas
+            AfriAtlas
           </span>
         </Link>
         {onClose && (
@@ -116,7 +116,7 @@ function OwnerSidebar({ onClose }: { onClose?: () => void }) {
       </div>
 
       {/* Owner badge */}
-      <div className="mx-4 mb-5 flex items-center gap-2.5 bg-amber-500/10 border border-amber-500/20 rounded-xl px-3 py-2.5">
+      <div className="mx-4 mb-5 flex items-center gap-2.5 bg-amber-500/10 border border-amber-500/20 rounded-md px-3 py-2.5">
         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
           {initials}
         </div>
@@ -145,7 +145,7 @@ function OwnerSidebar({ onClose }: { onClose?: () => void }) {
               key={href}
               to={href}
               onClick={onClose}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all ${
                 active
                   ? "bg-amber-500/15 text-amber-300 border border-amber-500/20"
                   : "text-white/50 hover:text-white/80 hover:bg-white/5"

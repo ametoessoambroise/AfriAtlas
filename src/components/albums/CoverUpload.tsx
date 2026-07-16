@@ -42,7 +42,7 @@ const CoverUpload = ({
   return (
     <div
       className={cn(
-        "relative w-full aspect-video rounded-3xl overflow-hidden bg-surface-alt border-2 border-dashed border-border flex flex-col items-center justify-center transition-all cursor-pointer hover:bg-primary/5 hover:border-primary/30",
+        "relative w-full aspect-video rounded-md overflow-hidden bg-surface-alt border-2 border-dashed border-border flex flex-col items-center justify-center transition-all cursor-pointer hover:bg-primary/5 hover:border-primary/30",
         displayImage && "border-solid",
         className,
       )}
@@ -72,7 +72,7 @@ const CoverUpload = ({
         </>
       ) : (
         <div className="flex flex-col items-center gap-4 text-muted-foreground">
-          <div className="w-16 h-16 bg-surface rounded-2xl flex items-center justify-center shadow-inner">
+          <div className="w-16 h-16 bg-surface rounded-md flex items-center justify-center shadow-inner">
             <ImageIcon className="w-8 h-8 opacity-50" />
           </div>
           <div className="text-center">

@@ -11,11 +11,11 @@ const IMAGES = [
 
 const EmptyFavorites = () => {
   return (
-    <div className="relative min-h-[60vh] flex flex-col items-center justify-center p-6 text-center overflow-hidden rounded-3xl border border-dashed border-border bg-surface/50">
+    <div className="relative min-h-[60vh] flex flex-col items-center justify-center p-6 text-center overflow-hidden rounded-md border border-dashed border-border bg-surface/50">
       {/* Background decoration */}
       <div className="absolute inset-0 grid grid-cols-2 gap-4 opacity-5 pointer-events-none scale-110 -rotate-3">
         {IMAGES.map((img, i) => (
-          <img key={i} src={img} className="w-full h-full object-cover rounded-2xl" alt="" />
+          <img key={i} src={img} className="w-full h-full object-cover rounded-md" alt="" />
         ))}
       </div>
 

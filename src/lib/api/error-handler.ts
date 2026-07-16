@@ -1,5 +1,5 @@
 /**
- * WorldAtlas API — Error Handler
+ * Afriatlas API — Error Handler
  * Centralise la gestion des erreurs pour un affichage utilisateur élégant.
  */
 

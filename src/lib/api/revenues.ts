@@ -1,5 +1,5 @@
 /**
- * REVENUES API Client — WorldAtlas Travel
+ * REVENUES API Client — Afriatlas Travel
  * ===================================
  * Integrated with Owner Revenue Management endpoints.
  */

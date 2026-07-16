@@ -7,7 +7,7 @@ export function ActiveSubscriptionCard({ user }: { user: UserResponse }) {
   const isPremium = user.subscription_status === "premium";
 
   return (
-    <div className="bg-gradient-to-br from-[#1A1A1A] to-[#333] p-6 rounded-[32px] text-white shadow-xl relative overflow-hidden group">
+    <div className="bg-gradient-to-br from-[#1A1A1A] to-[#333] p-6 rounded-md text-white shadow-xl relative overflow-hidden group">
       <div className="relative z-10">
         <div className="flex items-center gap-2 mb-4">
           {isPremium ? (
@@ -36,7 +36,7 @@ export function ActiveSubscriptionCard({ user }: { user: UserResponse }) {
               ? "Gérer mon abonnement"
               : "Découvrir les avantages Premium"
           }
-          className="flex items-center justify-between w-full bg-white/10 hover:bg-white/20 focus-visible:bg-white/20 focus-visible:outline-none transition-all p-3 rounded-2xl border border-white/10 text-sm font-bold"
+          className="flex items-center justify-between w-full bg-white/10 hover:bg-white/20 focus-visible:bg-white/20 focus-visible:outline-none transition-all p-3 rounded-md border border-white/10 text-sm font-bold"
         >
           {isPremium ? "Gérer mon abonnement" : "Découvrir Premium"}
           <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

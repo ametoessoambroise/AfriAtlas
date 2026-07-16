@@ -159,7 +159,7 @@ export default function NavigationMap({
         }}
       >
         <Popup
-          className="p-0 border-0 rounded-xl overflow-hidden"
+          className="p-0 border-0 rounded-md overflow-hidden"
           closeButton={false}
         >
           <PlacePopup destination={destination} />

@@ -7,6 +7,7 @@ import { Loader2, Mail, CheckCircle2 } from "lucide-react";
 
 import { useAuth } from "@/hooks/useAuth";
 import AuthLayout from "@/components/auth/AuthLayout";
+import { Input } from "@/components/ui/input";
 
 const forgotSchema = z.object({
   email: z.string().email("Veuillez entrer une adresse email valide."),
@@ -44,7 +45,7 @@ export default function ForgotPasswordPage() {
       backgroundImageUrl="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80"
     >
       {success ? (
-        <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-6 text-center animate-in fade-in zoom-in duration-300">
+        <div className="bg-green-500/10 border border-green-500/20 rounded-md p-6 text-center animate-in fade-in zoom-in duration-300">
            <div className="w-16 h-16 bg-green-500/20 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-8 h-8" />
            </div>
@@ -52,7 +53,7 @@ export default function ForgotPasswordPage() {
            <p className="text-sm text-muted-foreground font-medium mb-6">
               Vérifiez votre boîte de réception. Un lien sécurisé vous a été transmis pour choisir un nouveau mot de passe.
            </p>
-           <Link to="/login" className="w-full btn-primary py-3 flex justify-center font-bold">
+           <Link to="/login" className="w-full btn-primary py-3 flex justify-center font-bold rounded-md">
               Retour à la connexion
            </Link>
         </div>
@@ -67,13 +68,13 @@ export default function ForgotPasswordPage() {
 
           <div>
              <div className="relative">
-               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-               <input
-                 {...register("email")}
-                 type="email"
-                 placeholder="Adresse email du compte"
-                 className={`w-full bg-surface-alt border ${errors.email ? 'border-destructive' : 'border-border/60'} rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
-               />
+               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+               <Input
+                  {...register("email")}
+                  type="email"
+                  placeholder="Adresse email"
+                  className={`w-full bg-surface-alt border ${errors.email ? 'border-destructive' : 'border-border/60'} rounded-md h-12 pl-10 pr-4 text-sm focus:ring-primary/20 font-bold`}
+                />
              </div>
              {errors.email && <p className="text-xs text-destructive mt-1 font-medium">{errors.email.message}</p>}
           </div>
@@ -81,7 +82,7 @@ export default function ForgotPasswordPage() {
           <button
             type="submit"
             disabled={isForgotRequesting}
-            className="w-full btn-primary py-3 flex justify-center mt-2 font-bold"
+            className="w-full btn-primary py-3 flex justify-center mt-2 font-bold rounded-md"
           >
             {isForgotRequesting ? <Loader2 className="w-5 h-5 animate-spin" /> : "Envoyer le lien"}
           </button>

@@ -144,7 +144,7 @@ const stats = [
 const testimonials = [
   {
     quote:
-      "Grâce à WorldAtlas Travel, notre restaurant est passé de 10 à plus de 80 réservations par mois. La visibilité est incroyable !",
+      "Grâce à Afriatlas Travel, notre restaurant est passé de 10 à plus de 80 réservations par mois. La visibilité est incroyable !",
     author: "Eric K.",
     role: "Propriétaire – Le Bistrot, Lomé",
     avatar:
@@ -152,7 +152,7 @@ const testimonials = [
   },
   {
     quote:
-      "En seulement 3 mois, nous avons doublé notre clientèle. WorldAtlas Travel est notre meilleur investissement marketing.",
+      "En seulement 3 mois, nous avons doublé notre clientèle. Afriatlas Travel est notre meilleur investissement marketing.",
     author: "Aïcha M.",
     role: "Gérante – Hôtel Savane, Kpalimé",
     avatar:
@@ -285,9 +285,9 @@ function BannerExample() {
       <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         ● Exemple de bannière sponsorisée en haut de page
       </p>
-      <div className="rounded-2xl border border-border bg-card p-3 sm:p-4 shadow-sm">
+      <div className="rounded-md border border-border bg-card p-3 sm:p-4 shadow-sm">
         <div className="flex items-center gap-3 sm:gap-4">
-          <div className="relative h-20 w-24 sm:h-24 sm:w-32 shrink-0 overflow-hidden rounded-xl">
+          <div className="relative h-20 w-24 sm:h-24 sm:w-32 shrink-0 overflow-hidden rounded-md">
             <LazyImage
               src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&auto=format&fit=crop"
               alt="Restaurant Le Bistrot"
@@ -342,7 +342,7 @@ function SearchResultsExample() {
       <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         ● Exemple dans les résultats de recherche
       </p>
-      <div className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
+      <div className="rounded-md border border-border bg-card shadow-sm overflow-hidden">
         {/* Fake search bar — screenshot shows "Tous | Restaurants | Hôtels | Activités | Filtres" */}
         <div className="flex items-center gap-2 border-b border-border px-3 sm:px-4 py-3">
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -448,7 +448,7 @@ function SearchResultsExample() {
                   <Link
                     to="/pricing"
                     className={cn(
-                      "rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-widest transition-all shadow-sm active:scale-95 text-center whitespace-nowrap",
+                      "rounded-md px-4 py-2.5 text-xs font-black uppercase tracking-widest transition-all shadow-sm active:scale-95 text-center whitespace-nowrap",
                       r.sponsored
                         ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-primary/20 shadow-lg"
                         : "bg-background border border-border text-foreground hover:bg-muted shadow-sm",
@@ -485,7 +485,7 @@ function PartnerPageExample() {
       <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         ● Exemple de page partenaire mise en avant
       </p>
-      <div className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
+      <div className="rounded-md border border-border bg-card shadow-sm overflow-hidden">
         {/* Gallery — screenshot shows "+18 Photos" sur la 4ème cellule */}
         <div className="grid grid-cols-4 gap-0.5 h-40 sm:h-48">
           <div className="col-span-2 row-span-2 relative overflow-hidden">
@@ -645,7 +645,7 @@ function TestimonialCarousel() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: 0.2 }}
-      className="rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-sm"
+      className="rounded-md border border-border bg-card p-5 sm:p-6 shadow-sm"
     >
       <h3 className="text-sm sm:text-base font-bold text-foreground mb-3 sm:mb-4">
         Ce que disent nos partenaires
@@ -696,7 +696,7 @@ function MobileFloatingCTA() {
       transition={{ delay: 0.8, duration: 0.5 }}
       className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:hidden"
     >
-      <div className="rounded-2xl bg-card border border-border shadow-2xl shadow-black/20 p-3 flex items-center gap-3">
+      <div className="rounded-md bg-card border border-border shadow-2xl shadow-black/20 p-3 flex items-center gap-3">
         <div className="flex-1 min-w-0">
           <p className="text-xs font-bold text-foreground">
             Prêt à vous lancer ?
@@ -707,7 +707,7 @@ function MobileFloatingCTA() {
         </div>
         <Link
           to="/pricing"
-          className="shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-primary-foreground min-h-[44px]"
+          className="shrink-0 inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2.5 text-xs font-bold text-primary-foreground min-h-[44px]"
         >
           Commencer <ChevronRight className="h-3.5 w-3.5" />
         </Link>
@@ -748,7 +748,7 @@ export default function PartnerLandingPage() {
                 className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-primary mb-5"
               >
                 <Globe className="h-3 w-3" />
-                WorldAtlas Travel
+                Afriatlas Travel
               </motion.span>
 
               <motion.h1
@@ -767,7 +767,7 @@ export default function PartnerLandingPage() {
                 className="mt-4 text-sm sm:text-base font-bold text-foreground"
               >
                 Boostez votre visibilité sur{" "}
-                <span className="text-primary">WorldAtlas Travel</span>
+                <span className="text-primary">Afriatlas Travel</span>
               </motion.p>
               <motion.p
                 variants={fadeUp}
@@ -803,13 +803,13 @@ export default function PartnerLandingPage() {
               >
                 <Link
                   to="/pricing"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-accent-foreground shadow-lg shadow-accent/20 transition-all hover:opacity-90 active:scale-[0.98] min-h-[48px]"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-accent px-6 py-3.5 text-sm font-bold text-accent-foreground shadow-lg shadow-accent/20 transition-all hover:opacity-90 active:scale-[0.98] min-h-[48px]"
                 >
                   Lancer ma publicité <ChevronRight className="h-4 w-4" />
                 </Link>
                 <Link
                   to="/pricing"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-border px-6 py-3.5 text-sm font-bold text-foreground transition-all hover:bg-muted min-h-[48px]"
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-border px-6 py-3.5 text-sm font-bold text-foreground transition-all hover:bg-muted min-h-[48px]"
                 >
                   Voir les tarifs
                 </Link>
@@ -831,7 +831,7 @@ export default function PartnerLandingPage() {
               >
                 <img
                   src="/traveller.png"
-                  alt="Voyageur WorldAtlas"
+                  alt="Voyageur Afriatlas"
                   className="h-[460px] w-auto object-contain drop-shadow-lg"
                 />
               </motion.div>
@@ -849,7 +849,7 @@ export default function PartnerLandingPage() {
               >
                 <img
                   src="/phone.png"
-                  alt="WorldAtlas Travel sur mobile"
+                  alt="Afriatlas Travel sur mobile"
                   className="h-[520px] w-auto object-contain drop-shadow-2xl scale-140"
                 />
               </motion.div>
@@ -863,9 +863,9 @@ export default function PartnerLandingPage() {
                   delay: 0.8,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="absolute top-8 -right-4 z-30 flex items-center gap-3 rounded-2xl bg-card border border-border/60 px-4 py-3 shadow-xl shadow-black/5"
+                className="absolute top-8 -right-4 z-30 flex items-center gap-3 rounded-md bg-card border border-border/60 px-4 py-3 shadow-xl shadow-black/5"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-primary/10">
                   <TrendingUp className="h-5 w-5 text-primary" />
                 </div>
                 <div>
@@ -884,9 +884,9 @@ export default function PartnerLandingPage() {
                   delay: 1.0,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="absolute top-1/2 -translate-y-1/2 -right-8 z-30 flex items-center gap-3 rounded-2xl bg-card border border-border/60 px-4 py-3 shadow-xl shadow-black/5"
+                className="absolute top-1/2 -translate-y-1/2 -right-8 z-30 flex items-center gap-3 rounded-md bg-card border border-border/60 px-4 py-3 shadow-xl shadow-black/5"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary/20">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-secondary/20">
                   <Users className="h-5 w-5 text-secondary-foreground" />
                 </div>
                 <div>
@@ -905,9 +905,9 @@ export default function PartnerLandingPage() {
                   delay: 1.2,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="absolute bottom-12 -right-4 z-30 flex items-center gap-3 rounded-2xl bg-card border border-border/60 px-4 py-3 shadow-xl shadow-black/5"
+                className="absolute bottom-12 -right-4 z-30 flex items-center gap-3 rounded-md bg-card border border-border/60 px-4 py-3 shadow-xl shadow-black/5"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/10">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-accent/10">
                   <Map className="h-5 w-5 text-accent" />
                 </div>
                 <div>
@@ -940,9 +940,9 @@ export default function PartnerLandingPage() {
             <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">
               Fonctionnement
             </p>
-            {/* Screenshot h2: "Comment votre publicité est mise en avant sur WorldAtlas Travel" */}
+            {/* Screenshot h2: "Comment votre publicité est mise en avant sur Afriatlas Travel" */}
             <h2 className="text-xl sm:text-2xl font-heading font-bold text-foreground">
-              Comment votre publicité est mise en avant sur WorldAtlas Travel
+              Comment votre publicité est mise en avant sur Afriatlas Travel
             </h2>
             <p className="text-sm text-muted-foreground mt-1">
               Plus de visibilité. Plus de clients. Plus de réservations.
@@ -971,7 +971,7 @@ export default function PartnerLandingPage() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={stagger}
-                className="rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-sm"
+                className="rounded-md border border-border bg-card p-5 sm:p-6 shadow-sm"
               >
                 <h3 className="text-sm sm:text-base font-bold text-foreground mb-4 sm:mb-5">
                   Où votre publicité apparaît
@@ -982,7 +982,7 @@ export default function PartnerLandingPage() {
                   {placements.map((p) => (
                     <div
                       key={p.title}
-                      className="shrink-0 flex flex-col items-center gap-2 rounded-xl border border-border bg-muted/40 p-3 w-28 text-center"
+                      className="shrink-0 flex flex-col items-center gap-2 rounded-md border border-border bg-muted/40 p-3 w-28 text-center"
                     >
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
                         <p.icon className="h-4 w-4 text-primary" />
@@ -1046,7 +1046,7 @@ export default function PartnerLandingPage() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={stagger}
-                className="rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-sm"
+                className="rounded-md border border-border bg-card p-5 sm:p-6 shadow-sm"
               >
                 <h3 className="text-sm sm:text-base font-bold text-foreground mb-4 sm:mb-5">
                   Les avantages pour vous
@@ -1056,7 +1056,7 @@ export default function PartnerLandingPage() {
                   {advantages.map((a) => (
                     <div
                       key={a.title}
-                      className="rounded-xl border border-border bg-muted/30 p-3 space-y-1.5"
+                      className="rounded-md border border-border bg-muted/30 p-3 space-y-1.5"
                     >
                       <a.icon className="h-5 w-5 text-primary" />
                       <h4 className="text-xs font-bold text-foreground leading-tight">
@@ -1090,7 +1090,7 @@ export default function PartnerLandingPage() {
                 </div>
                 <Link
                   to="/pricing"
-                  className="mt-5 flex w-full items-center justify-center rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:opacity-90 active:scale-[0.98] min-h-[48px]"
+                  className="mt-5 flex w-full items-center justify-center rounded-md bg-primary py-3 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:opacity-90 active:scale-[0.98] min-h-[48px]"
                 >
                   Devenir partenaire
                 </Link>
@@ -1105,7 +1105,7 @@ export default function PartnerLandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="rounded-2xl border border-primary/20 bg-primary/5 p-5 sm:p-6"
+                className="rounded-md border border-primary/20 bg-primary/5 p-5 sm:p-6"
               >
                 <h3 className="text-sm font-bold text-foreground mb-2">
                   Prêt à booster votre business ?
@@ -1116,7 +1116,7 @@ export default function PartnerLandingPage() {
                 </p>
                 <Link
                   to="/pricing"
-                  className="flex w-full items-center justify-center rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:opacity-90 active:scale-[0.98] min-h-[44px] mb-3"
+                  className="flex w-full items-center justify-center rounded-md bg-primary py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:opacity-90 active:scale-[0.98] min-h-[44px] mb-3"
                 >
                   Lancer ma publicité
                 </Link>
@@ -1133,7 +1133,7 @@ export default function PartnerLandingPage() {
 
         {/* ── CTA Hero Section — matches screenshot design ── */}
         <div className="px-3 sm:px-4 mt-6 md:mt-8">
-          <div className="rounded-3xl bg-white dark:bg-card border border-border/50 shadow-xl shadow-black/5 overflow-hidden">
+          <div className="rounded-md bg-white dark:bg-card border border-border/50 shadow-xl shadow-black/5 overflow-hidden">
             <div className="grid lg:grid-cols-2 gap-0">
               {/* ── LEFT : Text content ── */}
               <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12">
@@ -1149,7 +1149,7 @@ export default function PartnerLandingPage() {
                 <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-heading font-extrabold text-foreground leading-[1.1] tracking-tight mb-4">
                   Attirez plus de clients
                   <br />
-                  avec <span className="text-primary">WorldAtlas Travel</span>
+                  avec <span className="text-primary">Afriatlas Travel</span>
                 </h2>
 
                 {/* Subtitle */}
@@ -1162,7 +1162,7 @@ export default function PartnerLandingPage() {
                 <div className="flex flex-col xs:flex-row gap-3 mb-10">
                   <Link
                     to="/pricing"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:opacity-90 active:scale-[0.98] min-h-[48px]"
+                    className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:opacity-90 active:scale-[0.98] min-h-[48px]"
                   >
                     {/* Rocket icon */}
                     <svg
@@ -1190,7 +1190,7 @@ export default function PartnerLandingPage() {
                         behavior: "smooth",
                       })
                     }
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-6 py-3.5 text-sm font-bold text-foreground cursor-pointer transition-all hover:bg-muted active:scale-[0.98] min-h-[48px]"
+                    className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-background px-6 py-3.5 text-sm font-bold text-foreground cursor-pointer transition-all hover:bg-muted active:scale-[0.98] min-h-[48px]"
                   >
                     {/* Play circle icon */}
                     <svg
@@ -1287,7 +1287,7 @@ export default function PartnerLandingPage() {
                     <div key={f.title} className="flex items-start gap-4">
                       <div
                         className={cn(
-                          "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl",
+                          "flex h-10 w-10 shrink-0 items-center justify-center rounded-md",
                           f.color,
                           f.iconColor,
                         )}
@@ -1317,7 +1317,7 @@ export default function PartnerLandingPage() {
                         width="100%"
                         height="100%"
                         src={imageUrl}
-                        alt={`Destination WorldAtlas ${index + 1}`}
+                        alt={`Destination Afriatlas ${index + 1}`}
                       />
                     </GalleryGridCell>
                   ))}
@@ -1329,7 +1329,7 @@ export default function PartnerLandingPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.5, duration: 0.5 }}
-                  className="absolute bottom-8 left-8 z-10 flex items-center gap-3 rounded-2xl bg-foreground/90 backdrop-blur-sm px-4 py-3 shadow-xl"
+                  className="absolute bottom-8 left-8 z-10 flex items-center gap-3 rounded-md bg-foreground/90 backdrop-blur-sm px-4 py-3 shadow-xl"
                 >
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/20">
                     <Users className="h-4 w-4 text-primary" />
@@ -1459,13 +1459,13 @@ export default function PartnerLandingPage() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="border border-border text-foreground shadow-md rounded-xl py-8 sm:py-10"
+        className="border border-border text-foreground shadow-md rounded-md py-8 sm:py-10"
       >
         <div className="container px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
           <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
             {stats.map((s) => (
               <div key={s.value} className="flex items-center gap-3">
-                <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-background/10">
+                <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-md bg-background/10">
                   <s.icon className="h-4 w-4 sm:h-5 sm:w-5 text-secondary" />
                 </div>
                 <div className="min-w-0">

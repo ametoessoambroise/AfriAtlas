@@ -62,7 +62,7 @@ export function AiDescriptionButton({ albumId }: { albumId: string }) {
       size="sm"
       onClick={handleGenerate}
       disabled={isGenerating}
-      className="gap-2 rounded-xl border-primary/20 bg-primary/5 text-primary hover:bg-primary/10"
+      className="gap-2 rounded-md border-primary/20 bg-primary/5 text-primary hover:bg-primary/10"
     >
       {isGenerating ? (
         <Loader2 className="h-4 w-4 animate-spin" />
@@ -80,7 +80,7 @@ export default function AlbumHeader({ album }: AlbumHeaderProps) {
   });
 
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-card border border-border shadow-2xl">
+    <div className="relative overflow-hidden rounded-md bg-card border border-border shadow-2xl">
       {/* Background Cover with Blur */}
       <div className="absolute inset-0 z-0">
         <img
@@ -96,7 +96,7 @@ export default function AlbumHeader({ album }: AlbumHeaderProps) {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="relative aspect-[4/5] w-full max-w-[280px] shrink-0 overflow-hidden rounded-2xl border-4 border-white/10 shadow-xl"
+          className="relative aspect-[4/5] w-full max-w-[280px] shrink-0 overflow-hidden rounded-md border-4 border-white/10 shadow-xl"
         >
           <img
             src={resolveAlbumCoverUrl(album.cover_image_url)}

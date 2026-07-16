@@ -1,5 +1,5 @@
 /**
- * SEARCH API Client — WorldAtlas Travel
+ * SEARCH API Client — Afriatlas Travel
  * ================================
  * AUTO-GENERATED — Ne pas modifier manuellement.
  * Source    : openapi.json (Pydantic schemas FastAPI)

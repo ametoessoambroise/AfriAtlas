@@ -117,18 +117,18 @@ export default function AlbumPhotoManager({
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
                     placeholder="Nom de l'album"
-                    className="text-lg font-medium h-12 rounded-xl"
+                    className="text-lg font-medium h-12 rounded-md"
                   />
                 </div>
                 <DialogFooter>
                   <DialogClose asChild>
-                    <Button variant="outline" className="rounded-xl">
+                    <Button variant="outline" className="rounded-md">
                       Annuler
                     </Button>
                   </DialogClose>
                   <Button
                     onClick={handleRename}
-                    className="rounded-xl bg-primary"
+                    className="rounded-md bg-primary"
                   >
                     Enregistrer
                   </Button>
@@ -142,23 +142,23 @@ export default function AlbumPhotoManager({
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex bg-muted/50 p-1 rounded-xl">
+          <div className="flex bg-muted/50 p-1 rounded-md">
             <button
               onClick={() => setViewMode("grid")}
-              className={`p-2 rounded-lg transition-colors ${viewMode === "grid" ? "bg-white shadow-sm" : "hover:bg-white/50"}`}
+              className={`p-2 rounded-lg transition-colors ${viewMode === "grid" ? "bg-background shadow-sm" : "hover:bg-background/50"}`}
             >
               <LayoutGrid className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode("list")}
-              className={`p-2 rounded-lg transition-colors ${viewMode === "list" ? "bg-white shadow-sm" : "hover:bg-white/50"}`}
+              className={`p-2 rounded-lg transition-colors ${viewMode === "list" ? "bg-background shadow-sm" : "hover:bg-background/50"}`}
             >
               <List className="w-4 h-4" />
             </button>
           </div>
 
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px] h-10 rounded-xl bg-white border border-border">
+            <SelectTrigger className="w-[180px] h-10 rounded-md bg-background border border-border">
               <SelectValue placeholder="Trier par date" />
             </SelectTrigger>
             <SelectContent>
@@ -168,7 +168,10 @@ export default function AlbumPhotoManager({
             </SelectContent>
           </Select>
 
-          <Button variant="outline" className="rounded-xl h-10 gap-2 bg-white">
+          <Button
+            variant="outline"
+            className="rounded-md h-10 gap-2 bg-background"
+          >
             <Filter className="w-4 h-4" /> Filtrer
           </Button>
         </div>
@@ -178,8 +181,8 @@ export default function AlbumPhotoManager({
       <div
         className={
           viewMode === "grid"
-            ? "grid grid-cols-1 lg:grid-cols-2 gap-6"
-            : "space-y-6"
+            ? "grid grid-cols-1 lg:grid-cols-2 gap-6 text-foreground"
+            : "space-y-6 text-foreground"
         }
       >
         {sortedImages.map((image, index) => {

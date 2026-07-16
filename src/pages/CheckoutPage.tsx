@@ -84,14 +84,14 @@ export default function CheckoutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             {/* Formulaires (Gauche) */}
             <div className="lg:col-span-7 space-y-12">
-              <section className="bg-card p-8 rounded-[2rem] border border-border shadow-sm">
+              <section className="bg-card p-8 rounded-md border border-border shadow-sm">
                  <DeliveryForm 
                    selectedAddressId={selectedAddressId}
                    onAddressSelect={setSelectedAddressId}
                  />
               </section>
 
-              <section className={`bg-card p-8 rounded-[2rem] border border-border shadow-sm transition-opacity ${!selectedAddressId ? 'opacity-30 pointer-events-none' : ''}`}>
+              <section className={`bg-card p-8 rounded-md border border-border shadow-sm transition-opacity ${!selectedAddressId ? 'opacity-30 pointer-events-none' : ''}`}>
                  <StripePaymentForm 
                    total={Number(subtotal) + (Number(subtotal) * 0.18) + deliveryFee}
                    onSuccess={handlePaymentSuccess}
@@ -120,7 +120,7 @@ export default function CheckoutPage() {
                   deliveryFee={deliveryFee}
                 />
                 
-                <div className="mt-6 p-6 bg-primary/5 rounded-3xl border border-primary/10">
+                <div className="mt-6 p-6 bg-primary/5 rounded-md border border-primary/10">
                    <p className="text-xs text-primary font-medium leading-relaxed">
                      <span className="font-black italic">Note sur la livraison :</span> Les frais de livraison ({deliveryFee} XOF) seront réglés séparément lors de la remise du colis au transporteur ou via mobile money.
                    </p>

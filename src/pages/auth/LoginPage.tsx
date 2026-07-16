@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { getErrorMessage } from "@/lib/utils/errorMessages";
 import AuthLayout from "@/components/auth/AuthLayout";
 import OAuthButtons from "@/components/auth/OAuthButtons";
+import { Input } from "@/components/ui/input";
 
 const loginSchema = z.object({
   email: z.string().email("Veuillez entrer une adresse email valide."),
@@ -85,12 +86,12 @@ export default function LoginPage() {
 
         <div>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+            <Input
               {...register("email")}
               type="email"
               placeholder="Adresse email"
-              className={`w-full bg-surface-alt border ${errors.email ? "border-destructive" : "border-border/60"} rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
+              className={`w-full bg-surface-alt border ${errors.email ? "border-destructive" : "border-border/60"} rounded-md py-6 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
             />
           </div>
           {errors.email && (
@@ -102,12 +103,12 @@ export default function LoginPage() {
 
         <div>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+            <Input
               {...register("password")}
               type="password"
               placeholder="Mot de passe"
-              className={`w-full bg-surface-alt border ${errors.password ? "border-destructive" : "border-border/60"} rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
+              className={`w-full bg-surface-alt border ${errors.password ? "border-destructive" : "border-border/60"} rounded-md h-12 pl-10 pr-4 text-sm focus:ring-primary/20 font-bold`}
             />
           </div>
           {errors.password && (
@@ -169,3 +170,4 @@ export default function LoginPage() {
     </AuthLayout>
   );
 }
+

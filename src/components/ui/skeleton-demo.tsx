@@ -22,10 +22,10 @@ export function SkeletonDemo() {
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className="bg-card border border-border p-6 rounded-[32px] shadow-sm"
+              className="bg-card border border-border p-6 rounded-md shadow-sm"
             >
               <div className="flex items-center justify-between mb-4">
-                <Skeleton className="w-12 h-12 rounded-2xl" />
+                <Skeleton className="w-12 h-12 rounded-md" />
                 <Skeleton className="w-20 h-8" />
               </div>
               <Skeleton className="w-16 h-3 mb-2" />
@@ -42,9 +42,9 @@ export function SkeletonDemo() {
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className="flex items-center gap-4 bg-card border border-border p-3 rounded-2xl"
+              className="flex items-center gap-4 bg-card border border-border p-3 rounded-md"
             >
-              <Skeleton className="w-16 h-16 rounded-xl shrink-0" />
+              <Skeleton className="w-16 h-16 rounded-md shrink-0" />
               <div className="flex-1 space-y-2">
                 <Skeleton className="h-4 w-3/4" />
                 <Skeleton className="h-3 w-1/2" />
@@ -58,7 +58,7 @@ export function SkeletonDemo() {
       {/* Order Item Skeleton */}
       <div>
         <h3 className="text-sm font-semibold mb-3">Order Item Skeleton</h3>
-        <div className="bg-card border border-border rounded-[32px] overflow-hidden">
+        <div className="bg-card border border-border rounded-md overflow-hidden">
           {[1, 2, 3].map((i) => (
             <div
               key={i}
@@ -85,7 +85,7 @@ export function SkeletonDemo() {
         <h3 className="text-sm font-semibold mb-3">Place Card Skeleton</h3>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="aspect-square rounded-2xl overflow-hidden">
+            <div key={i} className="aspect-square rounded-md overflow-hidden">
               <Skeleton className="w-full h-full" />
             </div>
           ))}
@@ -95,7 +95,7 @@ export function SkeletonDemo() {
       {/* Welcome Banner Skeleton */}
       <div>
         <h3 className="text-sm font-semibold mb-3">Welcome Banner Skeleton</h3>
-        <div className="bg-card border border-border p-8 rounded-[40px]">
+        <div className="bg-card border border-border p-8 rounded-md">
           <div className="flex items-center gap-6">
             <Skeleton className="w-24 h-24 rounded-full shrink-0" />
             <div className="space-y-3 flex-1">
@@ -114,11 +114,11 @@ export function SkeletonDemo() {
         <h3 className="text-sm font-semibold mb-3">
           Subscription Card Skeleton
         </h3>
-        <div className="bg-card border border-border p-6 rounded-[32px] max-w-sm">
+        <div className="bg-card border border-border p-6 rounded-md max-w-sm">
           <Skeleton className="h-6 w-32 mb-4" />
           <Skeleton className="h-8 w-40 mb-2" />
           <Skeleton className="h-4 w-full mb-6" />
-          <Skeleton className="h-12 w-full rounded-2xl" />
+          <Skeleton className="h-12 w-full rounded-md" />
         </div>
       </div>
     </div>

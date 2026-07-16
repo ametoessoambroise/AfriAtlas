@@ -23,7 +23,7 @@ export default function CtaBanner() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex-1 bg-black rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-12 lg:p-14 flex flex-col justify-between overflow-hidden group shadow-2xl min-h-[380px] md:min-h-[440px] lg:min-h-[600px]"
+            className="relative flex-1 bg-black rounded-md md:rounded-[3.5rem] p-8 md:p-12 lg:p-14 flex flex-col justify-between overflow-hidden group shadow-2xl min-h-[380px] md:min-h-[440px] lg:min-h-[600px]"
           >
             {/* Glow subtil en arrière-plan */}
             <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white/20 blur-3xl pointer-events-none" />
@@ -38,7 +38,7 @@ export default function CtaBanner() {
                   transition={{ delay: 0.3 }}
                   className="text-white text-xl md:text-2xl font-bold tracking-widest"
                 >
-                  WORLDATLAS
+                  AFRIATLAS
                 </motion.h3>
                 <div className="flex flex-wrap gap-2">
                   {["Voyages", "Culture", "Découverte"].map((tag, idx) => (
@@ -71,7 +71,7 @@ export default function CtaBanner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.6 }}
-                className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tighter"
+                className="text-white text-4xl sm:text-5xl md:text-5xl lg:text-5xl font-black leading-[1.05] tracking-tighter"
               >
                 Votre voyage <br />
                 commence <br />
@@ -88,12 +88,12 @@ export default function CtaBanner() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.7 }}
-                  className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 flex-shrink-0 cursor-pointer"
+                  className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-md md:rounded-md overflow-hidden border border-white/10 flex-shrink-0 cursor-pointer"
                 >
                   <img
                     src="/vr.png"
                     alt="Destination Preview"
-                    className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+                    className="w-full h-full grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
@@ -146,13 +146,13 @@ export default function CtaBanner() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex-[1.4] rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden shadow-2xl group min-h-[380px] md:min-h-[440px] lg:min-h-[600px] cursor-pointer"
+            className="relative flex-[1.4] rounded-md md:rounded-[3.5rem] overflow-hidden shadow-2xl group min-h-[380px] md:min-h-[440px] lg:min-h-[600px] cursor-pointer"
           >
             {/* Image */}
             <img
               src="/vr.png"
               alt="Destination Experience"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-fill transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
             />
 
             {/* Overlay */}
@@ -186,7 +186,7 @@ export default function CtaBanner() {
                 duration: 0.6,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 bg-white rounded-[1.75rem] md:rounded-[2rem] p-5 md:p-7 shadow-2xl w-[calc(100%-2rem)] max-w-[260px] sm:max-w-[280px] cursor-pointer"
+              className="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 bg-white rounded-[1.75rem] md:rounded-md p-5 md:p-7 shadow-2xl w-[calc(100%-2rem)] max-w-[260px] sm:max-w-[280px] cursor-pointer"
             >
               <Link to="/destinations" className="block">
                 <div className="flex flex-col gap-3 md:gap-4">

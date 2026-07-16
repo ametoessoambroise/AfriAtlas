@@ -195,10 +195,10 @@ export default function PhotoUploadZone({
     <>
       <div
         onClick={() => fileInputRef.current?.click()}
-        className="group cursor-pointer hover:bg-muted/30 transition-all flex flex-col items-center justify-center min-h-[200px] h-full border-2 border-dashed border-primary/20 hover:border-primary/50 bg-primary/5 hover:bg-primary/10 rounded-2xl"
+        className="group cursor-pointer hover:bg-muted/30 transition-all flex flex-col items-center justify-center min-h-[200px] h-full border-2 border-dashed border-primary/20 hover:border-primary/50 bg-primary/5 hover:bg-primary/10 rounded-md"
       >
-        <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-3 shadow-sm group-hover:scale-110 transition-transform">
-          <Upload className="h-5 w-5 text-primary" />
+        <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center mb-3 shadow-sm group-hover:scale-110 transition-transform">
+          <Upload className="h-5 w-5 text-white" />
         </div>
         <p className="text-sm font-bold text-primary">Ajouter plus de photos</p>
       </div>
@@ -213,7 +213,7 @@ export default function PhotoUploadZone({
       />
 
       {queue.length > 0 && (
-        <div className="fixed bottom-4 right-4 z-50 w-full max-w-md bg-card border border-border shadow-2xl rounded-2xl overflow-hidden flex flex-col">
+        <div className="fixed bottom-4 right-4 z-50 w-full max-w-md bg-card border border-border shadow-2xl rounded-md overflow-hidden flex flex-col">
           <div className="p-4 border-b border-border bg-muted/50 flex items-center justify-between">
             <h3 className="font-bold text-sm flex items-center gap-2">
               <Upload className="w-4 h-4" /> Upload en attente (

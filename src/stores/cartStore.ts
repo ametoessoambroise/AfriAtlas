@@ -48,7 +48,7 @@ export const useCartStore = create<CartStore>()(
         get().items.reduce((sum, i) => sum + i.item.price * i.quantity, 0),
       count: () => get().items.reduce((sum, i) => sum + i.quantity, 0),
     }),
-    { name: "worldatlas-cart" },
+    { name: "Afriatlas-cart" },
   ),
 );
 

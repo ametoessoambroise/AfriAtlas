@@ -68,7 +68,7 @@ const DestinationCard = ({
     >
       <Link
         to={`/destinations/${destination.slug}`}
-        className="group bg-card rounded-2xl border border-border/50 overflow-hidden block transition-all duration-300"
+        className="group bg-card rounded-md border border-border/50 overflow-hidden block transition-all duration-300"
       >
         <div className="relative h-72 overflow-hidden">
           <LazyImage

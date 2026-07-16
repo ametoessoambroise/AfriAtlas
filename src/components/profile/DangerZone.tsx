@@ -34,9 +34,9 @@ export function DangerZone() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Change Password Placeholder UI */}
-        <div className="bg-card border-red-100 border p-6 rounded-[32px] space-y-4">
+        <div className="bg-card border-red-100 border p-6 rounded-md space-y-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-red-50 text-red-500 rounded-xl">
+            <div className="p-2 bg-red-50 text-red-500 rounded-md">
               <Key className="w-5 h-5" />
             </div>
             <p className="font-black text-sm">Changer de mot de passe</p>
@@ -46,9 +46,9 @@ export function DangerZone() {
         </div>
 
         {/* Delete Account */}
-        <div className="bg-red-50/50 border-red-200 border p-6 rounded-[32px] space-y-4">
+        <div className="bg-red-50/50 border-red-200 border p-6 rounded-md space-y-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-red-100 text-red-600 rounded-xl">
+            <div className="p-2 bg-red-100 text-red-600 rounded-md">
               <Trash2 className="w-5 h-5" />
             </div>
             <p className="font-black text-sm text-red-600">Supprimer mon compte</p>
@@ -63,7 +63,7 @@ export function DangerZone() {
             </button>
           ) : (
             <div className="space-y-3 animate-in fade-in zoom-in-95 duration-200">
-              <div className="flex items-center gap-2 text-red-700 bg-red-100 p-2 rounded-xl text-[10px] font-bold">
+              <div className="flex items-center gap-2 text-red-700 bg-red-100 p-2 rounded-md text-[10px] font-bold">
                 <AlertTriangle className="w-3.5 h-3.5" />
                 Action irréversible. Confirmez avec votre mot de passe.
               </div>
@@ -72,19 +72,19 @@ export function DangerZone() {
                 placeholder="Mot de passe actuel"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-white border border-red-200 rounded-xl px-4 py-2 text-sm outline-none"
+                className="w-full bg-white border border-red-200 rounded-md px-4 py-2 text-sm outline-none"
               />
               <div className="flex gap-2">
                 <button
                   disabled={isDeleting}
                   onClick={handleDelete}
-                  className="flex-1 bg-red-600 text-white rounded-xl py-2 text-xs font-bold hover:bg-red-700 transition-colors"
+                  className="flex-1 bg-red-600 text-white rounded-md py-2 text-xs font-bold hover:bg-red-700 transition-colors"
                 >
                   {isDeleting ? "Suppression..." : "Confirmer"}
                 </button>
                 <button
                   onClick={() => setShowDeleteConfirm(false)}
-                  className="px-4 py-2 text-xs font-bold border border-red-200 rounded-xl"
+                  className="px-4 py-2 text-xs font-bold border border-red-200 rounded-md"
                 >
                   Annuler
                 </button>

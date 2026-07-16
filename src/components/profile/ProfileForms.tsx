@@ -49,13 +49,13 @@ export function ProfileForm({ user, onSuccess }: ProfileFormProps) {
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 bg-card border border-border p-8 rounded-[40px]">
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 bg-card border border-border p-8 rounded-md">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="text-xs font-black uppercase tracking-widest text-muted-foreground mb-2 block">Nom complet</label>
           <input
             {...form.register("fullname")}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 focus:border-primary outline-none transition-colors"
+            className="w-full bg-background border border-border rounded-md px-4 py-3 focus:border-primary outline-none transition-colors"
           />
           {form.formState.errors.fullname && (
             <p className="text-red-500 text-[10px] mt-1 font-bold">{form.formState.errors.fullname.message}</p>
@@ -66,21 +66,21 @@ export function ProfileForm({ user, onSuccess }: ProfileFormProps) {
           <input
             {...form.register("email")}
             disabled
-            className="w-full bg-surface-alt border border-border rounded-2xl px-4 py-3 text-muted-foreground cursor-not-allowed"
+            className="w-full bg-surface-alt border border-border rounded-md px-4 py-3 text-muted-foreground cursor-not-allowed"
           />
         </div>
         <div>
           <label className="text-xs font-black uppercase tracking-widest text-muted-foreground mb-2 block">Pays</label>
           <input
             {...form.register("country")}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 focus:border-primary outline-none"
+            className="w-full bg-background border border-border rounded-md px-4 py-3 focus:border-primary outline-none"
           />
         </div>
         <div>
           <label className="text-xs font-black uppercase tracking-widest text-muted-foreground mb-2 block">Langue préférée</label>
           <select
             {...form.register("preferred_language")}
-            className="w-full bg-background border border-border rounded-2xl px-4 py-3 focus:border-primary outline-none"
+            className="w-full bg-background border border-border rounded-md px-4 py-3 focus:border-primary outline-none"
           >
             <option value="fr">Français</option>
             <option value="en">English</option>

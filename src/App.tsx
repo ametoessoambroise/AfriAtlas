@@ -9,6 +9,7 @@ import { useTokenRefresh } from "@/hooks/useTokenRefresh";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BottomNav from "@/components/layout/BottomNav";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 // Pages publiques & Catalogue
 import Index from "./pages/Index";
@@ -39,6 +40,7 @@ import AlbumsPage from "./pages/albums/AlbumsPage";
 import CreateAlbumPage from "./pages/albums/CreateAlbumPage";
 import AlbumDetailPage from "./pages/albums/AlbumDetailPage";
 import ProtectedWrapper from "./components/auth/ProtectedWrapper";
+import TripPlanningPage from "./pages/TripPlanningPage";
 
 // Pages VR & Bookings
 import VrSessionsPage from "./pages/vr-sessions/VrSessionsPage";
@@ -91,13 +93,29 @@ import { useLocation } from "react-router-dom";
 const AppContent = () => {
   const isMobile = useIsMobile();
   const location = useLocation();
-  const isDashboard = location.pathname === "/dashboard";
+  
+  // Routes qui utilisent le DashboardLayout (avec sa propre Sidebar et Header)
+  const dashboardRoutes = [
+    "/dashboard",
+    "/profile",
+    "/favorites",
+    "/bookings",
+    "/orders",
+    "/albums",
+    "/tripplanification",
+    "/family",
+    "/vr-sessions"
+  ];
+  const isDashboardArea = dashboardRoutes.some(route => 
+    location.pathname === route || location.pathname.startsWith(route + "/")
+  );
 
   // Rafraîchir automatiquement le token toutes les 25 minutes
   useTokenRefresh();
 
   return (
     <TooltipProvider>
+      <ScrollToTop />
       <Toaster />
       <Sonner />
       <a
@@ -106,13 +124,13 @@ const AppContent = () => {
       >
         Aller au contenu principal
       </a>
-      {!isDashboard && <Navbar />}
+      {!isDashboardArea && <Navbar />}
       <main
         id="contenu-principal"
         tabIndex={-1}
         className={
           isMobile
-            ? `min-h-dvh scroll-mt-24 ${isDashboard ? "" : "pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))]"} outline-none md:pb-0`
+            ? `min-h-dvh scroll-mt-24 ${isDashboardArea ? "" : "pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))]"} outline-none md:pb-0`
             : "min-h-dvh scroll-mt-24 outline-none"
         }
       >
@@ -208,6 +226,14 @@ const AppContent = () => {
             element={
               <ProtectedWrapper>
                 <AlbumDetailPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/tripplanification"
+            element={
+              <ProtectedWrapper>
+                <TripPlanningPage />
               </ProtectedWrapper>
             }
           />
@@ -314,9 +340,10 @@ const AppContent = () => {
         </Routes>
       </main>
 
-      {!isDashboard && <Footer />}
-      {isMobile && !isDashboard && <BottomNav />}
+      {!isDashboardArea && <Footer />}
+      {isMobile && !isDashboardArea && <BottomNav />}
     </TooltipProvider>
+
   );
 };
 

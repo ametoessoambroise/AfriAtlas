@@ -123,7 +123,7 @@ const CardSkeleton = () => {
 
   return (
     <motion.div
-      className="w-full max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-lg"
+      className="w-full max-w-4xl mx-auto p-6 bg-white rounded-md shadow-lg"
       variants={frameVariants}
       initial="hidden"
       animate="visible"

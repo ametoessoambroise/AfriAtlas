@@ -16,8 +16,8 @@ export function AlbumDetailSkeleton() {
 
       <div className="container py-12 space-y-12">
         {/* Header Skeleton */}
-        <div className="relative overflow-hidden rounded-3xl border border-border p-8 md:p-12 flex flex-col md:flex-row gap-8 bg-card">
-          <Skeleton className="aspect-[4/5] w-full max-w-[280px] rounded-2xl" />
+        <div className="relative overflow-hidden rounded-md border border-border p-8 md:p-12 flex flex-col md:flex-row gap-8 bg-card">
+          <Skeleton className="aspect-[4/5] w-full max-w-[280px] rounded-md" />
           <div className="flex-1 space-y-4 py-8">
             <Skeleton className="h-6 w-24" />
             <Skeleton className="h-12 w-3/4" />
@@ -33,22 +33,22 @@ export function AlbumDetailSkeleton() {
 
         <div className="grid gap-12 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-12">
-            <Skeleton className="h-[300px] w-full rounded-3xl" />
+            <Skeleton className="h-[300px] w-full rounded-md" />
             <div className="space-y-6">
               <Skeleton className="h-8 w-48" />
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <Skeleton className="aspect-square rounded-2xl" />
-                <Skeleton className="aspect-square rounded-2xl" />
-                <Skeleton className="aspect-square rounded-2xl" />
+                <Skeleton className="aspect-square rounded-md" />
+                <Skeleton className="aspect-square rounded-md" />
+                <Skeleton className="aspect-square rounded-md" />
               </div>
             </div>
           </div>
           <aside className="space-y-8">
-            <Skeleton className="h-32 w-full rounded-3xl" />
+            <Skeleton className="h-32 w-full rounded-md" />
             <div className="space-y-4">
               <Skeleton className="h-8 w-40" />
-              <Skeleton className="h-20 w-full rounded-2xl" />
-              <Skeleton className="h-20 w-full rounded-2xl" />
+              <Skeleton className="h-20 w-full rounded-md" />
+              <Skeleton className="h-20 w-full rounded-md" />
             </div>
           </aside>
         </div>

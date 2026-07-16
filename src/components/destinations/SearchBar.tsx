@@ -94,7 +94,7 @@ export default function SearchBar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-0 top-full mt-2 w-full bg-card border border-border rounded-2xl shadow-2xl overflow-hidden z-40"
+            className="absolute left-0 top-full mt-2 w-full bg-card border border-border rounded-md shadow-2xl overflow-hidden z-40"
           >
             <div className="p-2">
               <p className="px-3 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
@@ -113,7 +113,7 @@ export default function SearchBar() {
                   // Shimmer Skeletons
                   Array.from({ length: 5 }).map((_, i) => (
                     <div key={i} className="flex items-center gap-3 px-3 py-2">
-                      <Skeleton className="h-10 w-10 rounded-xl shrink-0" />
+                      <Skeleton className="h-10 w-10 rounded-md shrink-0" />
                       <div className="flex-1 space-y-1.5">
                         <Skeleton className="h-4 w-2/3" />
                         <Skeleton className="h-3 w-1/3" />
@@ -126,9 +126,9 @@ export default function SearchBar() {
                       key={dest.id}
                       to={`/destinations/${dest.slug}`}
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted transition-colors group"
+                      className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-muted transition-colors group"
                     >
-                      <div className="h-10 w-10 rounded-xl bg-muted overflow-hidden shrink-0 border border-border group-hover:border-primary/30 transition-colors">
+                      <div className="h-10 w-10 rounded-md bg-muted overflow-hidden shrink-0 border border-border group-hover:border-primary/30 transition-colors">
                         <img
                           src={dest.image}
                           alt={dest.name}

@@ -20,8 +20,8 @@ export function BookingCard({ booking }: BookingCardProps) {
   const date = new Date(booking.scheduled_at);
 
   return (
-    <div className="bg-card border border-border rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow group flex flex-col md:flex-row gap-6">
-      <div className="h-40 w-full md:w-48 bg-muted rounded-2xl flex items-center justify-center shrink-0">
+    <div className="bg-card border border-border rounded-md p-6 shadow-sm hover:shadow-md transition-shadow group flex flex-col md:flex-row gap-6">
+      <div className="h-40 w-full md:w-48 bg-muted rounded-md flex items-center justify-center shrink-0">
         <MapPin className="h-8 w-8 text-muted-foreground/30" />
       </div>
 
@@ -54,7 +54,7 @@ export function BookingCard({ booking }: BookingCardProps) {
         </div>
 
         <div className="mt-6 flex justify-end">
-          <Button asChild variant="outline" className="rounded-xl group-hover:bg-primary group-hover:text-white transition-colors">
+          <Button asChild variant="outline" className="rounded-md group-hover:bg-primary group-hover:text-white transition-colors">
             <Link to={`/bookings/${booking.id}`}>
               Voir les détails
               <ChevronRight className="ml-2 h-4 w-4" />

@@ -8,6 +8,7 @@ import { Loader2, Lock, CheckCircle2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import AuthLayout from "@/components/auth/AuthLayout";
 import PasswordStrength from "@/components/auth/PasswordStrength";
+import { Input } from "@/components/ui/input";
 
 const resetSchema = z.object({
   password: z.string().min(8, "Le mot de passe doit faire au moins 8 caractères."),
@@ -70,7 +71,7 @@ export default function ResetPasswordPage() {
       backgroundImageUrl="https://images.unsplash.com/photo-1542382257-80da9fb9f5ab?auto=format&fit=crop&q=80"
     >
       {success ? (
-        <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-6 text-center animate-in fade-in zoom-in duration-300">
+        <div className="bg-green-500/10 border border-green-500/20 rounded-md p-6 text-center animate-in fade-in zoom-in duration-300">
            <div className="w-16 h-16 bg-green-500/20 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-8 h-8" />
            </div>
@@ -90,15 +91,14 @@ export default function ResetPasswordPage() {
               {errorMsg}
             </div>
           )}
-
           <div>
              <div className="relative">
-               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-               <input
+               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+               <Input
                  {...register("password")}
                  type="password"
                  placeholder="Nouveau mot de passe"
-                 className={`w-full bg-surface-alt border ${errors.password ? 'border-destructive' : 'border-border/60'} rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
+                 className={`w-full bg-surface-alt border ${errors.password ? 'border-destructive' : 'border-border/60'} rounded-md h-12 pl-10 pr-4 text-sm focus:ring-primary/20 font-bold`}
                />
              </div>
              <PasswordStrength password={pwValue} />
@@ -107,12 +107,12 @@ export default function ResetPasswordPage() {
 
           <div>
              <div className="relative">
-               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-               <input
+               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+               <Input
                  {...register("password_confirm")}
                  type="password"
                  placeholder="Confirmer"
-                 className={`w-full bg-surface-alt border ${errors.password_confirm ? 'border-destructive' : 'border-border/60'} rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
+                 className={`w-full bg-surface-alt border ${errors.password_confirm ? 'border-destructive' : 'border-border/60'} rounded-md h-12 pl-10 pr-4 text-sm focus:ring-primary/20 font-bold`}
                />
              </div>
              {errors.password_confirm && <p className="text-xs text-destructive mt-1 font-medium">{errors.password_confirm.message}</p>}
@@ -121,7 +121,7 @@ export default function ResetPasswordPage() {
           <button
             type="submit"
             disabled={isResetting}
-            className="w-full btn-primary py-3 flex justify-center mt-2 font-bold"
+            className="w-full btn-primary py-3 flex justify-center mt-2 font-bold rounded-md"
           >
             {isResetting ? <Loader2 className="w-5 h-5 animate-spin" /> : "Sauvegarder"}
           </button>

@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .vscode/
-.kiro/
 tests/
 scratch/
 .agent/
@@ -33,3 +32,5 @@ scratch/
 .env
 .env.example
 .env.local
+
+

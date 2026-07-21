@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { LogOut, Camera, X, Menu } from "lucide-react";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
-import { DashboardHeader } from "./DashboardHeader";
+import { useAuth } from "@/hooks/useAuth";
+import SearchBar from "../destinations/SearchBar";
+import { ThemeToggle } from "../layout/ThemeToggle";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
+const navMenu = [
+  { label: "Dashboard", href: "/dashboard", icon: null },
+  { label: "Mes Réservations", href: "/dashboard/bookings", icon: null },
+  { label: "Favoris", href: "/dashboard/favorites", icon: null },
+];
+
+const navGeneral = [
+  { label: "Profil", href: "/dashboard/profile", icon: null },
+  { label: "Paramètres", href: "/dashboard/settings", icon: null },
+];
+
 export function DashboardLayout({ children }: DashboardLayoutProps) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const location = useLocation();
+  const { user, logout } = useAuth();
   return (
     <div className="flex h-screen bg-background overflow-hidden font-body relative">
       {/* ══ MOBILE SIDEBAR OVERLAY ═══════════════════════════════════════════ */}
@@ -37,7 +55,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               />
             </div>
             <span className="text-base font-black tracking-tight text-foreground font-premium">
-              WorldAtlas Travel
+              Afriatlas Travel
             </span>
           </Link>
 
@@ -91,7 +109,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
 
         {/* Support Card — bottom */}
-        <div className="bg-primary rounded-2xl p-5 relative overflow-hidden group">
+        <div className="bg-primary rounded-md p-5 relative overflow-hidden group">
           <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-secondary/20 blur-2xl group-hover:scale-125 transition-transform" />
           <Camera className="w-6 h-6 text-primary-foreground mb-3" />
           <p className="text-primary-foreground text-sm font-black leading-tight mb-1">
@@ -117,12 +135,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
           {/* Right side: icons + user */}
           <div className="flex items-center gap-1 md:gap-2">
-            <button className="bg-primary rounded-full border border-border flex items-center justify-center text-foreground hover:bg-primary/80 transition-all">
-              <ThemeToggle />
-            </button>
+            <ThemeToggle />
 
             {/* Hamburger (Mobile) */}
             <button
+              type="button"
               className="w-9 h-9 rounded-xl bg-muted border border-border flex items-center justify-center md:hidden hover:bg-muted/80 transition-all"
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             >
@@ -164,8 +181,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <main className="flex-1 overflow-y-auto no-scrollbar bg-background">
           {children}
         </main>
-      </SidebarInset>
-    </SidebarProvider>
+      </div>
+    </div>
   );
 }
 

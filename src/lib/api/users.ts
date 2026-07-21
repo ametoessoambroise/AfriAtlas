@@ -214,3 +214,41 @@ export async function getUserDashboard(): Promise<T.UserDashboardResponse> {
 
   return res.json() as Promise<T.UserDashboardResponse>;
 }
+
+/**
+ * Change User Password
+ * @method PUT /api/v1/users/me/password
+ */
+export async function changePassword(body: any): Promise<any> {
+  const url = `${getApiBaseUrl()}/api/v1/users/me/password`;
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${getAccessToken()}`,
+  };
+  const init: RequestInit = { method: "PUT", headers, body: JSON.stringify(body) };
+  const res = await fetch(url, init);
+  if (!res.ok) {
+    const errorBody = await res.text().catch(() => res.statusText);
+    throw new ApiError(res.status, errorBody, url);
+  }
+  return res.json();
+}
+
+/**
+ * Delete User Account
+ * @method DELETE /api/v1/users/me
+ */
+export async function deleteAccount(): Promise<void> {
+  const url = `${getApiBaseUrl()}/api/v1/users/me`;
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${getAccessToken()}`,
+  };
+  const init: RequestInit = { method: "DELETE", headers };
+  const res = await fetch(url, init);
+  if (!res.ok) {
+    const errorBody = await res.text().catch(() => res.statusText);
+    throw new ApiError(res.status, errorBody, url);
+  }
+  return;
+}

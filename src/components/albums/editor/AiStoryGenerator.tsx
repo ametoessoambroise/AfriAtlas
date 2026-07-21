@@ -266,8 +266,7 @@ export default function AiStoryGenerator({
                 </motion.div>
               </AnimatePresence>
             </div>
-
-          </div>
+          )}
         </div>
       </div>
     </div>

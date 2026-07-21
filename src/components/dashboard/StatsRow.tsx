@@ -1,5 +1,11 @@
 import React, { memo } from "react";
-import { ArrowUpRight, Heart, ShoppingBag, Image as ImageIcon, CalendarDays } from "lucide-react";
+import {
+  ArrowUpRight,
+  Heart,
+  ShoppingBag,
+  Image as ImageIcon,
+  CalendarDays,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
@@ -36,7 +42,9 @@ const StatCard = memo(({ label, value, sub, trend, link }: StatCardProps) => {
         <p className="text-xs text-primary font-bold uppercase tracking-wider">
           {sub}
         </p>
-        <p className="text-[10px] text-muted-foreground mt-1 font-medium italic">Données en temps réel</p>
+        <p className="text-[10px] text-muted-foreground mt-1 font-medium italic">
+          Données en temps réel
+        </p>
       </CardContent>
     </Card>
   );

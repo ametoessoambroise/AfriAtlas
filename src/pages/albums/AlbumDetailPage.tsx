@@ -90,6 +90,7 @@ export default function AlbumDetailPage() {
         </div>
       </div>
 
+      <div className="container max-w-7xl mx-auto py-8 px-4">
         <div className="grid gap-8 xl:grid-cols-[1fr_350px] items-start animate-in slide-in-from-bottom-4 duration-500 delay-100">
           {/* Main Content (Left Column) */}
           <div className="lg:col-span-8 space-y-8">
@@ -106,6 +107,6 @@ export default function AlbumDetailPage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </PageWrapper>
   );
 }

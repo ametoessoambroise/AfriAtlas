@@ -1,23 +1,23 @@
-import { useState, useMemo } from 'react';
-import { Search, ShoppingCart, Loader2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import PageWrapper from '@/components/layout/PageWrapper';
-import ProductCard from '@/components/cards/ProductCard';
-import CartSidebar from '@/components/CartSidebar';
-import { useCartStore } from '@/stores/cartStore';
-import { useDestination } from '@/hooks/queries/useDestinations';
-import { useProducts } from '@/hooks/queries/useProducts';
-import { mapProductListToProduct } from '@/lib/mappers/productMapper';
+import { useState, useMemo } from "react";
+import { Search, ShoppingCart, Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import PageWrapper from "@/components/layout/PageWrapper";
+import ProductCard from "@/components/cards/ProductCard";
+import CartSidebar from "@/components/CartSidebar";
+import { useCartStore } from "@/stores/cartStore";
+import { useDestination } from "@/hooks/queries/useDestinations";
+import { useProducts } from "@/hooks/queries/useProducts";
+import { mapProductListToProduct } from "@/lib/mappers/productMapper";
 
-const categories = ['Tous', 'Épicerie', 'Boissons', 'Snacks', 'Beauté'];
+const categories = ["Tous", "Épicerie", "Boissons", "Snacks", "Beauté"];
 
 const ChampionPage = () => {
-  const [cat, setCat] = useState('Tous');
-  const [search, setSearch] = useState('');
+  const [cat, setCat] = useState("Tous");
+  const [search, setSearch] = useState("");
   const [cartOpen, setCartOpen] = useState(false);
   const count = useCartStore((s) => s.count());
 
-  const slug = 'le-champion';
+  const slug = "le-champion";
   const { data: champion, isLoading: isLoadingDest } = useDestination(slug);
   const { data: rawProducts, isLoading: isLoadingProducts } = useProducts(slug);
 
@@ -25,8 +25,9 @@ const ChampionPage = () => {
     if (!rawProducts) return [];
     const products = rawProducts.map(mapProductListToProduct);
     return products.filter((p) => {
-      if (cat !== 'Tous' && p.category !== cat) return false;
-      if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
+      if (cat !== "Tous" && p.category !== cat) return false;
+      if (search && !p.name.toLowerCase().includes(search.toLowerCase()))
+        return false;
       return true;
     });
   }, [rawProducts, cat, search]);
@@ -55,13 +56,23 @@ const ChampionPage = () => {
     <PageWrapper>
       {/* Hero */}
       <div className="relative h-[300px] overflow-hidden">
-        <img src={champion.image} alt={champion.name} className="w-full h-full object-cover" />
+        <img
+          src={champion.image}
+          alt={champion.name}
+          className="w-full h-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 to-foreground/20" />
         <div className="absolute bottom-0 left-0 right-0 p-8">
           <div className="container">
-            <span className="badge-rating text-xs mb-3 inline-block">Supermarché</span>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-card mb-2">{champion.name}</h1>
-            <p className="text-card/80 text-sm">{champion.openingHours} · {champion.address}</p>
+            <span className="badge-rating text-xs mb-3 inline-block">
+              Supermarché
+            </span>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-card mb-2">
+              {champion.name}
+            </h1>
+            <p className="text-card/80 text-sm">
+              {champion.openingHours} · {champion.address}
+            </p>
           </div>
         </div>
       </div>
@@ -79,7 +90,11 @@ const ChampionPage = () => {
           </div>
           <div className="flex gap-2 flex-wrap">
             {categories.map((c) => (
-              <button key={c} onClick={() => setCat(c)} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${cat === c ? 'bg-primary text-primary-foreground' : 'bg-card border border-border text-muted-foreground hover:border-primary/40'}`}>
+              <button
+                key={c}
+                onClick={() => setCat(c)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${cat === c ? "bg-primary text-primary-foreground" : "bg-card border border-border text-muted-foreground hover:border-primary/40"}`}
+              >
                 {c}
               </button>
             ))}
@@ -90,7 +105,9 @@ const ChampionPage = () => {
           >
             <ShoppingCart className="w-5 h-5" />
             {count > 0 && (
-              <span className="absolute -top-1 -right-1 bg-foreground text-card text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">{count}</span>
+              <span className="absolute -top-1 -right-1 bg-foreground text-card text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                {count}
+              </span>
             )}
           </button>
         </div>
@@ -104,7 +121,12 @@ const ChampionPage = () => {
                 </div>
               ) : (
                 filtered.map((p, i) => (
-                  <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}>
+                  <motion.div
+                    key={p.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.03 }}
+                  >
                     <ProductCard product={p} />
                   </motion.div>
                 ))
@@ -128,8 +150,20 @@ const ChampionPage = () => {
       <AnimatePresence>
         {cartOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-foreground/40 z-50 lg:hidden" onClick={() => setCartOpen(false)} />
-            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25 }} className="fixed right-0 top-0 bottom-0 w-[340px] bg-card z-50 lg:hidden shadow-2xl">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-foreground/40 z-50 lg:hidden"
+              onClick={() => setCartOpen(false)}
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25 }}
+              className="fixed right-0 top-0 bottom-0 w-[340px] bg-card z-50 lg:hidden shadow-2xl"
+            >
               <CartSidebar onClose={() => setCartOpen(false)} />
             </motion.div>
           </>

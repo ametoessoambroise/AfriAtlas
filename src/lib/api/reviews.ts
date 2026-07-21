@@ -41,7 +41,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
  * Créer un avis
  */
 export async function createReview(data: ReviewCreate): Promise<ReviewResponse> {
-  return request<ReviewResponse>("/reviews", {
+  return request<ReviewResponse>("/reviews/", {
     method: "POST",
     body: JSON.stringify(data),
   });

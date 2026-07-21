@@ -74,8 +74,8 @@ export default function DestinationGrid({
   }
 
   // ─── Injection logic ──────────────────────────────────────────────────────────
-  // On injecte une publicité tous les 5 items.
-  const AD_FREQUENCY = 5;
+  // On injecte une publicité tous les 4 items.
+  const AD_FREQUENCY = 4;
   const itemsWithAds: Array<
     | { type: "destination"; data: Destination }
     | { type: "ad"; data: AdvertisementListResponse }

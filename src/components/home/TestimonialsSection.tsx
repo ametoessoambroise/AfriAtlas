@@ -32,7 +32,7 @@ export default function TestimonialsSection() {
         <article className="max-w-screen-md mx-auto text-center space-y-4 mb-8">
           <TimelineContent
             as="h1"
-            className="text-3xl md:text-4xl xl:text-5xl font-bold tracking-tight"
+            className="text-[clamp(2rem,4vw+1rem,3rem)] font-heading font-semibold italic tracking-tight"
             animationNum={0}
             customVariants={revealVariants}
             timelineRef={testimonialRef}
@@ -41,7 +41,7 @@ export default function TestimonialsSection() {
           </TimelineContent>
           <TimelineContent
             as="p"
-            className="mx-auto text-muted-foreground text-lg"
+            className="mx-auto text-muted-foreground text-lg leading-relaxed"
             animationNum={1}
             customVariants={revealVariants}
             timelineRef={testimonialRef}

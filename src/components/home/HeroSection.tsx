@@ -59,13 +59,13 @@ export default function HeroSection() {
         {/* Titre */}
         <motion.h1
           variants={fadeUp}
-          className="mb-6 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-5xl lg:text-5xl"
+          className="mb-6 text-[clamp(2.5rem,5vw+1rem,4rem)] font-heading font-semibold italic leading-[1.1] tracking-tight"
         >
           Le Togo comme{" "}
-          <span className="relative inline-block">
+          <span className="relative inline-block text-primary">
             vous ne l'avez
             <motion.span
-              className="absolute -bottom-1 left-0 h-[3px] rounded-full bg-primary/60"
+              className="absolute -bottom-1 left-0 h-[3px] rounded-full bg-primary"
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ delay: 1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}

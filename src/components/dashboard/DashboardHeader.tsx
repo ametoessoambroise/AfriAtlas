@@ -1,13 +1,8 @@
 "use client";
 
-import { Bell, Calendar, ChevronDown, Download, Monitor, Search } from "lucide-react";
+import { Bell, Calendar, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { ThemeToggle } from "../layout/ThemeToggle";
 import { useAuth } from "@/hooks/useAuth";
 import SearchBar from "../destinations/SearchBar";
@@ -51,7 +46,7 @@ export function DashboardHeader() {
 
         {/* Theme Toggle */}
         <div className="w-8 h-8 rounded-full border border-border flex items-center justify-center">
-            <ThemeToggle />
+          <ThemeToggle />
         </div>
 
         {/* User Profile Summary */}

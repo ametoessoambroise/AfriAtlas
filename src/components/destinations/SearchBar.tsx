@@ -7,6 +7,8 @@ import {
 } from "@/hooks/queries/useDestinations";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 export default function SearchBar() {
   const [searchParams] = useSearchParams();
@@ -26,7 +28,9 @@ export default function SearchBar() {
   const { data: featuredResults, isLoading: isFeaturedLoading } =
     useFeaturedDestinations();
   const { data: searchResults, isLoading: isSearching } = useDestinations({
+    page: 1,
     q: localValue.length >= 2 ? localValue : "",
+    page_size: 5,
   });
 
   const displayResults =
@@ -63,7 +67,7 @@ export default function SearchBar() {
           className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground"
           aria-hidden
         />
-        <input
+        <Input
           type="text"
           value={localValue}
           onFocus={() => setIsOpen(true)}
@@ -161,13 +165,12 @@ export default function SearchBar() {
             <Link
               to={`/destinations${localValue ? `?search=${encodeURIComponent(localValue)}` : ""}`}
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-between px-5 py-3.5 bg-muted/50 border-t border-border hover:bg-muted transition-colors group"
+              className="flex items-center justify-between px-5 py-3.5 bg-muted border-t border-border hover:bg-muted hover:text-primary transition-colors group"
             >
-              <span className="text-xs font-black text-primary">VOIR TOUT</span>
-              <div className="flex items-center gap-1 text-[10px] font-bold text-muted-foreground">
+              <div className="text-xs font-bold text-muted-foreground hover:text-primary ">
                 Explorer tout le catalogue
-                <ChevronRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
               </div>
+              <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </motion.div>
         )}

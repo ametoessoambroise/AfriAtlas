@@ -37,7 +37,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      className="relative flex h-11 w-11 min-h-11 min-w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white touch-manipulation"
+      className="relative flex h-11 w-11 min-h-11 min-w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-full text-foreground transition-colors bg-foreground/10 hover:bg-foreground/20 touch-manipulation"
       aria-label={theme === "light" ? "Activer le thème sombre" : "Activer le thème clair"}
     >
       <AnimatePresence mode="wait" initial={false}>

@@ -63,26 +63,32 @@ export default function PlaceHero({ destination }: PlaceHeroProps) {
                 </div>
               </div>
 
-          <h1 className="mb-4 text-4xl font-extrabold text-white md:text-6xl drop-shadow-lg tracking-tight">
-            {destination.name}
-          </h1>
+              <h1 className="mb-4 text-[clamp(2.5rem,5vw+1rem,4rem)] font-heading font-semibold italic text-white drop-shadow-lg tracking-tight">
+                {destination.name}
+              </h1>
 
-          <div className="flex flex-wrap items-center gap-5">
-            <div className="flex items-center gap-1.5 bg-background/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-              <Star className="h-5 w-5 fill-primary text-primary" aria-hidden />
-              <span className="font-bold text-white text-sm">{destination.rating.toFixed(1)}</span>
-            </div>
+              <div className="flex flex-wrap items-center gap-5">
+                <div className="flex items-center gap-1.5 bg-background/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                  <Star
+                    className="h-5 w-5 fill-primary text-primary"
+                    aria-hidden
+                  />
+                  <span className="font-bold text-white text-sm">
+                    {destination.rating.toFixed(1)}
+                  </span>
+                </div>
 
-            <div className="flex items-center gap-1.5 bg-background/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-              <Shield className="h-4 w-4 text-emerald-400" aria-hidden />
-              <span className="text-sm font-medium text-white/90">
-                Confort : {destination.safety}/5
-              </span>
+                <div className="flex items-center gap-1.5 bg-background/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                  <Shield className="h-4 w-4 text-emerald-400" aria-hidden />
+                  <span className="text-sm font-medium text-white/90">
+                    Confort : {destination.safety}/5
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
       {/* Indicator Dots */}
       {images.length > 1 && (
         <div className="absolute bottom-6 right-8 flex flex-col gap-2 z-20">

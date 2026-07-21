@@ -49,7 +49,7 @@ const AlbumsPage = () => {
         {/* Albums Grid */}
         <AlbumsGrid />
       </div>
-    </DashboardLayout>
+    </div>
   );
 };
 

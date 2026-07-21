@@ -19,6 +19,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
+  Cell,
 } from "recharts";
 
 interface DashboardAnalyticsProps {
@@ -205,7 +206,7 @@ export const DashboardAnalytics = memo(
         <p className="text-[11px] text-muted-foreground mt-4 italic">
           * Basé sur vos interactions et réservations récentes.
         </p>
-      </div>
+      </Card>
     );
   },
 );

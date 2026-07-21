@@ -90,7 +90,6 @@ const queryClient = new QueryClient({
 });
 
 import { useLocation } from "react-router-dom";
-import ScrollToTop from "@/components/layout/ScrollToTop";
 
 const AppContent = () => {
   const isMobile = useIsMobile();

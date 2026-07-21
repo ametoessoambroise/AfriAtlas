@@ -5,13 +5,12 @@ import {
   RecentOrders,
   GlobalTopPlaces,
 } from "@/components/dashboard/DashboardLists";
-import { QuickActions } from "@/components/dashboard/QuickActions";
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { DashboardAnalytics } from "@/components/dashboard/DashboardAnalytics";
 import { NextBookingCard } from "@/components/dashboard/NextBookingCard";
 import { SubscriptionGauge } from "@/components/dashboard/SubscriptionGauge";
 import DashboardSkeleton from "@/components/dashboard/skeletons/DashboardSkeleton";
-import { AlertCircle, Plus, RefreshCcw, RefreshCw } from "lucide-react";
+import { AlertCircle, Plus, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -97,35 +96,35 @@ export default function DashboardPage() {
 
         {/* Middle Row (Analytics + Budget/Gauge) */}
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6 animate-in slide-in-from-bottom-4 duration-500 delay-200">
-           <DashboardAnalytics
-              ordersCount={orders.length}
-              bookingsCount={bookings.length}
-            />
-            <SubscriptionGauge status={dashboard?.user?.subscription_status} />
+          <DashboardAnalytics
+            ordersCount={orders.length}
+            bookingsCount={bookings.length}
+          />
+          <SubscriptionGauge status={dashboard?.user?.subscription_status} />
         </div>
 
         {/* Bottom Row (Orders + Fulfillment/NextBooking) */}
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6 animate-in slide-in-from-bottom-4 duration-500 delay-300">
-           <RecentOrders
-              orders={orders}
-              isLoading={isLoading && orders.length === 0}
-            />
-            <NextBookingCard
-              booking={bookings[0]}
-              isLoading={isLoading && bookings.length === 0}
-            />
+          <RecentOrders
+            orders={orders}
+            isLoading={isLoading && orders.length === 0}
+          />
+          <NextBookingCard
+            booking={bookings[0]}
+            isLoading={isLoading && bookings.length === 0}
+          />
         </div>
 
         {/* Extra Row for Favorites/Top Places if needed, or remove to match new design strictly */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in slide-in-from-bottom-4 duration-500 delay-400">
-            <RecentFavorites
-              favorites={favorites}
-              isLoading={isLoading && favorites.length === 0}
-            />
-            <GlobalTopPlaces
-              places={topPlaces}
-              isLoading={isLoading && topPlaces.length === 0}
-            />
+          <RecentFavorites
+            favorites={favorites}
+            isLoading={isLoading && favorites.length === 0}
+          />
+          <GlobalTopPlaces
+            places={topPlaces}
+            isLoading={isLoading && topPlaces.length === 0}
+          />
         </div>
       </div>
     </DashboardLayout>

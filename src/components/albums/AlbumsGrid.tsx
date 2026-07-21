@@ -117,7 +117,8 @@ const AlbumsGrid = ({
             <span className="font-black text-sm uppercase tracking-widest text-muted-foreground group-hover:text-primary">Nouvel Album</span>
           </Link>
         </motion.div>
-      </motion.div>
+      </div>
+      )}
     </div>
   );
 };

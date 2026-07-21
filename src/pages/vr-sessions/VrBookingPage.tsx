@@ -2,11 +2,19 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, CalendarIcon, Info, Lock, ShieldCheck, Loader2, CreditCard } from "lucide-react";
+import { toast } from "sonner";
 
 import { useVrSession, useBookVrSession } from "@/hooks/queries/useVrSessions";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { getPlaces } from "@/lib/api/places";
+import { listSubscriptionPlans } from "@/lib/api/subscriptions";
+import { bookingSchema, type BookingFormValues } from "./components/bookingSchema";
+import { SessionSummary } from "@/components/bookings/SessionSummary";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || "pk_test_sample");
 
@@ -47,14 +55,18 @@ export default function VrBookingPage() {
   const { watch, handleSubmit } = form;
   const values = watch();
 
+  const [date, setDate] = useState<string>("");
+  const [timeSlot, setTimeSlot] = useState<string>("10:00");
+  const [participants, setParticipants] = useState<number>(1);
+
   const onSubmit = async (data: BookingFormValues) => {
     if (!slug) return;
     try {
       await bookSession({
         body: {
-          booking_date: data.booking_date.toISOString(),
-          time_slot: data.time_slot,
-          num_participants: data.num_participants,
+          booking_date: data.booking_date?.toISOString() || new Date(date).toISOString(),
+          time_slot: data.time_slot || timeSlot,
+          num_participants: data.num_participants || participants,
           immersion_location_id: data.immersion_location_id,
           participation_type: data.participation_type,
           age_range: data.age_range,
@@ -95,6 +107,8 @@ export default function VrBookingPage() {
     (p) => p.id === values.immersion_location_id,
   )?.name;
   const selectedPlan = plans?.find((p) => p.id === values.subscription_plan_id);
+
+  const totalPrice = session.price * participants;
 
   return (
     <div className="container py-8 px-4 md:px-8 mx-auto max-w-6xl">
@@ -186,9 +200,9 @@ export default function VrBookingPage() {
               <Elements stripe={stripePromise}>
                 <PaymentForm 
                   amount={totalPrice} 
-                  isProcessing={isProcessing}
+                  isProcessing={isBooking}
                   disabled={!date}
-                  onSuccess={handlePaymentSuccess} 
+                  onSuccess={handleSubmit(onSubmit)} 
                 />
               </Elements>
             </div>

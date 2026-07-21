@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Megaphone, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import type { AdvertisementListResponse } from "@/lib/types";
 import { useRecordImpression, useRecordClick } from "@/hooks/queries/useAds";
 import { Button } from "@/components/ui/button";
+import { LazyImage } from "@/components/ui/lazy-image";
+import { cn } from "@/lib/utils";
 
 interface AdPremiumSpotlightProps {
   ad: AdvertisementListResponse;
@@ -47,86 +49,69 @@ const AdPremiumSpotlight = ({ ad }: AdPremiumSpotlightProps) => {
       className="container px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl my-16"
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="relative h-[400px] rounded-[3rem] overflow-hidden border border-white/10 group cursor-pointer"
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="rounded-md border border-border bg-card p-3 sm:p-4 shadow-sm cursor-pointer"
         onClick={handleClick}
       >
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0">
-          {ad.image_url ? (
-            <img
-              src={ad.image_url}
-              alt={ad.title}
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-indigo-900 to-zinc-950" />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/60 to-transparent" />
-        </div>
-
-        {/* Content */}
-        <div className="relative h-full flex flex-col justify-center px-12 md:px-20 max-w-2xl">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center gap-2 mb-6"
-          >
-            <div className="w-8 h-8 rounded-md bg-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
-              <Megaphone className="h-4 w-4 text-zinc-950" />
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="relative h-20 w-24 sm:h-24 sm:w-32 shrink-0 overflow-hidden rounded-md">
+            {ad.image_url ? (
+              <LazyImage
+                src={ad.image_url}
+                alt={ad.title}
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            ) : (
+              <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-xs">
+                Aperçu
+              </div>
+            )}
+            <div className="absolute left-1.5 top-1.5 bg-muted text-muted-foreground text-[10px] font-medium uppercase px-2 py-0.5 rounded-full tracking-[0.05em]">
+              Sponsorisé
             </div>
-            <span className="text-xs font-black uppercase tracking-[0.3em] text-amber-500">
-              Expérience Premium
-            </span>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-4xl md:text-5xl font-extrabold text-white leading-[1.1] tracking-tighter uppercase italic mb-4"
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-1.5 mb-1">
+              <h4 className="font-heading font-bold text-foreground text-sm sm:text-base truncate">
+                {ad.title}
+              </h4>
+              <div className="bg-muted text-muted-foreground text-[10px] font-medium uppercase px-2 py-0.5 rounded-full tracking-[0.05em]">
+                Partenaire
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground line-clamp-1">
+              {ad.description}
+            </p>
+            <div className="flex items-center gap-1 mt-1">
+              <Star className="h-3 w-3 fill-secondary text-secondary" />
+              <span className="text-xs font-bold text-foreground">4.8</span>
+              <span className="text-xs text-muted-foreground">(230 avis)</span>
+            </div>
+          </div>
+          <div
+            className="shrink-0 rounded-lg bg-primary px-3 py-2 sm:px-4 text-xs font-bold text-primary-foreground transition-colors hover:opacity-90 min-h-[40px] flex items-center gap-2"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClick();
+            }}
           >
-            {ad.title}
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-lg text-white/60 font-medium mb-8 line-clamp-2 italic"
-          >
-            {ad.description}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="flex md:items-center gap-2 md:gap-4 justify-between items-center flex-wrap"
-          >
-            <Button className="h-12 md:h-14 px-4 md:px-8 rounded-md bg-white text-zinc-950 font-black uppercase italic text-center tracking-tighter hover:bg-zinc-200 transition-all flex items-center gap-2 group-2">
-              Découvrir l'offre
-              <ArrowRight className="h-5 w-5 group-2-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button
-              asChild
-              variant="link"
-              className="text-white/50 hover:text-white px-0"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Link to="/how-ads-works">
-                Comment fonctionnent nos annonces ?
-              </Link>
-            </Button>
-          </motion.div>
+            Découvrir <ArrowRight className="h-4 w-4" />
+          </div>
         </div>
-
-        {/* Decorative elements */}
-        <div className="absolute top-8 right-8 w-24 h-24 bg-white/5 backdrop-blur-2xl rounded-full border border-white/10 flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
-          <Megaphone className="h-8 w-8 text-white/20" />
+        {/* Dot indicators */}
+        <div className="mt-3 flex justify-center gap-1.5">
+          {[0, 1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className={cn(
+                "h-1.5 rounded-full transition-all",
+                i === 0 ? "bg-primary w-4" : "bg-border w-1.5",
+              )}
+            />
+          ))}
         </div>
       </motion.div>
     </div>

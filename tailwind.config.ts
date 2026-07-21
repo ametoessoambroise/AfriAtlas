@@ -19,9 +19,11 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["Playfair Display", "serif"],
-        body: ["Montserrat", "sans-serif"],
-        sans: ["Inter", "sans-serif"],
+        heading: ["Cormorant Garamond", "serif"],
+        body: ["DM Sans", "sans-serif"],
+        sans: ["DM Sans", "sans-serif"],
+        mono: ["DM Mono", "monospace"],
+        display: ["Mate SC", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",

@@ -71,7 +71,7 @@ export default function CtaBanner() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.6 }}
-                className="text-white text-4xl sm:text-5xl md:text-5xl lg:text-5xl font-black leading-[1.05] tracking-tighter"
+                className="text-white text-[clamp(2.5rem,5vw+1rem,4rem)] font-heading font-semibold italic leading-[1.05] tracking-tight"
               >
                 Votre voyage <br />
                 commence <br />

@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 import {
   Plus,
-  Compass,
   HelpCircle,
   UserCircle,
   ChevronRight,

@@ -5,7 +5,10 @@ export interface ReviewUserInfo {
 }
 
 export interface ReviewCreate {
-  destination_id: string; // Mis à jour en string (UUID)
+  /** UUID of a Place (preferred — modern path) */
+  place_id?: string;
+  /** UUID of a Destination (legacy path — kept for backward compat) */
+  destination_id?: string;
   rating: number;
   comment?: string;
 }

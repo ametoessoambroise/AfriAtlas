@@ -12,6 +12,7 @@ import AdPromoCard from "@/components/ads/AdPromoCard";
 const Index = () => {
   const ads = usePublicAds({ per_page: 1 });
   const spotlightAd = ads.data?.items?.[0];
+  const promoAd = ads.data?.items?.[1];
 
   return (
     <PageWrapper>
@@ -25,9 +26,11 @@ const Index = () => {
       <FeaturedDestinations />
       <CategoryFilter />
 
-      <section className="container px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl my-24">
-        <AdPromoCard layout="horizontal" />
-      </section>
+      {promoAd && (
+        <section className="container px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl my-24">
+          <AdPromoCard ad={promoAd} layout="horizontal" />
+        </section>
+      )}
 
       <TestimonialsSection />
       <CtaBanner />

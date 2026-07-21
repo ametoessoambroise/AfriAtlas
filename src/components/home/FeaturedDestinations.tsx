@@ -56,12 +56,12 @@ export default function FeaturedDestinations() {
           </motion.div>
 
           {/* Titre */}
-          <motion.h2 variants={fadeUp} className="section-title mb-4 max-w-xl mx-auto">
+          <motion.h2 variants={fadeUp} className="text-[clamp(2rem,4vw+1rem,3rem)] font-heading font-semibold italic mb-4 max-w-xl mx-auto">
             Destinations à{" "}
-            <span className="relative inline-block">
+            <span className="relative inline-block text-primary">
               ne pas manquer
               <motion.span
-                className="absolute -bottom-1 left-0 h-[3px] rounded-full bg-primary/40"
+                className="absolute -bottom-1 left-0 h-[3px] rounded-full bg-primary"
                 initial={{ width: 0 }}
                 whileInView={{ width: "100%" }}
                 viewport={{ once: true }}

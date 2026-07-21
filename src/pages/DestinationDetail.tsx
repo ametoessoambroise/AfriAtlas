@@ -18,12 +18,7 @@ import ReviewSection from "@/components/destinations/detail/ReviewSection";
 import SimilarPlaces from "@/components/destinations/detail/SimilarPlaces";
 import CommonPlaceButtons from "@/components/destinations/detail/CommonPlaceButtons";
 import AnalyticsTracker from "@/components/destinations/detail/AnalyticsTracker";
-import PlaceSubNav from "@/components/destinations/detail/PlaceSubNav";
-import PlaceOverview from "@/components/destinations/detail/PlaceOverview";
-import PlaceClimateSection from "@/components/destinations/detail/PlaceClimateSection";
-import PlaceActivitiesGrid from "@/components/destinations/detail/PlaceActivitiesGrid";
-import PlaceProductsPreview from "@/components/destinations/detail/PlaceProductsPreview";
-import PlaceFooterBanners from "@/components/destinations/detail/PlaceFooterBanners";
+import VrSessionCalendar from "@/components/destinations/detail/VrSessionCalendar";
 
 const DestinationDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -100,13 +95,13 @@ const DestinationDetail = () => {
       {/* Section Hero avec le Diaporama Image & Weather Widget */}
       <div className="relative">
         <div className="absolute top-6 left-6 z-30">
-           <Link
-             to="/destinations"
-             className="inline-flex items-center justify-center gap-2 rounded-full bg-black/30 backdrop-blur-md px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-black/50 shadow-sm border border-white/10"
-           >
-             <ArrowLeft className="h-4 w-4" aria-hidden />
-             Retour
-           </Link>
+          <Link
+            to="/destinations"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-black/30 backdrop-blur-md px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-black/50 shadow-sm border border-white/10"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden />
+            Retour
+          </Link>
         </div>
         <PlaceHero destination={dest} />
       </div>
@@ -114,11 +109,10 @@ const DestinationDetail = () => {
       <div className="container py-12 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
         {/* Grille principale : 2/3 Description, 1/3 Infos pratiques */}
         <div className="grid gap-10 lg:grid-cols-3">
-          
           <div className="lg:col-span-2 space-y-12">
             <PlaceDescription destination={dest} />
             <VrSessionCalendar slug={dest.slug} />
-            <ReviewSection placeId={dest.id} />
+            <ReviewSection slug={dest.slug} destinationId={dest.id} />
           </div>
 
           <div className="space-y-6">
@@ -130,18 +124,17 @@ const DestinationDetail = () => {
                 to={`/destinations/${slug}/catalog`}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition-transform active:scale-95 hover:bg-indigo-700"
               >
-                <img
-                  src={img}
-                  alt={`Vue ${i + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-            ))}
+                Voir le catalogue VR
+              </Link>
+            ) : null}
           </div>
         </div>
 
         {/* Section Lieux similaires branchée par Catégorie */}
-        <SimilarPlaces currentSlug={dest.slug} category={placeQuery.data?.category} />
+        <SimilarPlaces
+          currentSlug={dest.slug}
+          category={placeQuery.data?.category}
+        />
       </div>
     </PageWrapper>
   );

@@ -20,7 +20,7 @@ const categories: GalleryItem[] = [
     title: "Loisirs & Aventures",
     summary: "Randonnées, parcs, expériences VR et activités en plein air.",
     url: "/destinations?category=activity",
-    image: "https://scontent.flfw2-1.fna.fbcdn.net/v/t39.30808-6/487021102_1218316020294045_6495456789714887312_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=7b2446&_nc_ohc=sXWgTSBif1gQ7kNvwGBC6jK&_nc_oc=AdqXRPAF-_5-CGxxisoB5HAnVzW8TFcY2bn5o2asLDj1y5pNf7eqrC_KA4CTL9CCLub99lqiqsD_ZwvdqieVDSv4&_nc_zt=23&_nc_ht=scontent.flfw2-1.fna&_nc_gid=QC_ozdZquLYvZF24RHU2_g&_nc_ss=7b2a8&oh=00_Af2tQPW93nN5Isg3ux53GguoZqzqSNWH9xwuosd_5fq54Q&oe=69F56653",
+    image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop",
   },
   {
     id: "restaurant",

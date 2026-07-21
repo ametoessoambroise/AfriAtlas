@@ -22,10 +22,10 @@ export default function LiveStats() {
         <div className="grid grid-cols-2 gap-4 rounded-t-2xl bg-card/10 p-6 backdrop-blur-md md:grid-cols-4 border-t border-x border-white/10 shadow-xl">
           {stats.map((s) => (
             <div key={s.label} className="text-center text-white">
-              <div className="text-2xl font-extrabold md:text-3xl drop-shadow-md">
+              <div className="text-[clamp(1.5rem,3vw+0.5rem,2.5rem)] font-heading font-semibold italic drop-shadow-md">
                 {s.value}
               </div>
-              <div className="text-xs text-white/90 md:text-sm font-medium drop-shadow-sm">
+              <div className="text-xs text-white/90 md:text-sm font-medium drop-shadow-sm uppercase tracking-widest">
                 {s.label}
               </div>
             </div>

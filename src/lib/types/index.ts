@@ -105,6 +105,7 @@ export type {
   PlaceNearbyRequest,
   PlaceOwnerResponse,
   PlaceResponse,
+  PlaceNestedProductResponse,
   VRSessionResponse,
   PlaceSearchRequest,
   PlaceUpdate,

@@ -208,13 +208,10 @@ export default function VrOwnerSessionsPage() {
   const { data: claims } = useOwnerClaims();
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null);
 
-  const {
-    data: sessions,
-    isLoading: isSessionsLoading,
-    isError,
-  } = useVrSessions();
-  const { data: revenueSummary, isLoading: isRevenueLoading } =
-    useMyRevenueSummary();
+  // On récupère toutes les sessions. Le filtrage par lieu se fait côté client
+  // ou on pourrait passer le slug si l'API le supporte bien.
+  const { data: sessions, isLoading: isSessionsLoading, isError } = useVrSessions();
+  const { data: revenueSummary, isLoading: isRevenueLoading } = useMyRevenueSummary();
 
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [search, setSearch] = useState("");
@@ -338,19 +335,18 @@ export default function VrOwnerSessionsPage() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <Select value={selectedPlace || "all"} onValueChange={(val) => setSelectedPlace(val)}>
-          <SelectTrigger className="bg-zinc-900 border border-white/10 text-white text-xs font-bold uppercase tracking-widest h-12 rounded-md px-4 min-w-[220px] focus:ring-amber-500/20">
-            <SelectValue placeholder="Tous les lieux" />
-          </SelectTrigger>
-          <SelectContent className="bg-zinc-950 border-white/10 text-white">
-            <SelectItem value="all" className="focus:bg-white/10 focus:text-white">Tous les lieux</SelectItem>
-            {claims?.map((c) => (
-              <SelectItem key={c.id} value={c.id} className="focus:bg-white/10 focus:text-white">
-                {c.place_name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <select
+          className="bg-zinc-900/50 border border-white/10 text-white rounded-xl h-11 px-4 min-w-[200px] outline-none focus:border-amber-500/50"
+          value={selectedPlace || ""}
+          onChange={(e) => setSelectedPlace(e.target.value || null)}
+        >
+          <option value="">Tous les lieux</option>
+          {claims?.map((c) => (
+            <option key={c.id} value={c.place_id}>
+              {c.place_name}
+            </option>
+          ))}
+        </select>
         <Button
           variant="outline"
           className="border-white/10 h-12 px-6 text-white hover:bg-white/5 rounded-md font-black uppercase tracking-widest text-[10px]"
@@ -583,8 +579,7 @@ function VrSessionFormModal({
               Description
             </label>
             <textarea
-              id="session-desc"
-              className="w-full bg-white/5 border-white/10 rounded-md p-4 min-h-[120px] focus:ring-1 focus:ring-amber-500/20 outline-none font-medium text-sm"
+              className="w-full bg-white/5 border-white/10 rounded-md p-3 min-h-[100px]"
               defaultValue={session?.description || ""}
             />
           </div>
@@ -625,22 +620,10 @@ function VrSessionFormModal({
             <label className="text-[10px] text-white/40 uppercase font-black tracking-widest block px-1">
               Statut
             </label>
-            <Select
-              defaultValue={session?.is_active ? "true" : "false"}
-              onValueChange={(val) => {
-                const el = document.getElementById("session-is-active-val") as HTMLInputElement;
-                if (el) el.value = val;
-              }}
-            >
-              <SelectTrigger className="w-full bg-white/5 border-white/10 rounded-md h-12 px-4 focus:ring-amber-500/20">
-                <SelectValue placeholder="Choisir un statut" />
-              </SelectTrigger>
-              <SelectContent className="bg-zinc-950 border-white/10 text-white">
-                <SelectItem value="true" className="focus:bg-white/10 focus:text-white">Actif</SelectItem>
-                <SelectItem value="false" className="focus:bg-white/10 focus:text-white">Désactivé / Maintenance</SelectItem>
-              </SelectContent>
-            </Select>
-            <input type="hidden" id="session-is-active-val" defaultValue={session?.is_active ? "true" : "false"} />
+            <select className="w-full bg-white/5 border-white/10 rounded-md h-10 px-3 outline-none">
+              <option value="true">Actif</option>
+              <option value="false">Désactivé / Maintenance</option>
+            </select>
           </div>
         </div>
 
@@ -652,55 +635,8 @@ function VrSessionFormModal({
           >
             Annuler
           </Button>
-          <Button
-            className="bg-amber-500 text-zinc-900 font-black uppercase tracking-widest text-xs h-12 px-8 rounded-md shadow-lg shadow-amber-500/20"
-            disabled={isCreating}
-            onClick={() => {
-              const title = (
-                document.getElementById("session-title") as HTMLInputElement
-              ).value;
-              const description = (
-                document.getElementById("session-desc") as HTMLTextAreaElement
-              ).value;
-              const duration = parseInt(
-                (
-                  document.getElementById(
-                    "session-duration",
-                  ) as HTMLInputElement
-                ).value,
-              );
-              const price = (
-                document.getElementById("session-price") as HTMLInputElement
-              ).value;
-              const maxParticipants = parseInt(
-                (document.getElementById("session-max") as HTMLInputElement)
-                  .value,
-              );
-              const isActiveInput = document.getElementById("session-is-active-val") as HTMLInputElement;
-              const isActive = isActiveInput ? isActiveInput.value === "true" : (session?.is_active ?? true);
-
-              if (isEditing && session) {
-                toast.info("Mise à jour en cours d'implémentation...");
-              } else {
-                create({
-                  title,
-                  description,
-                  duration_minutes: duration,
-                  price,
-                  currency: "FCFA",
-                  max_participants: maxParticipants,
-                  is_active: isActive,
-                });
-              }
-            }}
-          >
-            {isCreating ? (
-              <Loader2 className="h-4 w-4 animate-spin mr-2" />
-            ) : isEditing ? (
-              "Enregistrer"
-            ) : (
-              "Créer la session"
-            )}
+          <Button className="bg-amber-500 text-zinc-900 font-bold hover:bg-amber-400">
+            {isEditing ? "Enregistrer" : "Créer la session"}
           </Button>
         </DialogFooter>
       </DialogContent>

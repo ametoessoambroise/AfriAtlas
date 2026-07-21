@@ -100,64 +100,35 @@ const DestinationDetail = () => {
       {/* Section Hero avec le Diaporama Image & Weather Widget */}
       <div className="relative">
         <div className="absolute top-6 left-6 z-30">
-          <Link
-            to="/destinations"
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-black/20 backdrop-blur-md px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-black/40 shadow-sm border border-white/10"
-          >
-            <ArrowLeft className="h-4 w-4" aria-hidden />
-            Toutes les destinations
-          </Link>
+           <Link
+             to="/destinations"
+             className="inline-flex items-center justify-center gap-2 rounded-full bg-black/30 backdrop-blur-md px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-black/50 shadow-sm border border-white/10"
+           >
+             <ArrowLeft className="h-4 w-4" aria-hidden />
+             Retour
+           </Link>
         </div>
         <PlaceHero destination={dest} />
       </div>
 
-      {/* Barre de Navigation Secondaire (SubNav) */}
-      <PlaceSubNav
-        destination={dest}
-        showCatalog={showCatalog}
-        sessionId={firstSessionId}
-      />
-
-      <div className="container py-12 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl space-y-24">
-        {/* Section Aperçu (Histoire, Culture, etc.) - Sur une seule ligne responsive */}
-        <section id="aperçu">
-          <PlaceOverview destination={dest} />
-        </section>
-
-        {/* Section Climat & Période - Sur une seule ligne responsive */}
-        <section id="climat">
-          <PlaceClimateSection destination={dest} />
-        </section>
-
-        {/* Section Activités - Activités et Tableau sur la même ligne responsive */}
-        <section id="activités">
-          <PlaceActivitiesGrid destination={dest} />
-        </section>
-
-        {/* Section Gastronomie (si applicable) */}
-        {dest.type === "restaurant" && (
-          <section id="gastronomie">
-            <PlaceProductsPreview destination={dest} />
-          </section>
-        )}
-
-        {/* Section Galerie */}
-        <section id="galerie">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-              Galerie photos
-            </h2>
-            <button className="text-primary font-bold text-sm hover:underline">
-              Voir tout
-            </button>
+      <div className="container py-12 px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+        {/* Grille principale : 2/3 Description, 1/3 Infos pratiques */}
+        <div className="grid gap-10 lg:grid-cols-3">
+          
+          <div className="lg:col-span-2 space-y-12">
+            <PlaceDescription destination={dest} />
+            <VrSessionCalendar slug={dest.slug} />
+            <ReviewSection placeId={dest.id} />
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {dest.gallery.map((img, i) => (
-              <div
-                key={i}
-                className={`aspect-square rounded-lg overflow-hidden bg-muted group ${
-                  i === 0 ? "md:col-span-2 md:row-span-2 aspect-auto" : ""
-                }`}
+
+          <div className="space-y-6">
+            <CommonPlaceButtons destination={dest} />
+            <PlaceInfoPanel destination={dest} />
+
+            {showCatalog ? (
+              <Link
+                to={`/destinations/${slug}/catalog`}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition-transform active:scale-95 hover:bg-indigo-700"
               >
                 <img
                   src={img}
@@ -167,23 +138,10 @@ const DestinationDetail = () => {
               </div>
             ))}
           </div>
-        </section>
-
-        {/* Section Avis */}
-        <section id="avis">
-          <ReviewSection placeId={dest.id} slug={""} />
-        </section>
-
-        {/* Section Lieux similaires branchée par Catégorie */}
-        <div className="pt-12 border-t border-border">
-          <SimilarPlaces
-            currentSlug={dest.slug}
-            category={placeQuery.data?.category}
-          />
         </div>
 
-        {/* Bannières de Fin (VR avec bouton de redirection et Réservation) */}
-        <PlaceFooterBanners destination={dest} sessionId={firstSessionId} />
+        {/* Section Lieux similaires branchée par Catégorie */}
+        <SimilarPlaces currentSlug={dest.slug} category={placeQuery.data?.category} />
       </div>
     </PageWrapper>
   );

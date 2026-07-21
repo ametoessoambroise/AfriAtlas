@@ -77,7 +77,6 @@ export function useTripPlanning() {
 
   const stepIndex = PLANNING_STEPS.indexOf(step);
   const progressRatio = (stepIndex + 1) / PLANNING_STEPS.length;
-
   return {
     step,
     setStep,

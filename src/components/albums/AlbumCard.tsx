@@ -37,32 +37,57 @@ const AlbumCard = ({ album, className, index = 0 }: AlbumCardProps) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
-      className={cn(
-        "group relative bg-background rounded-md overflow-hidden border border-border shadow-sm hover:shadow-xl transition-all duration-500",
-        className,
-      )}
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      className="group"
     >
-      {/* Badge Public/Privé */}
-      <div className="absolute top-5 left-5 z-20">
-        {album.is_public ? (
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary/90 backdrop-blur-md text-white shadow-lg shadow-primary/20">
-            <Globe className="w-3.5 h-3.5" />
-            <span className="text-[10px] font-black uppercase tracking-widest">
-              Public
-            </span>
-          </div>
+      <Link
+        to={`/albums/${album.id}`}
+        className="block relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-surface-alt border border-border transition-all group-hover:shadow-2xl group-hover:shadow-primary/10"
+      >
+        {/* Cover Image */}
+        {album.cover_image_url ? (
+          <img
+            src={resolveAlbumCoverUrl(album.cover_image_url)}
+            alt={album.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+            onError={(e) => {
+              console.error("❌ Image failed to load:", e.currentTarget.src);
+              console.error("Original URL:", album.cover_image_url);
+            }}
+            onLoad={(e) => {
+              console.log("✅ Image loaded successfully:", e.currentTarget.src);
+            }}
+          />
         ) : (
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary/80 backdrop-blur-md text-white shadow-lg">
-            <Lock className="w-3.5 h-3.5" />
-            <span className="text-[10px] font-black uppercase tracking-widest">
-              Privé
-            </span>
+          <div className="w-full h-full flex items-center justify-center bg-primary/5">
+            <ImageIcon className="w-12 h-12 text-primary/20" />
           </div>
         )}
-      </div>
+
+        {/* Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+        {/* Content */}
+        <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+          <div className="flex items-center gap-2 mb-3">
+            {album.is_public ? (
+              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10">
+                <Globe className="w-3 h-3 text-emerald-400" />
+                <span className="text-[10px] font-black uppercase tracking-widest">
+                  Public
+                </span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10">
+                <Lock className="w-3 h-3 text-amber-400" />
+                <span className="text-[10px] font-black uppercase tracking-widest">
+                  Privé
+                </span>
+              </div>
+            )}
+          </div>
 
       {/* Menu Dropdown */}
       <div className="absolute top-5 right-5 z-20">

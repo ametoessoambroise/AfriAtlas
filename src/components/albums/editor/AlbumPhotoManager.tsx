@@ -158,7 +158,7 @@ export default function AlbumPhotoManager({
           </div>
 
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px] h-10 rounded-md bg-background border border-border">
+            <SelectTrigger className="w-[180px] h-10 rounded-xl bg-white border border-border">
               <SelectValue placeholder="Trier par date" />
             </SelectTrigger>
             <SelectContent>
@@ -168,10 +168,7 @@ export default function AlbumPhotoManager({
             </SelectContent>
           </Select>
 
-          <Button
-            variant="outline"
-            className="rounded-md h-10 gap-2 bg-background"
-          >
+          <Button variant="outline" className="rounded-xl h-10 gap-2 bg-white">
             <Filter className="w-4 h-4" /> Filtrer
           </Button>
         </div>

@@ -68,10 +68,22 @@ export default function ReviewSection({ placeId, slug }: ReviewSectionProps) {
   return (
     <div className="space-y-12">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="bg-primary/10 p-2.5 rounded-md">
-              <MessageSquare className="h-6 w-6 text-primary" />
+        <div className="space-y-1">
+          <h2 className="text-3xl font-extrabold tracking-tight text-foreground">
+            Avis des voyageurs
+          </h2>
+          {summary && (
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                <span className="text-lg font-bold text-foreground">
+                  {summary.average_rating.toFixed(1)}
+                </span>
+              </div>
+              <span className="text-muted-foreground">•</span>
+              <span className="text-muted-foreground">
+                {summary.total_reviews} avis au total
+              </span>
             </div>
             <h2 className="text-3xl font-extrabold tracking-tight">
               Avis des voyageurs
@@ -82,57 +94,54 @@ export default function ReviewSection({ placeId, slug }: ReviewSectionProps) {
           </p>
         </div>
 
-        <Button
-          onClick={() => setShowForm(!showForm)}
-          className="rounded-md font-bold bg-primary px-8 py-6 h-auto shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
-        >
-          {showForm ? (
-            <X className="h-5 w-5 mr-2" />
-          ) : (
-            <Plus className="h-5 w-5 mr-2" />
-          )}
-          {showForm ? "Annuler" : "Laisser un avis"}
-        </Button>
+        {!showForm && (
+          <Button
+            onClick={() => setShowForm(true)}
+            className="rounded-full bg-primary hover:bg-primary/90 font-bold"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Laisser un avis
+          </Button>
+        )}
       </div>
 
-      <div className="grid gap-12 lg:grid-cols-3">
-        {/* Rating Summary Card */}
-        <div className="lg:col-span-1 space-y-8">
-          <div className="rounded-md border border-border bg-surface-alt p-8 space-y-6">
-            <div className="text-center space-y-2">
-              <p className="text-5xl font-black text-primary">4.9</p>
-              <div className="flex justify-center gap-1">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} className="h-5 w-5 fill-primary text-primary" />
-                ))}
-              </div>
-              <p className="text-sm font-medium text-muted-foreground">
-                Basé sur 128 avis vérifiés
-              </p>
-            </div>
+      {showForm && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
+          <ReviewForm
+            destinationId={destinationId}
+            onSuccess={() => {
+              setShowForm(false);
+              refetch();
+            }}
+          />
+          <Button
+            variant="ghost"
+            onClick={() => setShowForm(false)}
+            className="mt-4 text-zinc-500 hover:text-white"
+          >
+            Annuler
+          </Button>
+        </motion.div>
+      )}
 
-            <Separator className="bg-border/50" />
-
-            <div className="space-y-3">
-              {ratingDistribution.map((dist) => (
-                <div key={dist.stars} className="flex items-center gap-4">
-                  <div className="flex items-center gap-1 w-8">
-                    <span className="text-xs font-bold">{dist.stars}</span>
-                    <Star className="h-3 w-3 fill-slate-400 text-slate-400" />
-                  </div>
-                  <div className="flex-grow h-2 bg-slate-200 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${dist.percentage}%` }}
-                      viewport={{ once: true }}
-                      className="h-full bg-primary"
-                    />
-                  </div>
-                  <span className="text-xs text-muted-foreground w-8 text-right">
-                    {dist.percentage}%
-                  </span>
-                </div>
-              ))}
+      <div className="space-y-6">
+        {isLoading ? (
+          <div className="space-y-4">
+            <Skeleton className="h-32 w-full rounded-2xl bg-white/5" />
+            <Skeleton className="h-32 w-full rounded-2xl bg-white/5" />
+          </div>
+        ) : isError ? (
+          <ApiErrorState
+            message={error?.message || "Erreur lors du chargement des avis"}
+            onRetry={() => refetch()}
+          />
+        ) : reviews.length === 0 ? (
+          <div className="flex flex-col items-center justify-center p-12 bg-zinc-900/20 rounded-3xl border border-dashed border-white/10 text-center">
+            <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+              <MessageSquare className="h-8 w-8 text-zinc-600" />
             </div>
           </div>
 
@@ -142,95 +151,55 @@ export default function ReviewSection({ placeId, slug }: ReviewSectionProps) {
               authenticité et la qualité de l'accueil."
             </p>
           </div>
-          <div className="">
-            <img src="/joystick.png" alt="casque" className="w-full h-full object-cover rounded-md" />
-          </div>
-        </div>
-
-        {/* Reviews List */}
-        <div className="lg:col-span-2 space-y-6">
-          <AnimatePresence>
-            {showForm && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="p-8 rounded-md border-2 border-dashed border-primary/20 bg-primary/5 mb-10"
-              >
-                <div className="text-center space-y-4">
-                  <p className="text-lg font-bold">Partagez votre aventure</p>
-                  <p className="text-sm text-muted-foreground">
-                    La fonctionnalité de dépôt d'avis est en cours de
-                    déploiement.
-                  </p>
-                  <Button
-                    variant="outline"
-                    className="rounded-md"
-                    onClick={() => setShowForm(false)}
-                  >
-                    Fermer
-                  </Button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
+        ) : (
           <div className="space-y-6">
-            {hardcodedReviews.map((review, i) => (
-              <motion.div
-                key={review.id}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-md border border-border bg-card shadow-sm hover:shadow-md transition-shadow space-y-6"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="h-14 w-14 rounded-md overflow-hidden bg-muted border border-border">
-                      <img
-                        src={review.user.avatar_url}
-                        alt={review.user.fullname}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-slate-900">
-                        {review.user.fullname}
-                      </h4>
-                      <p className="text-xs text-muted-foreground">
-                        {review.user.location} •{" "}
-                        {new Date(review.created_at).toLocaleDateString(
-                          "fr-FR",
-                          { month: "long", year: "numeric" },
+            <div className="grid gap-4">
+              {reviews.map((r) => (
+                <motion.div
+                  key={r.id}
+                  className="p-6 rounded-2xl border border-white/5 bg-zinc-900/40 backdrop-blur-sm shadow-xl"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center font-bold text-primary uppercase">
+                        {r.user.avatar_url ? (
+                          <img
+                            src={r.user.avatar_url}
+                            alt=""
+                            className="w-full h-full rounded-full object-cover"
+                          />
+                        ) : (
+                          r.user.fullname.charAt(0)
                         )}
-                      </p>
+                      </div>
+                      <div>
+                        <div className="font-bold text-white">
+                          {r.user.fullname}
+                        </div>
+                        <div className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mt-0.5">
+                          {new Date(r.created_at).toLocaleDateString("fr-FR", {
+                            month: "long",
+                            year: "numeric",
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-amber-400/10 text-amber-400 px-2 py-1 rounded-lg flex items-center gap-1.5">
+                      <Star className="h-3.5 w-3.5 fill-amber-400" />
+                      <span className="text-sm font-black">{r.rating}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 bg-primary/10 px-3 py-1.5 rounded-md border border-primary/10">
-                    <Star className="h-3.5 w-3.5 fill-primary text-primary" />
-                    <span className="text-sm font-black text-primary">
-                      {review.rating.toFixed(1)}
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-slate-600 leading-relaxed italic">
-                  "{review.comment}"
-                </p>
-
-                <div className="flex items-center gap-4 pt-2">
-                  <button className="flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-primary transition-colors">
-                    <ThumbsUp className="h-4 w-4" />
-                    Utile ({review.likes})
-                  </button>
-                  <button className="text-xs font-bold text-muted-foreground hover:text-primary transition-colors">
-                    Signaler
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  {r.comment && (
+                    <p className="text-zinc-300 leading-relaxed italic border-l-2 border-white/10 pl-4 py-1">
+                      "{r.comment}"
+                    </p>
+                  )}
+                </motion.div>
+              ))}
+            </div>
 
           <div className="pt-6 text-center">
             <button className="text-primary font-bold hover:underline">

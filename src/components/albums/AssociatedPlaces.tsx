@@ -144,8 +144,8 @@ export default function AssociatedPlaces({ albumId, places }: AssociatedPlacesPr
               key={place.id}
               className="flex items-center gap-4 p-4 rounded-md bg-card border border-border shadow-sm hover:shadow-md transition-shadow group"
             >
-              <div className="h-16 w-16 rounded-md overflow-hidden shrink-0 border border-border shadow-inner">
-                <img src={place.primary_image?.url || "/placeholder.png"} alt={place.name} className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              <div className="h-16 w-16 rounded-xl overflow-hidden shrink-0 border border-border shadow-inner">
+                <img src={place.primary_image?.url || "/placeholder.svg"} alt={place.name} className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
               
               <div className="flex-1 min-w-0">

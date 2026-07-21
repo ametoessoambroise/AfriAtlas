@@ -13,7 +13,6 @@ export default function AIInspirationSidebar() {
     await new Promise((r) => setTimeout(r, 2000));
     setIsLoading(false);
   };
-
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}

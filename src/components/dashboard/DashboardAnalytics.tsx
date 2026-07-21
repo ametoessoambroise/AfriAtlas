@@ -40,16 +40,54 @@ export const DashboardAnalytics = memo(
     });
 
     const chartData = useMemo(() => {
-      const dayLabels = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+      // Days order for display (Lundi to Dimanche)
+      const dayLabels = ["L", "M", "M", "J", "V", "S", "D"];
       const data = dayLabels.map((label) => ({
-        week: label,
-        current: Math.floor(Math.random() * 800) + 200,
-        prev: Math.floor(Math.random() * 500) + 100,
+        name: label,
+        value: 0,
+        fullDay: "",
       }));
 
-      if (!analytics) return data;
+      const fullDays = [
+        "Lundi",
+        "Mardi",
+        "Mercredi",
+        "Jeudi",
+        "Vendredi",
+        "Samedi",
+        "Dimanche",
+      ];
+      data.forEach((d, i) => (d.fullDay = fullDays[i]));
+
+      if (!analytics?.visits || analytics.visits.length === 0) {
+        return data.map((d) => ({ ...d, value: 0 }));
+      }
+
+      const now = new Date();
+      const today = now.getDay();
+      const startOfWeek = new Date(now);
+      const diff = now.getDate() - today + (today === 0 ? -6 : 1);
+      startOfWeek.setDate(diff);
+      startOfWeek.setHours(0, 0, 0, 0);
+
+      analytics.visits.forEach((visit) => {
+        if (!visit.visited_at) return;
+        const visitDate = new Date(visit.visited_at);
+        if (visitDate >= startOfWeek) {
+          const dayIdx = visitDate.getDay();
+          const chartIdx = dayIdx === 0 ? 6 : dayIdx - 1;
+          if (data[chartIdx]) {
+            data[chartIdx].value += 1;
+          }
+        }
+      });
+
       return data;
     }, [analytics]);
+
+    const totalActivity = useMemo(() => {
+      return (analytics?.total_visits || 0) + ordersCount + bookingsCount;
+    }, [analytics, ordersCount, bookingsCount]);
 
     if (isLoading) {
       return (
@@ -67,6 +105,8 @@ export const DashboardAnalytics = memo(
         </Card>
       );
     }
+
+    const currentDayIdx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
 
     return (
       <Card className="border border-border shadow-none h-full">
@@ -115,53 +155,57 @@ export const DashboardAnalytics = memo(
           </div>
         </CardHeader>
 
-        <CardContent className="px-5 pb-5">
-          <div className="h-[220px] w-full min-h-[220px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} barGap={2} barCategoryGap="30%">
-                <CartesianGrid
-                  vertical={false}
-                  strokeDasharray="3 3"
-                  stroke="var(--border)"
-                />
-                <XAxis
-                  dataKey="week"
-                  tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis
-                  tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
-                  axisLine={false}
-                  tickLine={false}
-                  width={40}
-                />
-                <Tooltip
-                  contentStyle={{
-                    background: "var(--card)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "8px",
-                    fontSize: 12,
-                  }}
-                  cursor={{ fill: "var(--muted-foreground)", opacity: 0.3 }}
-                />
-                <Bar
-                  dataKey="current"
-                  fill="var(--primary)"
-                  radius={[3, 3, 0, 0]}
-                  name="Période en cours"
-                />
-                <Bar
-                  dataKey="prev"
-                  fill="var(--destructive)"
-                  radius={[3, 3, 0, 0]}
-                  name="Période précédente"
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Recharts Area */}
+        <div className="flex-1 min-h-[160px] -ml-4 -mr-2">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={chartData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+              <XAxis 
+                dataKey="name" 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 10, fontWeight: 900, fill: "hsl(var(--muted-foreground))" }}
+                dy={10}
+              />
+              <YAxis hide />
+              <Tooltip
+                cursor={{ fill: "hsl(var(--muted))", opacity: 0.4 }}
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    return (
+                      <div className="bg-popover border border-border p-3 rounded-2xl shadow-xl">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">
+                          {payload[0].payload.fullDay}
+                        </p>
+                        <p className="text-sm font-black text-foreground">
+                          {payload[0].value} visites
+                        </p>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Bar 
+                dataKey="value" 
+                radius={[8, 8, 0, 0]} 
+                barSize={32}
+              >
+                {chartData.map((entry, index) => (
+                  <Cell 
+                    key={`cell-${index}`} 
+                    fill={index === currentDayIdx ? "#0F4C75" : "rgba(15, 76, 117, 0.2)"}
+                    className="transition-all duration-500"
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <p className="text-[11px] text-muted-foreground mt-4 italic">
+          * Basé sur vos interactions et réservations récentes.
+        </p>
+      </div>
     );
   },
 );

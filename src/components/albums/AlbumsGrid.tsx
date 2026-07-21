@@ -49,10 +49,7 @@ const AlbumsGrid = ({
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="rounded-md overflow-hidden bg-background h-[400px]"
-          >
+          <div key={i} className="aspect-[4/5] rounded-[2rem] overflow-hidden">
             <Skeleton className="w-full h-full" />
           </div>
         ))}
@@ -108,29 +105,19 @@ const AlbumsGrid = ({
             ))}
           </AnimatePresence>
 
-          {/* Quick Add Card */}
-          {viewMode === "grid" && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4 }}
-              className="md:col-span-1"
-            >
-              <Link
-                to="/albums/new"
-                className="flex flex-col items-center justify-center h-full min-h-[300px] rounded-md border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 transition-all group bg-background/50"
-              >
-                <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mb-4 shadow-xl shadow-primary/20 group-hover:scale-110 transition-transform">
-                  <Plus className="w-8 h-8 text-white" />
-                </div>
-                <span className="font-black text-sm uppercase tracking-widest text-muted-foreground group-hover:text-primary transition-colors">
-                  Nouvel Album
-                </span>
-              </Link>
-            </motion.div>
-          )}
-        </div>
-      )}
+        {/* Quick Add Card */}
+        <motion.div variants={fadeUp}>
+          <Link
+            to="/albums/new"
+            className="flex flex-col items-center justify-center aspect-[4/5] rounded-[2rem] border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 transition-all group"
+          >
+            <div className="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-4 border border-border group-hover:scale-110 transition-transform">
+              <Plus className="w-8 h-8 text-primary" />
+            </div>
+            <span className="font-black text-sm uppercase tracking-widest text-muted-foreground group-hover:text-primary">Nouvel Album</span>
+          </Link>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

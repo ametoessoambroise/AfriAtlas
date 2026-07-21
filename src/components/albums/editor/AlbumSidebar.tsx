@@ -54,7 +54,7 @@ export default function AlbumSidebar({ album, places }: AlbumSidebarProps) {
   return (
     <div className="space-y-6">
       {/* 1. Personnalisation */}
-      <div className="bg-background rounded-md border border-border shadow-sm p-6 space-y-8">
+      <div className="bg-white rounded-[2rem] border border-border shadow-sm p-6 space-y-8">
         <h3 className="font-black text-xl">Personnalise ton album</h3>
 
         {/* Thème */}
@@ -192,13 +192,13 @@ export default function AlbumSidebar({ album, places }: AlbumSidebarProps) {
       </div>
 
       {/* 2. Lieux Associés (Preserving existing logic) */}
-      <div className="bg-background rounded-md border border-border shadow-sm p-6">
+      <div className="bg-white rounded-[2rem] border border-border shadow-sm p-6">
         {/* We use the existing AssociatedPlaces component here to preserve its functionality exactly */}
         <AssociatedPlaces albumId={album.id} places={places} />
       </div>
 
       {/* 3. Export & Share */}
-      <div className="bg-background rounded-md border border-border shadow-sm p-6 space-y-4">
+      <div className="bg-white rounded-[2rem] border border-border shadow-sm p-6 space-y-4">
         <h3 className="font-black text-xl mb-2">Partage & exporte</h3>
 
         <div className="grid grid-cols-2 gap-3">
@@ -232,7 +232,7 @@ export default function AlbumSidebar({ album, places }: AlbumSidebarProps) {
             className="rounded-md justify-start gap-2 h-12 border-border/50 hover:bg-muted/50 font-bold text-xs"
           >
             <Globe2 className="w-4 h-4 text-muted-foreground" /> Publier sur
-            Afriatlas
+            site
           </Button>
         </div>
       </div>

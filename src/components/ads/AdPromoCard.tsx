@@ -1,76 +1,102 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Rocket, ArrowUpRight } from "lucide-react";
+import React, { useEffect, useRef } from "react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import type { AdvertisementListResponse } from "@/lib/types";
+import { useRecordImpression, useRecordClick } from "@/hooks/queries/useAds";
+import { LazyImage } from "@/components/ui/lazy-image";
 
 interface AdPromoCardProps {
-  layout?: "vertical" | "horizontal";
-  className?: string;
+  ad: AdvertisementListResponse;
+  layout?: "horizontal" | "vertical";
 }
 
-const AdPromoCard = ({ layout = "vertical", className }: AdPromoCardProps) => {
+const AdPromoCard: React.FC<AdPromoCardProps> = ({
+  ad,
+  layout = "horizontal",
+}) => {
+  const { mutate: recordImpression } = useRecordImpression();
+  const { mutate: recordClick } = useRecordClick();
+  const observerRef = useRef<HTMLDivElement>(null);
+  const impressionRecorded = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !impressionRecorded.current) {
+            recordImpression(ad.id);
+            impressionRecorded.current = true;
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [ad.id, recordImpression]);
+
+  const handleClick = () => {
+    recordClick(ad.id);
+    window.open(ad.target_url, "_blank", "noopener,noreferrer");
+  };
+
   const isVertical = layout === "vertical";
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      ref={observerRef}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className={cn(
-        "group relative overflow-hidden rounded-md shadow-2xl transition-all duration-500 hover:shadow-primary/20",
-        isVertical ? "aspect-[4/5] w-full max-w-sm" : "h-[400px] w-full",
-        className,
-      )}
+      className="cursor-pointer"
+      onClick={handleClick}
     >
-      {/* Background Image & Overlay */}
-      <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1576267423048-15c0040fec78?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Lancer votre business"
-          className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/40 to-transparent" />
-      </div>
-
-      {/* Content */}
       <div
-        className={cn(
-          "relative h-full flex flex-col p-8 md:p-12",
-          isVertical ? "justify-between" : "justify-center sm:max-w-2xl",
-        )}
+        className={`relative overflow-hidden border border-[#EAEAEA] bg-white group hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-shadow duration-200`}
+        style={{ borderRadius: "12px" }}
       >
-        {/* Top Icon */}
-        <motion.div
-          whileHover={{ rotate: 12, scale: 1.1 }}
-          className="w-12 h-12 md:w-16 md:h-16 rounded-md bg-white/20 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-xl mb-6 sm:mb-8"
+        <div
+          className={`relative ${isVertical ? "h-48" : "h-32"} overflow-hidden`}
         >
-          <Rocket className="w-6 h-6 md:w-8 md:h-8 text-white" />
-        </motion.div>
+          {ad.image_url ? (
+            <LazyImage
+              src={ad.image_url}
+              alt={ad.title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <img
+              src="/placeholder.svg"
+              alt="Aperçu non disponible"
+              className="w-full h-full bg-[#F7F6F3] flex items-center justify-center text-[#787774] text-sm"
+            />
+          )}
 
-        {/* Text Section */}
-        <div className={cn(!isVertical && "sm:mt-0")}>
-          <h3 className="text-3xl md:text-5xl font-heading font-bold text-white leading-[1.1] mb-6">
-            Veux-tu lancer <br className="hidden sm:block" />
-            ton business <br className="hidden sm:block" />
-            avec Afriatlas ?
+          <div className="absolute top-3 left-3 bg-[#FBF3DB] text-[#956400] font-medium text-xs uppercase px-2 py-1 rounded-full tracking-[0.05em]">
+            Promo
+          </div>
+        </div>
+
+        <div className="p-6">
+          <h3 className="font-serif font-semibold text-lg text-foreground leading-tight tracking-tight mb-2 group-hover:text-muted-foreground transition-colors">
+            {ad.title}
           </h3>
-          <p className="text-white/80 text-base md:text-xl font-medium mb-10 max-w-lg leading-relaxed">
-            Rejoins une communauté de voyageurs et d'entrepreneurs et transforme
-            ta passion en projet.
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-4 leading-relaxed font-sans">
+            {ad.description}
           </p>
-
-          <Button
-            asChild
-            className="h-14 md:h-16 px-10 rounded-md bg-white text-primary font-black uppercase tracking-widest hover:bg-zinc-100 transition-all shadow-2xl shadow-black/30 group/btn"
-          >
-            <Link to="/how-ads-works" className="flex items-center gap-3">
-              Lancer mon business
-              <ArrowUpRight className="w-6 h-6 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
-            </Link>
-          </Button>
+          <div className="flex items-center justify-between pt-3 border-t border-border">
+            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+              Offre limitée
+            </span>
+            <span className="text-xs font-medium text-foreground uppercase tracking-wider flex items-center gap-2 group-hover:translate-x-1 transition-transform">
+              Voir <ArrowRight className="h-4 w-4" />
+            </span>
+          </div>
         </div>
       </div>
     </motion.div>

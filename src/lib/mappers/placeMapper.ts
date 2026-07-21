@@ -153,5 +153,9 @@ export function mapPlaceResponseToDestination(p: PlaceResponse): Destination {
     featured: p.is_featured,
     hasCatalog: p.has_catalog,
     isFavorite: (p as any).is_favorite ?? false,
+    // Rich data from Option A backend relations
+    features: p.features ?? [],
+    activities: p.activities ?? [],
+    climate: p.climate ?? null,
   };
 }

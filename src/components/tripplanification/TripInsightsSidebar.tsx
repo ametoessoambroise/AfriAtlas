@@ -1,11 +1,12 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Lightbulb, TrendingUp, ArrowUpRight } from "lucide-react";
+import { Lightbulb, TrendingUp, ArrowUpRight, Sparkles, Info } from "lucide-react";
 import { TripDraft } from "@/lib/types/trip_planning";
 
 interface TripInsightsSidebarProps {
   draft: TripDraft;
 }
+
 
 const BUDGET_BREAKDOWN = {
   transport: { label: "Vols & Transport", amount: 450, ratio: 0.36 },
@@ -81,6 +82,7 @@ export default function TripInsightsSidebar({ draft }: TripInsightsSidebarProps)
           </button>
         </div>
       </motion.div>
+
 
       {/* ── Card Estimation Budget ──────────────────────────────────────────── */}
       <motion.div

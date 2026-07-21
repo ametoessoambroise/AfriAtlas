@@ -128,13 +128,10 @@ export default function AiStoryGenerator({
   };
 
   return (
-    <div className="rounded-md border border-border bg-background overflow-hidden">
-      <div className="flex flex-col lg:flex-row">
-
-        {/* ── Colonne gauche ── */}
-        <div className="flex-1 flex flex-col gap-7 p-8 lg:max-w-[380px]">
-
-          {/* En-tête */}
+    <div className="bg-white rounded-[2rem] border border-border shadow-sm overflow-hidden">
+      <div className="flex flex-col md:flex-row">
+        {/* Left Side: Content & Actions */}
+        <div className="flex-1 p-8 space-y-6">
           <div className="space-y-2">
             <div className="flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-secondary" />
@@ -177,28 +174,22 @@ export default function AiStoryGenerator({
                     transition={{ duration: 0.2, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <p className="text-xs font-medium text-muted-foreground mb-2.5">
-                      Choisir un ton
-                    </p>
-                    <div className="grid grid-cols-4 gap-2">
-                      {TONES.map((tone) => (
-                        <button
-                          key={tone.id}
-                          onClick={() => setSelectedTone(tone.id)}
-                          className={[
-                            "flex flex-col items-center justify-center gap-1.5 py-3 rounded-md border transition-all",
-                            selectedTone === tone.id
-                              ? "border-primary/40 bg-primary/5 text-primary"
-                              : "border-border text-muted-foreground hover:bg-muted/40",
-                          ].join(" ")}
-                        >
-                          {tone.icon}
-                          <span className="text-[10px] uppercase tracking-wider font-semibold">
-                            {tone.label}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
+                    {TONES.map((tone) => (
+                      <button
+                        key={tone.id}
+                        onClick={() => setSelectedTone(tone.id)}
+                        className={`flex flex-col items-center justify-center p-2 rounded-xl border transition-all ${
+                          selectedTone === tone.id
+                            ? "border-primary bg-primary/5 text-primary"
+                            : "border-border hover:border-primary/40"
+                        }`}
+                      >
+                        <span className="text-lg">{tone.icon}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider mt-1">
+                          {tone.label}
+                        </span>
+                      </button>
+                    ))}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -208,7 +199,6 @@ export default function AiStoryGenerator({
                 <Button
                   onClick={handleGenerate}
                   disabled={isGenerating}
-                  className="rounded-md h-10 px-5 font-medium bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
                 >
                   {isGenerating
                     ? <Loader2 className="w-4 h-4 animate-spin" />
@@ -227,8 +217,8 @@ export default function AiStoryGenerator({
                   <Button
                     variant="outline"
                     size="icon"
-                    onClick={() => { setStory(""); setShowOptions(false); }}
-                    className="h-10 w-10 rounded-md text-muted-foreground hover:text-destructive hover:border-destructive/30"
+                    onClick={() => setStory("")}
+                    className="h-12 w-12 rounded-xl border-red-200 text-red-500 hover:bg-red-50"
                   >
                     <RotateCcw className="w-4 h-4" />
                   </Button>
@@ -236,36 +226,12 @@ export default function AiStoryGenerator({
               </div>
             </div>
           </PremiumGate>
-
-          {/* Story output (si générée, dans la colonne gauche en bas) */}
-          <AnimatePresence>
-            {(story || isGenerating) && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.25 }}
-                className="overflow-hidden"
-              >
-                <div className="rounded-md border border-border bg-muted/20 p-4 max-h-[200px] overflow-y-auto">
-                  <p className="font-serif text-sm leading-relaxed text-muted-foreground italic whitespace-pre-wrap">
-                    {story}
-                    {isGenerating && (
-                      <span className="inline-block w-1 h-3.5 ml-0.5 bg-primary/70 animate-pulse align-middle rounded-sm" />
-                    )}
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
-        {/* ── Colonne droite : Bento grid ── */}
-        <div className="flex-1 border-t lg:border-t-0 lg:border-l border-border bg-muted/10 p-5">
-          <div className="grid grid-cols-3 grid-rows-4 gap-2.5 h-full min-h-[380px]">
-
-            {/* Tile 1 — grande vidéo principale */}
-            <div className="col-span-2 row-span-2 relative rounded-md overflow-hidden border border-border group cursor-pointer">
+        {/* Right Side: Visual/Video Mockup */}
+        <div className="w-full md:w-[40%] bg-muted/20 p-6 flex flex-col justify-center border-l border-border/50">
+          {!story && !isGenerating ? (
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-border group cursor-pointer">
               <img
                 src="https://images.unsplash.com/photo-1518098268026-4e89f1a2cd8e?q=80&w=600&auto=format&fit=crop"
                 alt="Aperçu principal"
@@ -276,86 +242,29 @@ export default function AiStoryGenerator({
                   <Play className="w-3.5 h-3.5 text-primary ml-0.5" />
                 </div>
               </div>
-              <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
-                <p className="text-white text-xs font-medium truncate">De Lomé à Kara…</p>
-                <span className="text-[10px] text-white/60">02:45</span>
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                <p className="text-white text-sm font-bold truncate">
+                  De Lomé à l'Islande, une aventure...
+                </p>
+                <span className="absolute bottom-4 right-4 bg-black/60 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
+                  02:45
+                </span>
               </div>
             </div>
-
-            {/* Tile 2 — Musique */}
-            <div className="col-span-1 row-span-1 rounded-md border border-secondary/20 bg-secondary/10 p-3.5 flex flex-col justify-between">
-              <div className="w-7 h-7 rounded-lg bg-secondary/20 flex items-center justify-center">
-                <Music2 className="w-4 h-4 text-secondary" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-foreground">Musique</p>
-                <p className="text-[11px] text-muted-foreground mt-0.5">Afro ambient</p>
-              </div>
-            </div>
-
-            {/* Tile 3 — Scènes */}
-            <div className="col-span-1 row-span-1 rounded-md border border-primary/20 bg-primary/5 p-3.5 flex flex-col justify-between">
-              <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Film className="w-4 h-4 text-primary" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-foreground">12 scènes</p>
-                <p className="text-[11px] text-muted-foreground mt-0.5">Générées</p>
-              </div>
-            </div>
-
-            {/* Tile 4 — Photo paysage */}
-            <div className="col-span-1 row-span-2 relative rounded-md overflow-hidden border border-border group cursor-pointer">
-              <img
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=400&auto=format&fit=crop"
-                alt="Paysages"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute bottom-0 inset-x-0 p-2.5 bg-gradient-to-t from-black/60 to-transparent">
-                <p className="text-white text-[11px] font-medium">Paysages</p>
-                <p className="text-white/60 text-[10px]">34 photos</p>
-              </div>
-            </div>
-
-            {/* Tile 5 — IA narrative */}
-            <div className="col-span-1 row-span-1 rounded-md border border-border bg-muted/30 p-3.5 flex flex-col justify-between">
-              <div className="w-7 h-7 rounded-lg bg-muted flex items-center justify-center">
-                <Wand2 className="w-4 h-4 text-muted-foreground" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-foreground">IA narrative</p>
-                <p className="text-[11px] text-muted-foreground mt-0.5">Claude 3</p>
-              </div>
-            </div>
-
-            {/* Tile 6 — Galerie photos */}
-            <div className="col-span-1 row-span-1 relative rounded-md overflow-hidden border border-border group cursor-pointer">
-              <img
-                src="https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=400&auto=format&fit=crop"
-                alt="Galerie"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/20 flex items-end p-2.5">
-                <p className="text-white text-[11px] font-medium">Galerie</p>
-              </div>
-            </div>
-
-            {/* Tile 7 — Reel large */}
-            <div className="col-span-2 row-span-1 relative rounded-md overflow-hidden border border-border group cursor-pointer">
-              <img
-                src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=800&auto=format&fit=crop"
-                alt="Reel du voyage"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-black/35 flex items-center justify-between px-4">
-                <div>
-                  <p className="text-white text-xs font-semibold">Reel du voyage</p>
-                  <p className="text-white/60 text-[10px] mt-0.5">Exportable · HD</p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow group-hover:scale-105 transition-transform">
-                  <Play className="w-3 h-3 text-primary ml-0.5" />
-                </div>
-              </div>
+          ) : (
+            <div className="h-full relative min-h-[200px] p-6 rounded-2xl bg-muted/30 border border-border/50 font-serif leading-relaxed italic text-muted-foreground whitespace-pre-wrap flex items-center overflow-y-auto">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="relative text-sm"
+                >
+                  {story}
+                  {isGenerating && (
+                    <span className="inline-block w-1.5 h-4 ml-1 bg-primary animate-pulse align-middle" />
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </div>
 
           </div>

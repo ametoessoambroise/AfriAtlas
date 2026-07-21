@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 const inspirations = [
   {
     id: 1,
+
     name: "Kpalimé",
     category: "Nature & Cascades",
     rating: 4.9,
@@ -150,6 +151,7 @@ export default function DestinationInspiration() {
           </button>
         </motion.div>
       </motion.div>
+
     </div>
   );
 }

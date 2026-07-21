@@ -69,32 +69,31 @@ export function AlbumPhotoCard({
   if (image.latitude && image.longitude) tags.push("Géolocalisée");
 
   return (
-    <>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.05 }}
-        className="w-full"
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05 }}
+      className="w-full"
+    >
+      <div
+        className={`flex ${
+          viewMode === "grid" ? "flex-col" : "flex-col sm:flex-row"
+        } w-full rounded-3xl overflow-hidden border border-neutral-200 bg-white shadow-sm hover:shadow-lg transition-shadow duration-300`}
       >
+        {/* ── Panneau Image ── */}
         <div
-          className={`flex ${
-            viewMode === "grid" ? "flex-col" : "flex-col sm:flex-row"
-          } w-full rounded-md overflow-hidden border border-border bg-card shadow-sm hover:shadow-lg transition-shadow duration-300`}
+          className={`relative ${
+            viewMode === "grid"
+              ? "w-full aspect-[4/3]"
+              : "sm:w-[46%] min-h-[280px] sm:min-h-0"
+          } bg-[#E8E4DF] flex items-center justify-center overflow-hidden flex-shrink-0 group`}
         >
-          {/* ── Panneau Image ── */}
-          <div
-            className={`relative ${
-              viewMode === "grid"
-                ? "w-full aspect-[4/3]"
-                : "sm:w-[46%] min-h-[280px] sm:min-h-0"
-            } bg-[#E8E4DF] flex items-center justify-center overflow-hidden flex-shrink-0 group`}
-          >
-            {/* Label coin haut gauche */}
-            <div className="absolute top-4 left-4 z-10">
-              <span className="bg-[#F5EFE8] text-neutral-600 text-xs font-medium px-3 py-1.5 rounded-full shadow-sm">
-                Photo de voyage
-              </span>
-            </div>
+          {/* Label coin haut gauche */}
+          <div className="absolute top-4 left-4 z-10">
+            <span className="bg-[#F5EFE8] text-neutral-600 text-xs font-medium px-3 py-1.5 rounded-full shadow-sm">
+              Photo de voyage
+            </span>
+          </div>
 
             {/* Action Buttons - Top Right */}
             <div className="absolute top-4 right-4 z-20 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -223,97 +222,54 @@ export function AlbumPhotoCard({
               </div>
             )}
 
-            {/* Actions */}
-            <div className="flex items-center gap-2 flex-wrap">
-              {/* CTA principal - Voir */}
-              <button
-                onClick={() => {
-                  // Ouvrir l'image en grand ou naviguer vers le lieu
-                  if (place?.slug) {
-                    window.open(`/destinations/${place.slug}`, "_blank");
-                  } else {
-                    openImageModal();
-                  }
-                }}
-                className="inline-flex items-center gap-2.5 bg-primary hover:bg-primary/80 active:scale-[0.98] text-white font-semibold text-sm px-6 py-3 rounded-md transition-all duration-200 shadow-md shadow-primary/20"
-              >
-                <Eye className="w-4 h-4" />
-                {place ? "Voir le lieu" : "Voir la photo"}
-              </button>
+          {/* Actions */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* CTA principal - Voir */}
+            <button
+              onClick={() => {
+                // Ouvrir l'image en grand ou naviguer vers le lieu
+                if (place?.slug) {
+                  window.open(`/destinations/${place.slug}`, "_blank");
+                }
+              }}
+              className="inline-flex items-center gap-2.5 bg-[#E8820C] hover:bg-[#CF7209] active:scale-[0.98] text-white font-semibold text-sm px-6 py-3 rounded-2xl transition-all duration-200 shadow-md shadow-orange-200"
+            >
+              <Eye className="w-4 h-4" />
+              {place ? "Voir le lieu" : "Voir la photo"}
+            </button>
 
-              {/* Partager */}
-              <button
-                onClick={() => {
-                  // Logique de partage
-                  if (navigator.share) {
-                    navigator.share({
-                      title: placeName,
-                      text: image.caption || placeName,
-                      url: window.location.href,
-                    });
-                  }
-                }}
-                className="inline-flex items-center gap-2 border border-border hover:border-primary hover:bg-primary/20 active:scale-[0.98] text-primary font-semibold text-sm px-5 py-3 rounded-md transition-all duration-200"
-              >
-                <Share2 className="w-4 h-4" />
-                Partager
-              </button>
+            {/* Partager */}
+            <button
+              onClick={() => {
+                // Logique de partage
+                if (navigator.share) {
+                  navigator.share({
+                    title: placeName,
+                    text: image.caption || placeName,
+                    url: window.location.href,
+                  });
+                }
+              }}
+              className="inline-flex items-center gap-2 border border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50 active:scale-[0.98] text-neutral-700 font-semibold text-sm px-5 py-3 rounded-2xl transition-all duration-200"
+            >
+              <Share2 className="w-4 h-4" />
+              Partager
+            </button>
 
-              {/* Like */}
-              <button
-                onClick={() => setLiked((v) => !v)}
-                className={`w-12 h-12 rounded-md border flex items-center justify-center transition-all duration-200 active:scale-[0.95] ${
-                  liked
-                    ? "bg-red-50 border-red-200 text-red-500"
-                    : "border-border hover:border-primary hover:bg-primary/20 active:scale-[0.95] text-primary"
-                }`}
-              >
-                <Heart className={`w-4 h-4 ${liked ? "fill-red-500" : ""}`} />
-              </button>
-            </div>
+            {/* Like */}
+            <button
+              onClick={() => setLiked((v) => !v)}
+              className={`w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-200 active:scale-[0.95] ${
+                liked
+                  ? "bg-red-50 border-red-200 text-red-500"
+                  : "border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50 text-neutral-500"
+              }`}
+            >
+              <Heart className={`w-4 h-4 ${liked ? "fill-red-500" : ""}`} />
+            </button>
           </div>
         </div>
-      </motion.div>
-
-      {/* ── Lightbox Modal ── */}
-      {imageModalOpen && (
-        <div
-          className="fixed inset-0 z-[9999] w-full h-[90vh] m-auto flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-          onClick={closeImageModal}
-        >
-          <button
-            onClick={closeImageModal}
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
-            aria-label="Fermer"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-          <img
-            src={imageUrl}
-            alt={placeName}
-            className="max-w-full max-h-[80vh] rounded-md object-contain shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          />
-          {image.caption && (
-            <p className="absolute bottom-6 left-0 right-0 text-center text-white/70 text-sm px-4">
-              {image.caption}
-            </p>
-          )}
-        </div>
-      )}
-    </>
+      </div>
+    </motion.div>
   );
 }

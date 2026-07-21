@@ -24,13 +24,13 @@ export default function MenuCatalogLayout({
 }: MenuCatalogProps) {
   return (
     <>
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-card p-5 shadow-sm">
         <div>
-           <h2 className="text-3xl font-extrabold tracking-tight">La Carte</h2>
-           <p className="text-muted-foreground mt-1 text-sm md:text-base">Commandez vos plats et boissons favoris.</p>
+          <h2 className="text-3xl font-extrabold tracking-tight">La Carte</h2>
+          <p className="mt-1 text-sm text-muted-foreground md:text-base">Commandez vos plats et boissons favoris.</p>
         </div>
-        
-        <div className="flex flex-wrap items-center gap-2 bg-muted/30 p-2 rounded-md border border-border/50" role="tablist" aria-label="Catégories du menu">
+
+        <div className="flex flex-wrap items-center gap-2 rounded-xl bg-muted/30 p-2" role="tablist" aria-label="Catégories du menu">
           {categories.map((c) => (
             <button
               key={c}
@@ -47,7 +47,7 @@ export default function MenuCatalogLayout({
               {menuCat === c && (
                 <motion.div
                   layoutId="active-cat-menu"
-                  className="absolute inset-0 bg-primary rounded-full shadow-md shadow-primary/20"
+                  className="absolute inset-0 rounded-full bg-primary shadow-md shadow-primary/20"
                   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
@@ -57,7 +57,7 @@ export default function MenuCatalogLayout({
           <button
             type="button"
             onClick={() => setCartOpen(true)}
-            className="relative ml-2 rounded-full bg-primary p-3 text-primary-foreground lg:hidden shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
+            className="relative ml-2 rounded-full bg-primary p-3 text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 lg:hidden"
             aria-label="Ouvrir le panier"
           >
             <ShoppingCart className="h-5 w-5" />
@@ -72,7 +72,7 @@ export default function MenuCatalogLayout({
 
       <div className="flex flex-col gap-8 lg:flex-row">
         <div className="min-w-0 flex-1">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             {items.map((m, i) => (
               <motion.div
                 key={m.id}
@@ -85,14 +85,14 @@ export default function MenuCatalogLayout({
             ))}
           </div>
           {items.length === 0 ? (
-             <div className="py-20 text-center flex flex-col items-center justify-center bg-surface-alt/50 rounded-md border border-dashed border-border/80">
-                <p className="text-lg font-medium text-foreground">Menu non disponible.</p>
-             </div>
+            <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-muted/20 py-20 text-center">
+              <p className="text-lg font-medium text-foreground">Menu non disponible.</p>
+            </div>
           ) : null}
         </div>
-        
+
         <aside className="hidden w-[340px] shrink-0 lg:block">
-          <div className="card-destination overflow-hidden sticky top-[100px] h-[calc(100vh-140px)] shadow-xl shadow-foreground/5 border border-border/60 rounded-md">
+          <div className="card-destination sticky top-[100px] h-[calc(100vh-140px)] overflow-hidden rounded-2xl border border-border/60 shadow-sm">
             <CartSidebar />
           </div>
         </aside>

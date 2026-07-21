@@ -50,11 +50,11 @@ export default function HotelCatalogLayout({
 
   return (
     <>
-      <div className="mb-12">
-         <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-3">Chambres & Suites<span className="text-primary">.</span></h2>
-         <p className="text-muted-foreground text-base md:text-lg max-w-2xl leading-relaxed">
-            Découvrez nos espaces d'exception et réservez votre séjour au cœur de l'Afrique.
-         </p>
+      <div className="mb-12 rounded-2xl border border-border bg-card p-6 shadow-sm">
+        <h2 className="mb-3 text-4xl font-black tracking-tighter md:text-5xl">Chambres & Suites<span className="text-primary">.</span></h2>
+        <p className="max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+          Découvrez nos espaces d’exception et réservez votre séjour au cœur de l’Afrique.
+        </p>
       </div>
 
       <div className="mb-20 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -65,7 +65,7 @@ export default function HotelCatalogLayout({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
             whileHover={{ y: -5 }}
-            className={`group card-destination overflow-hidden rounded-md transition-all border-2 ${selectedRoom === r.id ? "border-primary shadow-2xl shadow-primary/10 scale-[1.02]" : "border-border/60 shadow-lg shadow-foreground/5 hover:border-primary/20"}`}
+            className={`group card-destination overflow-hidden rounded-2xl border-2 transition-all ${selectedRoom === r.id ? "scale-[1.02] border-primary shadow-lg shadow-primary/10" : "border-border/60 shadow-sm hover:border-primary/20"}`}
           >
             <div className="relative h-64 overflow-hidden">
               <img
@@ -94,10 +94,10 @@ export default function HotelCatalogLayout({
               
               <div className="flex items-center justify-between border-t border-border/40 pt-6">
                 <div className="flex flex-col">
-                  <span className="text-3xl font-black text-primary leading-none tracking-tighter">
+                  <span className="text-3xl font-black leading-none tracking-tighter text-primary">
                     {formatPrice(r.price)}
                   </span>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mt-2">
+                  <span className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
                     par nuitée
                   </span>
                 </div>
@@ -105,7 +105,7 @@ export default function HotelCatalogLayout({
                   type="button"
                   disabled={!r.available}
                   onClick={() => setSelectedRoom(r.id)}
-                  className={`rounded-md px-8 py-3.5 text-xs font-black uppercase tracking-widest transition-all ${selectedRoom === r.id ? "bg-foreground text-background shadow-xl" : "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:scale-105 active:scale-95"}`}
+                  className={`rounded-xl px-8 py-3.5 text-xs font-black uppercase tracking-widest transition-all ${selectedRoom === r.id ? "bg-foreground text-background shadow-xl" : "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:scale-105 active:scale-95"}`}
                 >
                   {selectedRoom === r.id ? "Ok" : "Choisir"}
                 </button>
@@ -115,63 +115,62 @@ export default function HotelCatalogLayout({
         ))}
       </div>
 
-      <div className="card-destination mb-12 p-10 md:p-14 rounded-[3rem] border border-border/60 bg-card shadow-2xl shadow-foreground/5 relative overflow-hidden group">
-        {/* Decorative elements */}
-        <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors" />
-        <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-accent/5 rounded-full blur-2xl" />
-        
-        <div className="flex items-center gap-4 mb-10 relative z-10">
-           <div className="w-12 h-12 bg-primary/10 rounded-md flex items-center justify-center">
-              <Calendar className="text-primary w-6 h-6" />
-           </div>
-           <h2 className="text-3xl font-black tracking-tight">Vérifier les dates</h2>
+      <div className="card-destination group relative mb-12 overflow-hidden rounded-[28px] border border-border/60 bg-card p-10 shadow-sm md:p-14">
+        <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/5 blur-3xl transition-colors group-hover:bg-primary/10" />
+        <div className="absolute -bottom-24 -left-24 h-48 w-48 rounded-full bg-accent/5 blur-2xl" />
+
+        <div className="relative z-10 mb-10 flex items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
+            <Calendar className="h-6 w-6 text-primary" />
+          </div>
+          <h2 className="text-3xl font-black tracking-tight">Vérifier les dates</h2>
         </div>
-        
-        <div className="mb-12 grid gap-6 md:grid-cols-4 relative z-10">
-          <div className="p-5 bg-muted/40 rounded-md border border-border/40 focus-within:border-primary/40 transition-colors">
+
+        <div className="relative z-10 mb-12 grid gap-6 md:grid-cols-4">
+          <div className="rounded-2xl border border-border/40 bg-muted/40 p-5 transition-colors focus-within:border-primary/40">
             <label className="mb-3 block text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60">Arrivée</label>
             <input
               type="date"
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
-              className="w-full bg-transparent text-sm font-black focus:outline-none cursor-pointer"
+              className="w-full cursor-pointer bg-transparent text-sm font-black focus:outline-none"
             />
           </div>
-          <div className="p-5 bg-muted/40 rounded-md border border-border/40 focus-within:border-primary/40 transition-colors">
+          <div className="rounded-2xl border border-border/40 bg-muted/40 p-5 transition-colors focus-within:border-primary/40">
             <label className="mb-3 block text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60">Départ</label>
             <input
               type="date"
               value={checkOut}
               onChange={(e) => setCheckOut(e.target.value)}
-              className="w-full bg-transparent text-sm font-black focus:outline-none cursor-pointer"
+              className="w-full cursor-pointer bg-transparent text-sm font-black focus:outline-none"
             />
           </div>
-          <div className="p-5 bg-muted/40 rounded-md border border-border/40">
+          <div className="rounded-2xl border border-border/40 bg-muted/40 p-5">
             <label className="mb-3 block text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60">Voyageurs</label>
             <div className="flex items-center justify-between gap-4">
               <button
                 type="button"
                 onClick={() => setGuests(Math.max(1, guests - 1))}
-                className="flex h-10 w-10 items-center justify-center rounded-md bg-card border border-border/60 text-lg font-black shadow-sm hover:bg-muted active:scale-90 transition-all"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-card text-lg font-black shadow-sm transition-all hover:bg-muted active:scale-90"
               >
-                <Minus className="w-4 h-4" />
+                <Minus className="h-4 w-4" />
               </button>
-              <span className="font-black text-xl">{guests}</span>
+              <span className="text-xl font-black">{guests}</span>
               <button
                 type="button"
                 onClick={() => setGuests(Math.min(10, guests + 1))}
-                className="flex h-10 w-10 items-center justify-center rounded-md bg-card border border-border/60 text-lg font-black shadow-sm hover:bg-muted active:scale-90 transition-all"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-card text-lg font-black shadow-sm transition-all hover:bg-muted active:scale-90"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="h-4 w-4" />
               </button>
             </div>
           </div>
-          <div className="p-5 bg-muted/40 rounded-md border border-border/40 focus-within:border-primary/40 transition-colors">
+          <div className="rounded-2xl border border-border/40 bg-muted/40 p-5 transition-colors focus-within:border-primary/40">
             <label className="mb-3 block text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60">Hébergement</label>
             <select
               value={selectedRoom ?? ""}
               onChange={(e) => setSelectedRoom(e.target.value || null)}
-              className="w-full bg-transparent text-sm font-black focus:outline-none appearance-none cursor-pointer"
+              className="w-full cursor-pointer appearance-none bg-transparent text-sm font-black focus:outline-none"
             >
               <option value="">-- Sélectionner --</option>
               {rooms
@@ -213,7 +212,7 @@ export default function HotelCatalogLayout({
           type="button"
           onClick={handleBook}
           disabled={!room || !checkIn || !checkOut || isBooking}
-          className="btn-primary w-full md:w-auto px-12 py-5 rounded-md font-black text-base uppercase tracking-widest shadow-2xl shadow-primary/30 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none hover:scale-[1.02] active:scale-[0.98] transition-all relative z-10 flex items-center justify-center gap-3"
+          className="relative z-10 flex w-full items-center justify-center gap-3 rounded-xl bg-primary px-12 py-5 text-base font-black uppercase tracking-widest text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none md:w-auto"
         >
            {isBooking ? (
              <>

@@ -96,23 +96,28 @@ export default function DeliveryForm({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold flex items-center gap-2">
-          <MapPin className="w-5 h-5 text-primary" />
-          Adresse de livraison
-        </h3>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10">
+            <MapPin className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <h3 className="text-xl font-black">Adresse de livraison</h3>
+            <p className="text-sm text-muted-foreground">Choisissez où le colis doit être livré.</p>
+          </div>
+        </div>
         {!isAddingNew && (
-           <button 
-             onClick={() => setIsAddingNew(true)}
-             className="text-primary text-sm font-bold hover:underline"
-           >
-             + Nouvelle adresse
-           </button>
+          <button
+            onClick={() => setIsAddingNew(true)}
+            className="rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary transition-colors hover:bg-primary/15"
+          >
+            + Nouvelle adresse
+          </button>
         )}
       </div>
 
       {isAddingNew ? (
-        <form onSubmit={handleCreateAddress} className="bg-surface-alt p-6 rounded-md border border-border space-y-4 animate-in fade-in zoom-in-95 duration-200">
+        <form onSubmit={handleCreateAddress} className="space-y-4 rounded-[20px] border border-border bg-surface-alt p-6 animate-in fade-in zoom-in-95 duration-200">
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2 md:col-span-1">
               <label className="text-xs font-bold uppercase text-muted-foreground mb-1 block">Libellé (ex: Bureau)</label>
@@ -120,7 +125,7 @@ export default function DeliveryForm({
                 required
                 value={formData.label}
                 onChange={e => setFormData({...formData, label: e.target.value})}
-                className="w-full bg-background border border-border rounded-md px-4 py-2 focus:outline-none focus:border-primary"
+                className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm focus:border-primary focus:outline-none"
               />
             </div>
             <div className="col-span-2 md:col-span-1">
@@ -156,7 +161,7 @@ export default function DeliveryForm({
                     setFormData({...formData, street_address: e.target.value});
                     setSearchQuery(e.target.value);
                   }}
-                  className="w-full bg-background border border-border rounded-md px-4 py-2 pr-24"
+                  className="w-full rounded-xl border border-border bg-background px-4 py-2.5 pr-24 text-sm focus:border-primary focus:outline-none"
                 />
                 <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
                    {isSearching && <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />}
@@ -164,7 +169,7 @@ export default function DeliveryForm({
                      type="button"
                      onClick={() => setIsTracking(true)}
                      disabled={isTracking}
-                     className="p-1.5 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors"
+                     className="rounded-lg bg-primary/10 p-1.5 text-primary transition-colors hover:bg-primary/20"
                      title="Utiliser ma position GPS"
                    >
                       {isTracking ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Navigation className="w-3.5 h-3.5" />}
@@ -196,29 +201,29 @@ export default function DeliveryForm({
              <button 
                type="button"
                onClick={() => setIsAddingNew(false)}
-               className="flex-1 py-3 font-bold border border-border rounded-md hover:bg-background transition-colors"
+               className="flex-1 rounded-xl border border-border py-3 font-bold transition-colors hover:bg-background"
              >
                Annuler
              </button>
              <button 
                type="submit"
                disabled={isCreatingAddress}
-               className="flex-1 py-3 font-bold bg-primary text-white rounded-md hover:opacity-90 transition-opacity disabled:opacity-50"
+               className="flex-1 rounded-xl bg-primary py-3 font-bold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
              >
                {isCreatingAddress ? "Enregistrement..." : "Confirmer"}
              </button>
           </div>
         </form>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {addresses.map((addr) => (
             <button
               key={addr.id}
               onClick={() => onAddressSelect(addr.id)}
-              className={`p-4 rounded-md border text-left transition-all ${
-                selectedAddressId === addr.id 
-                ? "border-primary bg-primary/5 ring-1 ring-primary" 
-                : "border-border hover:border-muted-foreground bg-card"
+              className={`rounded-[18px] border p-4 text-left transition-all ${
+                selectedAddressId === addr.id
+                  ? "border-primary bg-primary/5 ring-1 ring-primary"
+                  : "border-border bg-card hover:border-primary/30"
               }`}
             >
               <div className="flex justify-between items-start mb-2">

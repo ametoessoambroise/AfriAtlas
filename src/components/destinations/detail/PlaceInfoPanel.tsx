@@ -18,89 +18,59 @@ export default function PlaceInfoPanel({ destination }: PlaceInfoPanelProps) {
 
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 rounded-2xl border border-border bg-card p-6 shadow-sm">
       <div className="flex items-center gap-3">
-
-        <div className="bg-primary/10 p-2.5 rounded-xl">
-
-          <MapPin className="h-6 w-6 text-primary" />
+        <div className="rounded-xl bg-primary/10 p-2.5">
+          <MapPin className="h-5 w-5 text-primary" />
         </div>
-        <h2 className="text-2xl font-heading font-semibold">Informations pratiques</h2>
+        <h2 className="text-2xl font-semibold text-foreground">Informations pratiques</h2>
       </div>
 
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         {destination.address && (
-
-          <div className="flex items-start gap-4 p-6 rounded-xl border border-border bg-card shadow-sm group hover:shadow-md transition-all">
-            <div className="bg-primary/10 p-3 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-
-              <MapPin className="h-6 w-6 text-primary" />
+          <div className="rounded-xl border border-border bg-background p-4">
+            <div className="mb-2 flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-primary" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Adresse</span>
             </div>
-            <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-1">
-                Adresse
-              </p>
-              <p className="text-sm font-medium leading-relaxed">
-                {destination.address}
-              </p>
-            </div>
+            <p className="text-sm leading-relaxed text-foreground">{destination.address}</p>
           </div>
         )}
 
         {destination.openingHours && (
-
-          <div className="flex items-start gap-4 p-6 rounded-xl border border-border bg-card shadow-sm group hover:shadow-md transition-all">
-            <div className="bg-primary/10 p-3 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-              <Clock className="h-6 w-6 text-primary" />
+          <div className="rounded-xl border border-border bg-background p-4">
+            <div className="mb-2 flex items-center gap-2">
+              <Clock className="h-4 w-4 text-primary" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Horaires</span>
             </div>
-            <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-1">
-                Horaires
-              </p>
-              <p className="text-sm font-medium leading-relaxed">
-                {destination.openingHours}
-              </p>
-            </div>
+            <p className="text-sm leading-relaxed text-foreground">{destination.openingHours}</p>
           </div>
         )}
 
         {destination.phone && (
-
-          <div className="flex items-start gap-4 p-6 rounded-xl border border-border bg-card shadow-sm group hover:shadow-md transition-all">
-            <div className="bg-primary/10 p-3 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-              <Phone className="h-6 w-6 text-primary" />
+          <div className="rounded-xl border border-border bg-background p-4">
+            <div className="mb-2 flex items-center gap-2">
+              <Phone className="h-4 w-4 text-primary" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Contact</span>
             </div>
-            <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-1">
-                Contact
-              </p>
-              <p className="text-sm font-medium leading-relaxed">
-                {destination.phone}
-              </p>
-            </div>
+            <p className="text-sm leading-relaxed text-foreground">{destination.phone}</p>
           </div>
         )}
 
         {destination.website && (
-
-          <div className="flex items-start gap-4 p-6 rounded-xl border border-border bg-card shadow-sm group hover:shadow-md transition-all">
-            <div className="bg-blue-500/10 p-3 rounded-xl shrink-0 group-hover:scale-110 transition-transform">
-              <Globe className="h-6 w-6 text-blue-600" />
+          <div className="rounded-xl border border-border bg-background p-4">
+            <div className="mb-2 flex items-center gap-2">
+              <Globe className="h-4 w-4 text-primary" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Site Web</span>
             </div>
-            <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-1">
-                Site Web
-              </p>
-              <a
-                href={destination.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-blue-600 hover:underline flex items-center gap-1"
-              >
-                Visiter le site
-                <Globe className="h-3 w-3" />
-              </a>
-            </div>
+            <a
+              href={destination.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-primary hover:underline"
+            >
+              Visiter le site
+            </a>
           </div>
         )}
       </div>

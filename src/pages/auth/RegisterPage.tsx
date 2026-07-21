@@ -87,67 +87,67 @@ export default function RegisterPage() {
 
         <div className="flex gap-3">
           <div className="flex-1">
-             <div className="relative">
-               <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-               <input
-                 {...register("first_name")}
-                 type="text"
-                 placeholder="Prénom"
-                 className={`w-full bg-surface-alt border ${errors.first_name ? 'border-destructive' : 'border-border/60'} rounded-md py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
-               />
-             </div>
-             {errors.first_name && <p className="text-xs text-destructive mt-1 font-medium">{errors.first_name.message}</p>}
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                {...register("first_name")}
+                type="text"
+                placeholder="Prénom"
+                className={`w-full rounded-xl border ${errors.first_name ? "border-destructive" : "border-border/60"} bg-surface-alt py-3 pl-10 pr-4 text-sm focus:border-primary focus:outline-none`}
+              />
+            </div>
+            {errors.first_name && <p className="mt-1 text-xs font-medium text-destructive">{errors.first_name.message}</p>}
           </div>
 
           <div className="flex-1">
-             <input
-               {...register("last_name")}
-               type="text"
-               placeholder="Nom"
-               className={`w-full bg-surface-alt border ${errors.last_name ? 'border-destructive' : 'border-border/60'} rounded-md py-3 px-4 text-sm focus:outline-none focus:border-primary`}
-             />
-             {errors.last_name && <p className="text-xs text-destructive mt-1 font-medium">{errors.last_name.message}</p>}
+            <input
+              {...register("last_name")}
+              type="text"
+              placeholder="Nom"
+              className={`w-full rounded-xl border ${errors.last_name ? "border-destructive" : "border-border/60"} bg-surface-alt py-3 px-4 text-sm focus:border-primary focus:outline-none`}
+            />
+            {errors.last_name && <p className="mt-1 text-xs font-medium text-destructive">{errors.last_name.message}</p>}
           </div>
         </div>
 
         <div>
-           <div className="relative">
-             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-             <input
-               {...register("email")}
-               type="email"
-               placeholder="Adresse email"
-               className={`w-full bg-surface-alt border ${errors.email ? 'border-destructive' : 'border-border/60'} rounded-md py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
-             />
-           </div>
-           {errors.email && <p className="text-xs text-destructive mt-1 font-medium">{errors.email.message}</p>}
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input
+              {...register("email")}
+              type="email"
+              placeholder="Adresse email"
+              className={`w-full rounded-xl border ${errors.email ? "border-destructive" : "border-border/60"} bg-surface-alt py-3 pl-10 pr-4 text-sm focus:border-primary focus:outline-none`}
+            />
+          </div>
+          {errors.email && <p className="mt-1 text-xs font-medium text-destructive">{errors.email.message}</p>}
         </div>
 
         <div>
-           <div className="relative">
-             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-             <Input
-               {...register("password")}
-               type="password"
-               placeholder="Mot de passe"
-               className={`w-full bg-surface-alt border ${errors.password ? 'border-destructive' : 'border-border/60'} rounded-md h-12 pl-10 pr-4 text-sm focus:ring-primary/20 font-bold`}
-             />
-           </div>
-           <PasswordStrength password={pwValue} />
-           {errors.password && <p className="text-xs text-destructive mt-1 font-medium">{errors.password.message}</p>}
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              {...register("password")}
+              type="password"
+              placeholder="Mot de passe"
+              className={`h-12 w-full rounded-xl border ${errors.password ? "border-destructive" : "border-border/60"} bg-surface-alt pl-10 pr-4 text-sm font-bold focus:border-primary focus:ring-primary/20`}
+            />
+          </div>
+          <PasswordStrength password={pwValue} />
+          {errors.password && <p className="mt-1 text-xs font-medium text-destructive">{errors.password.message}</p>}
         </div>
 
         <div>
-           <div className="relative">
-             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-             <input
-               {...register("password_confirm")}
-               type="password"
-               placeholder="Confirmer le mot de passe"
-               className={`w-full bg-surface-alt border ${errors.password_confirm ? 'border-destructive' : 'border-border/60'} rounded-md py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
-             />
-           </div>
-           {errors.password_confirm && <p className="text-xs text-destructive mt-1 font-medium">{errors.password_confirm.message}</p>}
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input
+              {...register("password_confirm")}
+              type="password"
+              placeholder="Confirmer le mot de passe"
+              className={`w-full rounded-xl border ${errors.password_confirm ? "border-destructive" : "border-border/60"} bg-surface-alt py-3 pl-10 pr-4 text-sm focus:border-primary focus:outline-none`}
+            />
+          </div>
+          {errors.password_confirm && <p className="mt-1 text-xs font-medium text-destructive">{errors.password_confirm.message}</p>}
         </div>
 
         <div className="flex items-start text-xs text-muted-foreground mt-2">

@@ -62,13 +62,13 @@ const DestinationCard = ({
     <motion.div
       whileHover={{
         y: -8,
-        boxShadow: "0 25px 50px -12px rgba(0, 51, 102, 0.15)",
+        boxShadow: "0 25px 50px -14px rgba(0, 51, 102, 0.18)",
       }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link
         to={`/destinations/${destination.slug}`}
-        className="group bg-card rounded-md border border-border/50 overflow-hidden block transition-all duration-300"
+        className="group bg-card rounded-[26px] border border-border/60 overflow-hidden block transition-all duration-300 shadow-[0_10px_30px_-18px_rgba(0,0,0,0.14)]"
       >
         <div className="relative h-72 overflow-hidden">
           <LazyImage
@@ -76,10 +76,9 @@ const DestinationCard = ({
             alt={destination.name}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
-          {/* Subtle gradient to ensure badges are readable */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
 
-          <span className="absolute top-4 left-4 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
+          <span className="absolute top-4 left-4 px-3 py-1 bg-white/12 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
             {typeLabels[destination.type]}
           </span>
 
@@ -90,7 +89,7 @@ const DestinationCard = ({
               "absolute top-4 right-4 h-10 w-10 flex items-center justify-center rounded-full backdrop-blur-md border transition-all duration-300",
               destination.isFavorite
                 ? "bg-red-500 border-red-500 text-white shadow-lg shadow-red-500/30 scale-110"
-                : "bg-white/10 border-white/20 text-white hover:bg-white/30 hover:scale-110",
+                : "bg-white/12 border-white/20 text-white hover:bg-white/25 hover:scale-110",
             )}
             aria-label={
               destination.isFavorite
@@ -110,32 +109,29 @@ const DestinationCard = ({
             )}
           </button>
         </div>
-        <div className="p-6 bg-card relative z-10 transition-transform duration-500 ease-out group-hover:-translate-y-2">
-          <div className="flex items-start justify-between mb-3 gap-2">
-            <h3 className="font-heading font-bold text-2xl text-foreground group-hover:text-primary transition-colors leading-tight">
+        <div className="p-5 bg-card relative z-10 transition-transform duration-500 ease-out group-hover:-translate-y-1">
+          <div className="mb-3 flex items-start justify-between gap-3">
+            <h3 className="text-[1.55rem] font-semibold text-foreground leading-tight transition-colors group-hover:text-primary">
               {destination.name}
             </h3>
-            <div className="flex items-center gap-1 bg-secondary/10 px-2 py-1.5 rounded-lg border border-secondary/20 backdrop-blur-sm shadow-sm">
-              <Star className="w-3.5 h-3.5 fill-secondary text-secondary" />
-              <span className="text-xs font-bold text-secondary">
-                {destination.rating}
-              </span>
+            <div className="flex items-center gap-1 rounded-full bg-secondary/15 px-2.5 py-1.5 text-xs font-bold text-foreground shadow-sm shrink-0">
+              <Star className="h-3.5 w-3.5 fill-secondary text-secondary" />
+              <span>{destination.rating}</span>
             </div>
           </div>
-          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4 flex items-center gap-2">
+
+          <p className="text-[11px] font-black uppercase tracking-[0.22em] text-muted-foreground mb-4 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_8px_rgba(var(--secondary),0.8)]" />
             {destination.city} · {destination.category}
           </p>
 
-          <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
-            <div className="overflow-hidden">
-              <p className="text-sm text-muted-foreground line-clamp-3 font-body leading-relaxed pb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                {destination.description}
-              </p>
-            </div>
+          <div className="overflow-hidden">
+            <p className="pb-4 text-sm leading-relaxed text-muted-foreground line-clamp-3 min-h-[3.6rem]">
+              {destination.description}
+            </p>
           </div>
 
-          <div className="pt-4 border-t border-border/50 flex items-center justify-between">
+          <div className="flex items-center justify-between border-t border-border/60 pt-4">
             <span className="text-xs text-muted-foreground font-medium flex items-center gap-1.5">
               <span className="font-bold text-foreground">
                 {destination.reviewsCount ?? 0}

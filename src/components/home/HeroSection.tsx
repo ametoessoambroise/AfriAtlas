@@ -18,105 +18,110 @@ const fadeUp: Variants = {
 
 export default function HeroSection() {
   return (
-    <section className="relative flex h-[100dvh] w-full items-center justify-center overflow-hidden bg-black">
-      {/* ── Vidéo background ── */}
+    <section className="relative flex h-[100dvh] w-full items-center justify-center overflow-hidden bg-[#003b95]">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <iframe
           src="https://player.vimeo.com/video/80522930?h=60cc78a870&autoplay=1&loop=1&muted=1&background=1&quality=1080p"
           className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           style={{
             width: "100vw",
-            height: "56.25vw" /* 16:9 ratio */,
+            height: "56.25vw",
             minHeight: "100vh",
-            minWidth: "177.77vh" /* 100 * 16 / 9 */,
+            minWidth: "177.77vh",
             border: 0,
           }}
           allow="autoplay; fullscreen"
           title="Vidéo d'accueil Afriatlas Travel"
         />
-        {/* Overlay sombre + Fallback image si besoin */}
-        <div className="absolute inset-0 bg-black/55" />
-        {/* Gradient bas pour transition vers la section suivante */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,59,149,0.88),rgba(0,20,42,0.72))]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background via-background/60 to-transparent" />
       </div>
 
-      {/* ── Contenu ── */}
       <motion.div
-        className="relative z-10 mx-auto max-w-3xl px-6 text-center text-white"
+        className="relative z-10 mx-auto max-w-5xl px-6 text-center text-white"
         variants={stagger}
         initial="hidden"
         animate="visible"
       >
-        {/* Eyebrow */}
         <motion.p
           variants={fadeUp}
           className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur-sm"
         >
-          <Globe className="h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
+          <Globe className="h-3.5 w-3.5 shrink-0 text-secondary" aria-hidden />
           Découvrez l'Afrique de l'Ouest
         </motion.p>
 
-        {/* Titre */}
         <motion.h1
           variants={fadeUp}
-          className="mb-6 text-[clamp(2.5rem,5vw+1rem,4rem)] font-heading font-semibold italic leading-[1.1] tracking-tight"
+          className="mb-6 text-[clamp(2.8rem,5vw+1rem,4.8rem)] font-heading font-semibold leading-[1.05] tracking-tight"
         >
-          Le Togo comme{" "}
-          <span className="relative inline-block text-primary">
-            vous ne l'avez
-            <motion.span
-              className="absolute -bottom-1 left-0 h-[3px] rounded-full bg-primary"
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ delay: 1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            />
-          </span>{" "}
-          jamais vu
+          Réservez votre prochaine aventure au Togo
         </motion.h1>
 
-        {/* Subtitle */}
         <motion.p
           variants={fadeUp}
-          className="mb-10 text-base text-white/75 sm:text-lg md:text-xl leading-relaxed"
+          className="mx-auto mb-10 max-w-2xl text-base text-white/85 sm:text-lg md:text-xl leading-relaxed"
         >
-          Destinations authentiques, expériences uniques, souvenirs inoubliables
+          Destinations authentiques, séjours mémorables et expériences locales sélectionnées pour inspirer vos voyages.
         </motion.p>
 
-        {/* CTAs */}
+        <motion.div
+          variants={fadeUp}
+          className="mx-auto mb-8 max-w-4xl rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur-md shadow-2xl"
+        >
+          <div className="grid gap-3 md:grid-cols-[1.4fr_1fr_1fr_auto]">
+            <div className="rounded-xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
+              <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Destination</div>
+              <div className="mt-1 font-semibold">Lomé, Kpalimé, Kara...</div>
+            </div>
+            <div className="rounded-xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
+              <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Dates</div>
+              <div className="mt-1 font-semibold">12 - 18 août</div>
+            </div>
+            <div className="rounded-xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
+              <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Voyageurs</div>
+              <div className="mt-1 font-semibold">2 adultes</div>
+            </div>
+            <Link
+              to="/destinations"
+              className="inline-flex items-center justify-center rounded-xl bg-secondary px-5 py-3 text-sm font-bold text-foreground shadow-md transition-transform hover:scale-[1.01]"
+            >
+              Rechercher
+            </Link>
+          </div>
+        </motion.div>
+
         <motion.div
           variants={fadeUp}
           className="flex items-center justify-center gap-3"
         >
           <Link
             to="/destinations"
-            className="btn-primary inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold shadow-lg hover:scale-105 active:scale-95 transition-transform"
+            className="btn-primary inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-bold shadow-lg hover:scale-105 active:scale-95 transition-transform"
           >
             Explorer le Togo
           </Link>
           <Link
             to="/carte"
-            className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm hover:bg-white/20 active:scale-95 transition-all"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm hover:bg-white/20 active:scale-95 transition-all"
           >
             Voir la carte
           </Link>
         </motion.div>
       </motion.div>
 
-      {/* ── Scroll indicator ── */}
       <motion.div
         className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.6 }}
       >
-        <span className="text-xs uppercase tracking-[0.2em] text-white/40">
-          Scroll
-        </span>
+        <span className="text-xs uppercase tracking-[0.2em] text-white/50">Scroll</span>
         <motion.div
           animate={{ y: [0, 7, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ArrowDown className="h-4 w-4 text-white/40" />
+          <ArrowDown className="h-4 w-4 text-white/60" />
         </motion.div>
       </motion.div>
     </section>

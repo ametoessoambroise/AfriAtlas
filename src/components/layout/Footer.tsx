@@ -120,16 +120,9 @@ function DestinationSlideshow() {
 
 export default function Footer() {
   return (
-    <footer className="bg-background text-foreground relative w-full pt-20 pb-10 border-t border-border/40 mt-20">
-      {/* Background blobs for a modern glass effect */}
-      <div className="pointer-events-none absolute top-0 left-0 z-0 h-full w-full overflow-hidden">
-        <div className="bg-primary absolute top-1/3 left-1/4 h-64 w-64 rounded-full opacity-10 blur-3xl" />
-        <div className="bg-amber-500 absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full opacity-10 blur-3xl" />
-      </div>
-
+    <footer className="bg-background text-foreground relative w-full pt-20 pb-10 border-t border-border/60 mt-20">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Newsletter Section */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 mb-16 rounded-md p-8 md:p-12 shadow-2xl relative overflow-hidden">
+        <div className="bg-white border border-border mb-16 rounded-2xl p-8 md:p-12 shadow-sm relative overflow-hidden">
           <div className="grid items-center gap-8 md:grid-cols-2 relative z-10">
             <div>
               <h3 className="mb-4 text-2xl font-bold md:text-3xl">

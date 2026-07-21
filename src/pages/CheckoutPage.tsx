@@ -74,22 +74,45 @@ export default function CheckoutPage() {
 
   return (
     <StripeProvider>
-      <div className="bg-surface pt-12 pb-24 min-h-screen">
-        <div className="max-w-7xl mx-auto px-6">
+      <div className="min-h-screen bg-background pb-24 pt-12">
+        <div className="mx-auto max-w-7xl px-6">
           <button
             onClick={() => navigate("/cart")}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
+            className="group mb-8 flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-xs font-bold uppercase tracking-widest">
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            <span className="text-xs font-bold uppercase tracking-[0.22em]">
               Retour au panier
             </span>
           </button>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            {/* Formulaires (Gauche) */}
-            <div className="lg:col-span-7 space-y-12">
-              <section className="bg-card p-8 rounded-md border border-border shadow-sm">
+          <div className="mb-8 rounded-[28px] border border-border bg-card p-6 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-primary">
+                  Finaliser votre réservation
+                </p>
+                <h1 className="mt-2 text-3xl font-black tracking-tight text-foreground md:text-4xl">
+                  Paiement et livraison
+                </h1>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+                  1. Adresse
+                </span>
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+                  2. Paiement
+                </span>
+                <span className="rounded-full bg-muted px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+                  3. Confirmation
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+            <div className="space-y-12 lg:col-span-7">
+              <section className="rounded-[24px] border border-border bg-card p-8 shadow-sm">
                 <DeliveryForm
                   selectedAddressId={selectedAddressId}
                   onAddressSelect={setSelectedAddressId}
@@ -97,7 +120,7 @@ export default function CheckoutPage() {
               </section>
 
               <section
-                className={`bg-card p-8 rounded-md border border-border shadow-sm transition-opacity ${!selectedAddressId ? "opacity-30 pointer-events-none" : ""}`}
+                className={`rounded-[24px] border border-border bg-card p-8 shadow-sm transition-opacity ${!selectedAddressId ? "pointer-events-none opacity-30" : ""}`}
               >
                 <StripePaymentForm
                   total={
@@ -108,19 +131,18 @@ export default function CheckoutPage() {
                 />
               </section>
 
-              <div className="flex items-center justify-center gap-8 py-4 border-t border-dashed border-border">
+              <div className="flex flex-wrap items-center justify-center gap-8 border-t border-dashed border-border py-4">
                 <div className="flex items-center gap-2 text-[10px] font-bold uppercase text-muted-foreground">
-                  <ShieldCheck className="w-4 h-4 text-green-500" />
+                  <ShieldCheck className="h-4 w-4 text-green-500" />
                   SSL 256-bit Secure
                 </div>
                 <div className="flex items-center gap-2 text-[10px] font-bold uppercase text-muted-foreground">
-                  <Truck className="w-4 h-4 text-primary" />
+                  <Truck className="h-4 w-4 text-primary" />
                   Logistique Togo Express
                 </div>
               </div>
             </div>
 
-            {/* Récapitulatif (Droite) */}
             <div className="lg:col-span-5">
               <div className="sticky top-24">
                 <OrderSummary
@@ -129,11 +151,9 @@ export default function CheckoutPage() {
                   deliveryFee={deliveryFee}
                 />
 
-                <div className="mt-6 p-6 bg-primary/5 rounded-md border border-primary/10">
-                  <p className="text-xs text-primary font-medium leading-relaxed">
-                    <span className="font-black italic">
-                      Note sur la livraison :
-                    </span>{" "}
+                <div className="mt-6 rounded-[22px] border border-primary/10 bg-primary/5 p-6">
+                  <p className="text-xs font-medium leading-relaxed text-primary">
+                    <span className="font-black italic">Note sur la livraison :</span>{" "}
                     Les frais de livraison ({deliveryFee} XOF) seront réglés
                     séparément lors de la remise du colis au transporteur ou via
                     mobile money.

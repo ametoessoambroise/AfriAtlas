@@ -27,21 +27,19 @@ export default function RetailCatalogLayout({
 }: RetailCatalogProps) {
   return (
     <>
-      {/* Barre d'outils et de Filtres */}
-      <div className="mb-8 flex flex-wrap items-center gap-4 bg-muted/40 p-4 rounded-md border border-border/50">
+      <div className="mb-8 flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm">
         <div className="relative min-w-[240px] max-w-sm flex-1">
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground/60" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher un produit..."
-            className="w-full rounded-full border border-border/60 bg-background py-3 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-shadow"
+            className="w-full rounded-xl border border-border bg-background py-3 pl-12 pr-4 text-sm shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-primary/40"
             aria-label="Rechercher un produit"
           />
         </div>
-        
-        {/* Category Tabs */}
-        <div className="flex flex-wrap gap-2 flex-1 items-center" role="tablist" aria-label="Catégories de produits">
+
+        <div className="flex flex-1 flex-wrap items-center gap-2" role="tablist" aria-label="Catégories de produits">
           {categories.map((c) => (
             <button
               key={c}
@@ -52,13 +50,13 @@ export default function RetailCatalogLayout({
               className={`relative rounded-full px-5 py-2.5 text-sm font-semibold transition-all outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                 cat === c
                   ? "text-primary-foreground"
-                  : "bg-surface-alt text-muted-foreground hover:bg-border/60 hover:text-foreground"
+                  : "bg-muted text-muted-foreground hover:bg-border/60 hover:text-foreground"
               }`}
             >
               {cat === c && (
                 <motion.div
                   layoutId="active-cat-retail"
-                  className="absolute inset-0 bg-primary rounded-full shadow-md shadow-primary/20"
+                  className="absolute inset-0 rounded-full bg-primary shadow-md shadow-primary/20"
                   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
@@ -66,12 +64,11 @@ export default function RetailCatalogLayout({
             </button>
           ))}
         </div>
-        
-        {/* Mobile Cart Trigger */}
+
         <button
           type="button"
           onClick={() => setCartOpen(true)}
-          className="relative rounded-full bg-primary p-3 text-primary-foreground lg:hidden shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
+          className="relative rounded-full bg-primary p-3 text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 lg:hidden"
           aria-label="Ouvrir le panier"
         >
           <ShoppingCart className="h-5 w-5" />
@@ -83,7 +80,6 @@ export default function RetailCatalogLayout({
         </button>
       </div>
 
-      {/* Grille principale avec Panier latéral (Desktop) */}
       <div className="flex flex-col gap-8 lg:flex-row">
         <div className="min-w-0 flex-1">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
@@ -99,16 +95,15 @@ export default function RetailCatalogLayout({
             ))}
           </div>
           {items.length === 0 ? (
-             <div className="py-20 text-center flex flex-col items-center justify-center bg-surface-alt/50 rounded-md border border-dashed border-border/80">
-                <p className="text-lg font-medium text-foreground">Aucun produit trouvé.</p>
-                <p className="text-sm text-muted-foreground mt-2 max-w-sm">Essayer avec d'autres mots-clés ou changer de catégorie.</p>
-             </div>
+            <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-muted/20 py-20 text-center">
+              <p className="text-lg font-medium text-foreground">Aucun produit trouvé.</p>
+              <p className="mt-2 max-w-sm text-sm text-muted-foreground">Essayez avec d’autres mots-clés ou modifiez la catégorie.</p>
+            </div>
           ) : null}
         </div>
-        
-        {/* Sidebar Panier Desktop */}
+
         <aside className="hidden w-[340px] shrink-0 lg:block">
-          <div className="card-destination overflow-hidden sticky top-[100px] h-[calc(100vh-140px)] shadow-xl shadow-foreground/5 border border-border/60 rounded-md">
+          <div className="card-destination sticky top-[100px] h-[calc(100vh-140px)] overflow-hidden rounded-2xl border border-border/60 shadow-sm">
             <CartSidebar />
           </div>
         </aside>

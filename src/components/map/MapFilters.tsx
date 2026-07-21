@@ -49,8 +49,11 @@ export default function MapFilters({
   };
 
   return (
-    <div className="absolute top-4 left-1/2 z-[1000] -translate-x-1/2 w-[90%] max-w-md pointer-events-auto" ref={containerRef}>
-      <div className="rounded-md bg-card/90 p-2 shadow-xl backdrop-blur-md border border-border/50 relative">
+    <div
+      className="absolute top-4 left-1/2 z-[1000] -translate-x-1/2 w-[92%] max-w-[520px] pointer-events-auto"
+      ref={containerRef}
+    >
+      <div className="rounded-[26px] bg-card/90 p-2.5 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.45)] backdrop-blur-xl border border-border/70 relative">
         <div className="relative mb-2">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
@@ -62,19 +65,18 @@ export default function MapFilters({
               setIsOpen(true);
             }}
             placeholder="Rechercher une destination..."
-            className="w-full rounded-md bg-background py-2.5 pl-10 pr-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
+            className="w-full rounded-2xl bg-background/80 py-3 pl-10 pr-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
           />
         </div>
-        
-        {/* ── DROPDOWN AUTOCOMPLETE ── */}
+
         <AnimatePresence>
           {isOpen && search.trim().length > 0 && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="absolute left-0 right-0 top-[calc(100%+8px)] bg-card/95 backdrop-blur-xl border border-border/50 rounded-md shadow-2xl overflow-hidden flex flex-col max-h-[320px] z-[1001]"
+              className="absolute left-0 right-0 top-[calc(100%+8px)] bg-card/95 backdrop-blur-xl border border-border/70 rounded-[22px] shadow-2xl overflow-hidden flex flex-col max-h-[320px] z-[1001]"
             >
               {destinations.length === 0 ? (
                 <div className="p-5 text-center text-sm font-medium text-muted-foreground">
@@ -89,10 +91,10 @@ export default function MapFilters({
                         onMouseEnter={() => handleHoverDestination(dest)}
                         className="w-full text-left px-4 py-3 hover:bg-muted/80 transition-colors flex items-center gap-3 group"
                       >
-                        <img 
-                          src={dest.image || "/images/places/placeholder-place.jpg"} 
-                          alt={dest.name} 
-                          className="h-10 w-10 rounded-md object-cover shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-110" 
+                        <img
+                          src={dest.image || "/images/places/placeholder-place.jpg"}
+                          alt={dest.name}
+                          className="h-10 w-10 rounded-md object-cover shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-110"
                         />
                         <div className="flex flex-col overflow-hidden">
                           <span className="text-sm font-bold truncate text-foreground group-hover:text-primary transition-colors">
@@ -111,26 +113,26 @@ export default function MapFilters({
           )}
         </AnimatePresence>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar px-1">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar px-1">
           <button
             onClick={() => setSelectedCategory(null)}
-            className={`flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
-              selectedCategory === null 
-                 ? "bg-primary text-primary-foreground shadow-sm" 
-                 : "bg-surface-alt text-muted-foreground hover:bg-border/60"
+            className={`flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all ${
+              selectedCategory === null
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "bg-surface-alt text-muted-foreground hover:bg-border/60"
             }`}
           >
             Tous
           </button>
-          
+
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`shrink-0 capitalize rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
+              className={`shrink-0 capitalize rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all ${
                 selectedCategory === cat
-                 ? "bg-primary text-primary-foreground shadow-sm" 
-                 : "bg-surface-alt text-muted-foreground hover:bg-border/60"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-surface-alt text-muted-foreground hover:bg-border/60"
               }`}
             >
               {cat}

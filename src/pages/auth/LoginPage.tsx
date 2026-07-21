@@ -86,16 +86,16 @@ export default function LoginPage() {
 
         <div>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+            <Mail className="absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               {...register("email")}
               type="email"
               placeholder="Adresse email"
-              className={`w-full bg-surface-alt border ${errors.email ? "border-destructive" : "border-border/60"} rounded-md py-6 pl-10 pr-4 text-sm focus:outline-none focus:border-primary`}
+              className={`w-full rounded-xl border ${errors.email ? "border-destructive" : "border-border/60"} bg-background py-6 pl-10 pr-4 text-sm focus:border-primary focus:outline-none`}
             />
           </div>
           {errors.email && (
-            <p className="text-xs text-destructive mt-1 font-medium">
+            <p className="mt-1 text-xs font-medium text-destructive">
               {errors.email.message}
             </p>
           )}
@@ -103,16 +103,16 @@ export default function LoginPage() {
 
         <div>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+            <Lock className="absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               {...register("password")}
               type="password"
               placeholder="Mot de passe"
-              className={`w-full bg-surface-alt border ${errors.password ? "border-destructive" : "border-border/60"} rounded-md h-12 pl-10 pr-4 text-sm focus:ring-primary/20 font-bold`}
+              className={`h-12 w-full rounded-xl border ${errors.password ? "border-destructive" : "border-border/60"} bg-background pl-10 pr-4 text-sm font-bold focus:border-primary focus:ring-primary/20`}
             />
           </div>
           {errors.password && (
-            <p className="text-xs text-destructive mt-1 font-medium">
+            <p className="mt-1 text-xs font-medium text-destructive">
               {errors.password.message}
             </p>
           )}
@@ -138,7 +138,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={isLoggingIn}
-          className="w-full btn-primary py-3 flex justify-center mt-2 font-bold"
+          className="mt-2 flex w-full items-center justify-center rounded-xl bg-primary px-5 py-3.5 text-sm font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.01]"
         >
           {isLoggingIn ? (
             <Loader2 className="w-5 h-5 animate-spin" />

@@ -48,83 +48,75 @@ export default function CartItemList({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ delay: index * 0.05 }}
-            className={`group relative flex flex-col md:flex-row items-center gap-6 p-6 bg-card rounded-md border border-border/60 hover:border-primary/20 transition-all hover:shadow-xl hover:shadow-primary/5 ${
-              (isUpdating && busyItemId === item.id) ? "opacity-70" : ""
+            className={`group relative flex flex-col items-center gap-6 rounded-[24px] border border-border/60 bg-card p-6 transition-all hover:border-primary/20 hover:shadow-sm md:flex-row ${
+              isUpdating && busyItemId === item.id ? "opacity-70" : ""
             }`}
           >
-            {/* Image Section */}
-            <div className="relative shrink-0 w-full md:w-32 h-32">
+            <div className="relative h-32 w-full shrink-0 md:w-32">
               <img
                 src={item.product_image_url || "/images/places/placeholder-place.jpg"}
                 alt={item.product_name}
-                className="w-full h-full rounded-md object-cover shadow-sm group-hover:scale-105 transition-transform duration-500"
+                className="h-full w-full rounded-[18px] object-cover shadow-sm transition-transform duration-500 group-hover:scale-105"
               />
               {!item.is_available && (
-                <div className="absolute inset-0 bg-destructive/10 backdrop-blur-[2px] rounded-md flex items-center justify-center">
-                  <span className="bg-destructive text-white text-[10px] font-black px-2 py-1 rounded-lg shadow-lg">ÉPUISÉ</span>
+                <div className="absolute inset-0 flex items-center justify-center rounded-[18px] bg-destructive/10 backdrop-blur-[2px]">
+                  <span className="rounded-lg bg-destructive px-2 py-1 text-[10px] font-black text-white shadow-lg">ÉPUISÉ</span>
                 </div>
               )}
               {busyItemId === item.id && (
-                <div className="absolute inset-0 bg-background/40 backdrop-blur-[1px] rounded-md flex items-center justify-center">
-                  <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                <div className="absolute inset-0 flex items-center justify-center rounded-[18px] bg-background/40 backdrop-blur-[1px]">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
               )}
             </div>
 
-            {/* Info Section */}
-            <div className="flex-1 min-w-0 text-center md:text-left">
-              <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-1 block opacity-60">
+            <div className="min-w-0 flex-1 text-center md:text-left">
+              <span className="mb-1 block text-[10px] font-black uppercase tracking-[0.2em] text-primary opacity-60">
                 Article Sélectionné
               </span>
-              <h3 className="font-black text-2xl truncate mb-1 tracking-tight group-hover:text-primary transition-colors">
+              <h3 className="mb-1 truncate text-2xl font-black tracking-tight transition-colors group-hover:text-primary">
                 {item.product_name}
               </h3>
-              <p className="text-sm text-muted-foreground line-clamp-1 font-medium mb-3">
+              <p className="mb-3 line-clamp-1 text-sm font-medium text-muted-foreground">
                 {item.product_description}
               </p>
-              <div className="flex items-center justify-center md:justify-start gap-3">
-                <p className="text-xl font-black text-foreground">
-                  {formatPrice(Number(item.unit_price))}
-                </p>
-                <span className="text-xs text-muted-foreground font-bold">/ unité</span>
+              <div className="flex items-center justify-center gap-3 md:justify-start">
+                <p className="text-xl font-black text-foreground">{formatPrice(Number(item.unit_price))}</p>
+                <span className="text-xs font-bold text-muted-foreground">/ unité</span>
               </div>
             </div>
-            
-            {/* Actions Section */}
-            <div className="flex flex-row md:flex-col items-center gap-4 w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 border-border/40">
-               <div className="flex items-center gap-4 bg-muted/40 p-1.5 rounded-md border border-border/50 shadow-inner">
-                  <button
-                    disabled={isUpdating || busyItemId === item.id}
-                    onClick={() => handleUpdate(item.id, item.quantity - 1)}
-                    className="w-10 h-10 rounded-md flex items-center justify-center bg-card hover:bg-primary hover:text-primary-foreground transition-all shadow-sm disabled:opacity-50 active:scale-90"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <span className="font-black text-lg w-8 text-center tabular-nums">
-                    {item.quantity}
-                  </span>
-                  <button
-                    disabled={isUpdating || busyItemId === item.id || item.quantity >= item.stock_available}
-                    onClick={() => handleUpdate(item.id, item.quantity + 1)}
-                    className="w-10 h-10 rounded-md flex items-center justify-center bg-primary text-primary-foreground hover:scale-105 transition-all shadow-lg shadow-primary/10 disabled:opacity-50 active:scale-90"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-               </div>
-               
-               <button
-                 disabled={isUpdating || busyItemId === item.id}
-                 onClick={() => handleRemove(item.id)}
-                 className="flex items-center gap-2 text-muted-foreground hover:text-destructive transition-all p-2 font-bold text-xs uppercase tracking-widest disabled:opacity-50"
-               >
-                 <Trash2 className="w-4 h-4" />
-                 <span className="hidden md:inline">Retirer</span>
-               </button>
+
+            <div className="flex w-full flex-row items-center gap-4 border-t border-border/40 pt-4 md:w-auto md:flex-col md:border-t-0 md:pt-0">
+              <div className="flex items-center gap-4 rounded-xl border border-border/50 bg-muted/40 p-1.5 shadow-inner">
+                <button
+                  disabled={isUpdating || busyItemId === item.id}
+                  onClick={() => handleUpdate(item.id, item.quantity - 1)}
+                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-card text-foreground shadow-sm transition-all hover:bg-primary hover:text-primary-foreground active:scale-90 disabled:opacity-50"
+                >
+                  <Minus className="h-4 w-4" />
+                </button>
+                <span className="w-8 text-center text-lg font-black tabular-nums">{item.quantity}</span>
+                <button
+                  disabled={isUpdating || busyItemId === item.id || item.quantity >= item.stock_available}
+                  onClick={() => handleUpdate(item.id, item.quantity + 1)}
+                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/10 transition-all hover:scale-105 active:scale-90 disabled:opacity-50"
+                >
+                  <Plus className="h-4 w-4" />
+                </button>
+              </div>
+
+              <button
+                disabled={isUpdating || busyItemId === item.id}
+                onClick={() => handleRemove(item.id)}
+                className="flex items-center gap-2 p-2 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground transition-all hover:text-destructive disabled:opacity-50"
+              >
+                <Trash2 className="h-4 w-4" />
+                <span className="hidden md:inline">Retirer</span>
+              </button>
             </div>
 
-            {/* Total Badge Mobile-friendly */}
-            <div className="absolute top-4 right-4 md:relative md:top-0 md:right-0 bg-primary/5 px-3 py-1.5 rounded-full border border-primary/10 md:hidden">
-                <span className="text-primary font-black text-xs">{formatPrice(Number(item.unit_price) * item.quantity)}</span>
+            <div className="absolute right-4 top-4 rounded-full border border-primary/10 bg-primary/5 px-3 py-1.5 md:hidden">
+              <span className="text-xs font-black text-primary">{formatPrice(Number(item.unit_price) * item.quantity)}</span>
             </div>
           </motion.div>
         ))}

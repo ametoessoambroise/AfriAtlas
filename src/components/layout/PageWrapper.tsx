@@ -3,10 +3,11 @@ import type { ReactNode } from "react";
 
 const PageWrapper = ({ children }: { children: ReactNode }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: 12 }}
     animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -20 }}
-    transition={{ duration: 0.4, ease: "easeInOut" }}
+    exit={{ opacity: 0, y: -12 }}
+    transition={{ duration: 0.3, ease: "easeOut" }}
+    className="min-h-screen bg-background"
   >
     {children}
   </motion.div>

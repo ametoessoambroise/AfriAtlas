@@ -14,6 +14,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const SCROLL_THRESHOLD = 80;
+const NAVBAR_BACKGROUND = "rgba(255,255,255,0.96)";
 
 const getNavLinks = (user: any) => {
   const baseLinks = [
@@ -218,14 +219,14 @@ const NavSearch = ({ onClose }: { onClose: () => void }) => {
         placeholder="Rechercher une destination…"
         value={localValue}
         onChange={(e) => setLocalValue(e.target.value)}
-        className="w-full min-h-11 rounded-full border border-white/20 bg-white/10 py-2 pl-10 pr-11 text-base text-white placeholder-white/50 transition-colors focus:border-primary/50 focus:outline-none sm:text-sm"
+        className="w-full min-h-11 rounded-full border border-border bg-white py-2 pl-10 pr-11 text-base text-foreground placeholder-muted-foreground transition-colors focus:border-primary/50 focus:outline-none sm:text-sm"
         autoFocus
       />
       <button
         type="button"
         onClick={onClose}
         aria-label="Fermer la recherche"
-        className="absolute right-1.5 flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-full text-white/50 transition-colors hover:bg-white/10 hover:text-white touch-manipulation"
+        className="absolute right-1.5 flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground touch-manipulation"
       >
         <XIcon className="h-4 w-4" aria-hidden />
       </button>
@@ -251,7 +252,7 @@ function NavBar() {
   const bgOpacity = useTransform(scrollY, [0, SCROLL_THRESHOLD], [0.3, 0.75]);
   const paddingY = useTransform(scrollY, [0, SCROLL_THRESHOLD], [12, 6]);
   const paddingX = useTransform(scrollY, [0, SCROLL_THRESHOLD], [24, 8]);
-  const bgStyle = useTransform(bgOpacity, (v) => `rgba(0,0,0,${v})`);
+  const bgStyle = useTransform(bgOpacity, (v) => `rgba(255,255,255,${Math.min(0.96, 0.9 + v * 0.06)})`);
 
   useEffect(() => {
     const unsub = scrollY.on("change", (v) => {
@@ -279,7 +280,7 @@ function NavBar() {
         )}
       >
         <motion.div
-          className="relative w-full flex items-center border border-white/15 backdrop-blur-md overflow-hidden mx-auto"
+          className="relative w-full flex items-center border border-border/80 bg-white/95 shadow-sm backdrop-blur-md overflow-hidden mx-auto"
           animate={isScrolled ? "shrunk" : "expanded"}
           variants={{
             expanded: { 
@@ -335,7 +336,7 @@ function NavBar() {
                 }}
               />
               <motion.span
-                className="text-white/90 font-semibold tracking-widest uppercase whitespace-nowrap overflow-hidden"
+                className="text-primary font-semibold tracking-widest uppercase whitespace-nowrap overflow-hidden"
                 animate={isScrolled ? "shrunk" : "expanded"}
                 variants={{
                   expanded: {
@@ -482,7 +483,7 @@ const Tab = ({
     >
       <Link
         to={href}
-        className="uppercase text-white/75 hover:text-white tracking-widest font-medium whitespace-nowrap transition-colors block text-xs"
+        className="uppercase text-foreground/75 hover:text-primary tracking-widest font-medium whitespace-nowrap transition-colors block text-xs"
       >
         {children}
       </Link>

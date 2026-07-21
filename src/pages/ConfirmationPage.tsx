@@ -38,7 +38,7 @@ export default function ConfirmationPage() {
 
   if (orderQuery.isLoading)
     return (
-      <div className="p-20 text-center font-bold">
+      <div className="p-20 text-center text-sm font-bold uppercase tracking-[0.22em] text-muted-foreground">
         Génération de votre reçu...
       </div>
     );
@@ -46,94 +46,83 @@ export default function ConfirmationPage() {
   const order = orderQuery.data;
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-20">
-      <div className="bg-card rounded-md border border-border shadow-xl overflow-hidden">
-        {/* Header Succès */}
+    <div className="mx-auto max-w-4xl px-6 py-20">
+      <div className="overflow-hidden rounded-[32px] border border-border bg-card shadow-sm">
         <div className="bg-primary p-12 text-center text-white">
-          <div className="w-20 h-20 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-10 h-10" />
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-[22px] bg-white/20">
+            <CheckCircle className="h-10 w-10" />
           </div>
-          <h1 className="text-4xl font-black mb-2">
+          <h1 className="mb-2 text-4xl font-black">
             Merci pour votre confiance !
           </h1>
-          <p className="opacity-80 font-medium">
+          <p className="font-medium opacity-80">
             Votre commande #{orderId?.slice(0, 8)} est en cours de préparation.
           </p>
         </div>
 
-        <div className="p-8 md:p-12 space-y-12">
-          {/* Section Suivi */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-surface-alt p-6 rounded-md border border-border">
-              <div className="flex items-center gap-3 mb-4">
-                <Package className="w-5 h-5 text-primary" />
-                <h3 className="font-bold">Livraison Togo Express</h3>
+        <div className="space-y-12 p-8 md:p-12">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="rounded-[24px] border border-border bg-surface-alt p-6">
+              <div className="mb-4 flex items-center gap-3">
+                <Package className="h-5 w-5 text-primary" />
+                <h3 className="text-lg font-black">Livraison Togo Express</h3>
               </div>
-              <p className="text-xs text-muted-foreground mb-4 font-medium leading-relaxed">
+              <p className="mb-4 text-xs font-medium leading-relaxed text-muted-foreground">
                 Votre colis sera expédié vers votre adresse de livraison. Suivez
                 son trajet en temps réel.
               </p>
-              <div className="bg-background p-4 rounded-md border border-border">
-                <span className="text-[10px] font-bold uppercase text-muted-foreground block mb-1">
+              <div className="rounded-2xl border border-border bg-background p-4">
+                <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
                   N° de suivi
                 </span>
-                <span className="text-lg font-black tracking-widest text-primary">
+                <span className="text-lg font-black tracking-[0.25em] text-primary">
                   {deliveryQuery.data?.tracking_number}
                 </span>
               </div>
             </div>
 
             <div className="flex flex-col justify-center gap-4">
-              <button className="flex items-center justify-between p-4 bg-background border border-border rounded-md hover:bg-surface-alt transition-colors group">
+              <button className="group flex items-center justify-between rounded-[18px] border border-border bg-background p-4 text-left transition-colors hover:bg-surface-alt">
                 <div className="flex items-center gap-3">
-                  <Printer className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm font-bold">
-                    Télécharger la facture
-                  </span>
+                  <Printer className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm font-bold">Télécharger la facture</span>
                 </div>
-                <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all" />
+                <ArrowRight className="h-4 w-4 opacity-0 transition-all group-hover:opacity-100" />
               </button>
               <button
                 onClick={() => navigate("/destinations")}
-                className="flex items-center justify-between p-4 bg-background border border-border rounded-md hover:bg-surface-alt transition-colors group"
+                className="group flex items-center justify-between rounded-[18px] border border-border bg-background p-4 text-left transition-colors hover:bg-surface-alt"
               >
                 <div className="flex items-center gap-3">
-                  <MapPin className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm font-bold">
-                    Explorer d'autres lieux
-                  </span>
+                  <MapPin className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm font-bold">Explorer d’autres lieux</span>
                 </div>
-                <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all" />
+                <ArrowRight className="h-4 w-4 opacity-0 transition-all group-hover:opacity-100" />
               </button>
             </div>
           </div>
 
-          {/* Section Recap Court */}
           <div className="border-t border-border pt-8">
-            <h3 className="font-bold mb-6">Résumé du paiement</h3>
+            <h3 className="mb-6 text-lg font-black">Résumé du paiement</h3>
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Articles</span>
-                <span className="font-bold">
-                  {formatPrice(Number(order?.total_price))}
-                </span>
+                <span className="font-bold">{formatPrice(Number(order?.total_price))}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Mode de paiement</span>
                 <span className="font-bold">Stripe (Carte Bancaire)</span>
               </div>
-              <div className="flex justify-between text-lg font-black pt-4 border-t border-dashed border-border">
+              <div className="flex justify-between border-t border-dashed border-border pt-4 text-lg font-black">
                 <span>Payé</span>
-                <span className="text-primary">
-                  {formatPrice(Number(order?.total_price))}
-                </span>
+                <span className="text-primary">{formatPrice(Number(order?.total_price))}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-surface-alt p-6 text-center border-t border-border">
-          <p className="text-xs text-muted-foreground font-medium">
+        <div className="border-t border-border bg-surface-alt p-6 text-center">
+          <p className="text-xs font-medium text-muted-foreground">
             Un email de confirmation contenant votre QR Code a été envoyé à
             votre adresse.
           </p>
@@ -142,9 +131,7 @@ export default function ConfirmationPage() {
 
       <p className="mt-12 text-center text-xs text-muted-foreground">
         Besoin d'aide ?{" "}
-        <span className="text-primary font-bold cursor-pointer">
-          Contactez le Support Client Atlas
-        </span>
+        <span className="cursor-pointer font-bold text-primary">Contactez le Support Client Atlas</span>
       </p>
     </div>
   );

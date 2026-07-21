@@ -39,7 +39,6 @@ export default function FeaturedDestinations() {
     <section className="py-20 sm:py-24 bg-background">
       <div className="container px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
 
-        {/* ── Header ── */}
         <motion.div
           variants={stagger}
           initial="hidden"
@@ -47,32 +46,19 @@ export default function FeaturedDestinations() {
           viewport={{ once: true, margin: "-60px" }}
           className="mb-14 text-center"
         >
-          {/* Badge */}
           <motion.div variants={fadeUp}>
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/15 mb-5">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary mb-5">
               <Sparkles className="h-3 w-3" />
               Sélection experts
             </span>
           </motion.div>
 
-          {/* Titre */}
-          <motion.h2 variants={fadeUp} className="text-[clamp(2rem,4vw+1rem,3rem)] font-heading font-semibold italic mb-4 max-w-xl mx-auto">
-            Destinations à{" "}
-            <span className="relative inline-block text-primary">
-              ne pas manquer
-              <motion.span
-                className="absolute -bottom-1 left-0 h-[3px] rounded-full bg-primary"
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.6, duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
-              />
-            </span>
+          <motion.h2 variants={fadeUp} className="mx-auto mb-4 max-w-3xl text-[clamp(2rem,4vw+1rem,3rem)] font-semibold text-foreground">
+            Destinations à ne pas manquer
           </motion.h2>
 
-          {/* Subtitle */}
-          <motion.p variants={fadeUp} className="section-subtitle mx-auto max-w-md">
-            Les lieux incontournables sélectionnés par nos experts pour un séjour mémorable au Togo
+          <motion.p variants={fadeUp} className="mx-auto max-w-2xl text-base text-muted-foreground leading-relaxed">
+            Les lieux incontournables sélectionnés pour pallier les visites rapides et offrir un séjour plus mémorable.
           </motion.p>
         </motion.div>
 

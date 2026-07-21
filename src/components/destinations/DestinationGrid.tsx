@@ -97,7 +97,7 @@ export default function DestinationGrid({
         variants={stagger}
         initial="hidden"
         animate="visible"
-        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
       >
         {itemsWithAds.map((item, idx) => {
           const isAd = item.type === "ad";

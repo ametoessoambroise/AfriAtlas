@@ -31,12 +31,12 @@ export default function CartPage() {
     return (
       <div className="min-h-[80vh] flex flex-col items-center justify-center gap-6">
         <div className="relative">
-          <div className="w-16 h-16 border-4 border-primary/10 border-t-primary rounded-full animate-spin" />
-          <ShoppingBag className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-primary" />
+          <div className="h-16 w-16 animate-spin rounded-full border-4 border-primary/10 border-t-primary" />
+          <ShoppingBag className="absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 text-primary" />
         </div>
-        <div className="text-center space-y-2">
-          <p className="font-black text-xl tracking-tight">Préparation de votre sélection...</p>
-          <p className="text-muted-foreground text-sm font-medium">Un instant, nous récupérons vos trésors.</p>
+        <div className="space-y-2 text-center">
+          <p className="text-xl font-black tracking-tight">Préparation de votre sélection...</p>
+          <p className="text-sm font-medium text-muted-foreground">Un instant, nous récupérons vos trésors.</p>
         </div>
       </div>
     );
@@ -44,28 +44,28 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center"
+        className="flex min-h-[70vh] flex-col items-center justify-center p-6 text-center"
       >
-        <div className="w-32 h-32 bg-surface-alt rounded-full flex items-center justify-center text-muted-foreground mb-8 relative">
-          <ShoppingBag className="w-12 h-12 opacity-20" />
-          <motion.div 
+        <div className="relative mb-8 flex h-32 w-32 items-center justify-center rounded-full bg-surface-alt text-muted-foreground">
+          <ShoppingBag className="h-12 w-12 opacity-20" />
+          <motion.div
             animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
-            className="absolute -top-2 -right-2 bg-primary/10 p-3 rounded-full"
+            className="absolute -right-2 -top-2 rounded-full bg-primary/10 p-3"
           >
-            <Sparkles className="w-6 h-6 text-primary" />
+            <Sparkles className="h-6 w-6 text-primary" />
           </motion.div>
         </div>
-        <h2 className="text-4xl font-black mb-4 tracking-tight">Votre panier est vide.</h2>
-        <p className="text-muted-foreground max-w-sm mb-10 text-lg leading-relaxed">
-          Il semble que vous n'ayez pas encore ajouté de destinations ou de délices à votre sélection.
+        <h2 className="mb-4 text-4xl font-black tracking-tight">Votre panier est vide.</h2>
+        <p className="mb-10 max-w-sm text-lg leading-relaxed text-muted-foreground">
+          Il semble que vous n’ayez pas encore ajouté de destinations ou de délices à votre sélection.
         </p>
         <button
           onClick={() => navigate("/destinations")}
-          className="btn-primary px-10 py-4 font-black rounded-md shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-105 active:scale-95"
+          className="rounded-xl bg-primary px-10 py-4 text-sm font-black uppercase tracking-[0.2em] text-primary-foreground shadow-xl shadow-primary/20 transition-all hover:scale-105 hover:shadow-primary/30 active:scale-95"
         >
           Découvrir les destinations
         </button>
@@ -74,34 +74,37 @@ export default function CartPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 md:py-24">
-      <motion.div 
+    <div className="mx-auto max-w-7xl px-6 py-12 md:py-24">
+      <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        className="flex flex-col md:flex-row gap-6 items-start md:items-end justify-between mb-16"
+        className="mb-16 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end"
       >
         <div>
-          <button 
+          <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-4 group font-bold"
+            className="group mb-4 flex items-center gap-2 font-bold text-muted-foreground transition-colors hover:text-primary"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             <span className="text-[10px] uppercase tracking-[0.2em]">Retour</span>
           </button>
-          <h1 className="text-3xl md:text-5xl lg:text-5xl font-black tracking-tighter">Votre Sélection<span className="text-primary">.</span></h1>
+          <h1 className="text-3xl font-black tracking-tighter md:text-5xl lg:text-5xl">
+            Votre Sélection<span className="text-primary">.</span>
+          </h1>
         </div>
         <div className="flex flex-col items-end gap-2">
-          <div className="bg-primary text-primary-foreground px-6 py-3 rounded-md shadow-lg shadow-primary/10 flex items-center gap-3">
-            <ShoppingBag className="w-5 h-5" />
-            <span className="font-black text-lg">{itemCount} {items.length > 1 ? "Articles" : "Article"}</span>
+          <div className="flex items-center gap-3 rounded-xl bg-primary px-6 py-3 text-primary-foreground shadow-lg shadow-primary/10">
+            <ShoppingBag className="h-5 w-5" />
+            <span className="text-lg font-black">{itemCount} {items.length > 1 ? "Articles" : "Article"}</span>
           </div>
-          <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest mr-2">Sous-total : {formatPrice(subtotal)}</p>
+          <p className="mr-2 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            Sous-total : {formatPrice(subtotal)}
+          </p>
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-        {/* Liste des articles */}
-        <div className="lg:col-span-8 space-y-10">
+      <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
+        <div className="space-y-10 lg:col-span-8">
           <AnimatePresence mode="popLayout">
             <CartItemList
               items={items}
@@ -110,46 +113,43 @@ export default function CartPage() {
               isUpdating={isUpdating || isRemoving}
             />
           </AnimatePresence>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="p-8 bg-surface-alt rounded-md border border-dashed border-border/60 flex flex-col md:flex-row items-center gap-6"
+            className="flex flex-col items-center gap-6 rounded-[24px] border border-dashed border-border/60 bg-surface-alt p-8 md:flex-row"
           >
-             <div className="w-16 h-16 bg-background rounded-md flex items-center justify-center shrink-0 shadow-sm">
-                <span className="text-2xl">🌍</span>
-             </div>
-             <div>
-               <h4 className="font-black text-xl mb-1 tracking-tight">Besoin d'un guide personnalisé ?</h4>
-               <p className="text-sm text-muted-foreground font-medium leading-relaxed">
-                 Nos experts locaux sont là pour vous aider à finaliser votre itinéraire.
-                 Contactez notre concierge 24/7 au <span className="text-primary font-bold">+228 90 00 00 00</span>
-               </p>
-             </div>
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-background shadow-sm">
+              <span className="text-2xl">🌍</span>
+            </div>
+            <div>
+              <h4 className="mb-1 text-xl font-black tracking-tight">Besoin d’un guide personnalisé ?</h4>
+              <p className="text-sm font-medium leading-relaxed text-muted-foreground">
+                Nos experts locaux sont là pour vous aider à finaliser votre itinéraire. Contactez notre concierge 24/7 au <span className="font-bold text-primary">+228 90 00 00 00</span>
+              </p>
+            </div>
           </motion.div>
         </div>
 
-        {/* Résumé et Checkout */}
         <div className="lg:col-span-4">
           <div className="sticky top-32">
             <CartSummary
               subtotal={Number(subtotal)}
               onCheckout={() => navigate("/checkout")}
             />
-            
-            {/* Trust Badges */}
+
             <div className="mt-8 grid grid-cols-3 gap-4 px-2">
-               {[
-                 { icon: "🛡️", label: "Sécurisé" },
-                 { icon: "⚡", label: "Rapide" },
-                 { icon: "🎁", label: "Privilèges" }
-               ].map((b, i) => (
-                 <div key={i} className="flex flex-col items-center gap-1.5">
-                    <span className="text-xl">{b.icon}</span>
-                    <span className="text-[10px] font-black uppercase tracking-tighter text-muted-foreground">{b.label}</span>
-                 </div>
-               ))}
+              {[
+                { icon: "🛡️", label: "Sécurisé" },
+                { icon: "⚡", label: "Rapide" },
+                { icon: "🎁", label: "Privilèges" },
+              ].map((b, i) => (
+                <div key={i} className="flex flex-col items-center gap-1.5">
+                  <span className="text-xl">{b.icon}</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.16em] text-muted-foreground">{b.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

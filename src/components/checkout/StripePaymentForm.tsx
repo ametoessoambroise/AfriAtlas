@@ -46,28 +46,33 @@ export default function StripePaymentForm({
   const CARD_ELEMENT_OPTIONS = {
     style: {
       base: {
-        color: "#ffffff",
+        color: "#0f172a",
         fontFamily: "DM Sans, sans-serif",
         fontSmoothing: "antialiased",
         fontSize: "16px",
         "::placeholder": {
-          color: "#aab7c4",
+          color: "#94a3b8",
         },
       },
       invalid: {
-        color: "#fa755a",
-        iconColor: "#fa755a",
+        color: "#e11d48",
+        iconColor: "#e11d48",
       },
     },
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold flex items-center gap-2">
-          <Lock className="w-5 h-5 text-primary" />
-          Paiement Sécurisé
-        </h3>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10">
+            <Lock className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <h3 className="text-xl font-black">Paiement Sécurisé</h3>
+            <p className="text-sm text-muted-foreground">Validation de carte via Stripe.</p>
+          </div>
+        </div>
         <div className="flex gap-2">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg"
@@ -78,15 +83,15 @@ export default function StripePaymentForm({
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-surface-alt p-6 rounded-md border border-border">
-          <label className="text-xs font-bold uppercase text-muted-foreground mb-4 block">
+        <div className="rounded-[20px] border border-border bg-surface-alt p-6">
+          <label className="mb-4 block text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
             Détails de la Carte
           </label>
-          <div className="p-4 bg-background border border-border rounded-md">
+          <div className="rounded-2xl border border-border bg-background p-4">
             <CardElement options={CARD_ELEMENT_OPTIONS} />
           </div>
           <div className="mt-4 flex items-start gap-2 text-[10px] text-muted-foreground">
-            <AlertCircle className="w-3 h-3 shrink-0" />
+            <AlertCircle className="h-3 w-3 shrink-0" />
             <p>
               Vos données de carte ne sont jamais stockées sur nos serveurs.
               Elles sont traitées de manière chiffrée par Stripe (PCI-DSS).
@@ -97,11 +102,11 @@ export default function StripePaymentForm({
         <button
           type="submit"
           disabled={!stripe || isProcessing || isExternalLoading || total <= 0}
-          className="w-full btn-primary py-4 flex items-center justify-center gap-3 font-black transition-transform active:scale-95 disabled:opacity-50"
+          className="flex w-full items-center justify-center gap-3 rounded-xl bg-primary px-4 py-4 text-sm font-black uppercase tracking-[0.2em] text-primary-foreground transition-transform active:scale-95 disabled:opacity-50"
         >
           {isProcessing ? (
             <>
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="h-5 w-5 animate-spin" />
               <span>Traitement en cours...</span>
             </>
           ) : (

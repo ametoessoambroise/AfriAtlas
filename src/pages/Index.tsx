@@ -1,6 +1,5 @@
 import PageWrapper from "@/components/layout/PageWrapper";
 import HeroSection from "@/components/home/HeroSection";
-import LiveStats from "@/components/home/LiveStats";
 import FeaturedDestinations from "@/components/home/FeaturedDestinations";
 import CategoryFilter from "@/components/home/CategoryFilter";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
@@ -18,7 +17,6 @@ const Index = () => {
     <PageWrapper>
       <div className="relative max-w-full mx-auto ">
         <HeroSection />
-        <LiveStats />
       </div>
 
       {spotlightAd && <AdPremiumSpotlight ad={spotlightAd} />}

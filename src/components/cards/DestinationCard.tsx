@@ -68,7 +68,7 @@ const DestinationCard = ({
     >
       <Link
         to={`/destinations/${destination.slug}`}
-        className="group bg-card rounded-[26px] border border-border/60 overflow-hidden block transition-all duration-300 shadow-[0_10px_30px_-18px_rgba(0,0,0,0.14)]"
+        className="group bg-card rounded-[28px] border border-border/70 overflow-hidden block transition-all duration-300 shadow-[0_16px_40px_-20px_rgba(0,0,0,0.22)]"
       >
         <div className="relative h-72 overflow-hidden">
           <LazyImage
@@ -78,7 +78,7 @@ const DestinationCard = ({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
 
-          <span className="absolute top-4 left-4 px-3 py-1 bg-white/12 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
+          <span className="absolute top-4 left-4 px-3 py-1 bg-white/14 backdrop-blur-md border border-white/25 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
             {typeLabels[destination.type]}
           </span>
 
@@ -114,7 +114,7 @@ const DestinationCard = ({
             <h3 className="text-[1.55rem] font-semibold text-foreground leading-tight transition-colors group-hover:text-primary">
               {destination.name}
             </h3>
-            <div className="flex items-center gap-1 rounded-full bg-secondary/15 px-2.5 py-1.5 text-xs font-bold text-foreground shadow-sm shrink-0">
+            <div className="flex items-center gap-1 rounded-full bg-secondary/15 px-2.5 py-1.5 text-xs font-bold text-foreground shadow-sm shrink-0 border border-secondary/10">
               <Star className="h-3.5 w-3.5 fill-secondary text-secondary" />
               <span>{destination.rating}</span>
             </div>

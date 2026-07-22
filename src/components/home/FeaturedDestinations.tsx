@@ -35,6 +35,21 @@ export default function FeaturedDestinations() {
     return pickFeaturedIds(items).map(mapPlaceListToDestination);
   }, [catalog.data?.items]);
 
+  const highlights = [
+    {
+      title: "Sélection premium",
+      copy: "Les meilleurs endroits du Togo, soigneusement organisés pour inspirer le voyage idéal.",
+    },
+    {
+      title: "Découverte fluide",
+      copy: "Une navigation simple, rapide et plus élégante pour filtrer votre prochaine destination.",
+    },
+    {
+      title: "Expérience complète",
+      copy: "Des adresses pensée pour un séjour réussi, de l’arrivée à la découverte locale.",
+    },
+  ];
+
   return (
     <section className="py-20 sm:py-24 bg-background">
       <div className="container px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
@@ -60,6 +75,24 @@ export default function FeaturedDestinations() {
           <motion.p variants={fadeUp} className="mx-auto max-w-2xl text-base text-muted-foreground leading-relaxed">
             Les lieux incontournables sélectionnés pour pallier les visites rapides et offrir un séjour plus mémorable.
           </motion.p>
+        </motion.div>
+
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-40px" }}
+          className="mb-10 grid gap-4 md:grid-cols-3"
+        >
+          {highlights.map((item) => (
+            <motion.div key={item.title} variants={fadeUp}>
+              <div className="h-full rounded-[24px] border border-border/70 bg-card p-5 shadow-[0_14px_38px_-24px_rgba(0,0,0,0.24)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_-24px_rgba(0,0,0,0.34)]">
+                <div className="mb-3 h-1.5 w-12 rounded-full bg-secondary" />
+                <h3 className="mb-2 text-lg font-bold text-foreground">{item.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{item.copy}</p>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* ── États : loading / error / empty / data ── */}

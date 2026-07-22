@@ -67,28 +67,46 @@ export default function HeroSection() {
 
         <motion.div
           variants={fadeUp}
-          className="mx-auto mb-8 max-w-4xl rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur-md shadow-2xl"
+          className="mx-auto mb-8 max-w-4xl rounded-[28px] border border-white/20 bg-white/10 p-3.5 backdrop-blur-xl shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)]"
         >
           <div className="grid gap-3 md:grid-cols-[1.4fr_1fr_1fr_auto]">
-            <div className="rounded-xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
+            <div className="rounded-2xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
               <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Destination</div>
               <div className="mt-1 font-semibold">Lomé, Kpalimé, Kara...</div>
             </div>
-            <div className="rounded-xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
+            <div className="rounded-2xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
               <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Dates</div>
               <div className="mt-1 font-semibold">12 - 18 août</div>
             </div>
-            <div className="rounded-xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
+            <div className="rounded-2xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
               <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Voyageurs</div>
               <div className="mt-1 font-semibold">2 adultes</div>
             </div>
             <Link
               to="/destinations"
-              className="inline-flex items-center justify-center rounded-xl bg-secondary px-5 py-3 text-sm font-bold text-foreground shadow-md transition-transform hover:scale-[1.01]"
+              className="inline-flex items-center justify-center rounded-2xl bg-secondary px-5 py-3 text-sm font-bold text-foreground shadow-[0_10px_30px_-12px_rgba(254,187,2,0.9)] transition-all hover:-translate-y-0.5"
             >
               Rechercher
             </Link>
           </div>
+        </motion.div>
+
+        <motion.div
+          variants={fadeUp}
+          className="mb-6 flex flex-wrap items-center justify-center gap-3"
+        >
+          {[
+            "Séjours premium",
+            "Expériences locales",
+            "Paiement simplifié",
+          ].map((item) => (
+            <span
+              key={item}
+              className="rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-white/85 backdrop-blur-sm"
+            >
+              {item}
+            </span>
+          ))}
         </motion.div>
 
         <motion.div

@@ -280,7 +280,7 @@ function NavBar() {
         )}
       >
         <motion.div
-          className="relative w-full flex items-center border border-border/80 bg-white/95 shadow-sm backdrop-blur-md overflow-hidden mx-auto"
+          className="relative w-full flex items-center border border-border/80 bg-white/95 dark:bg-black/95 shadow-sm backdrop-blur-md overflow-hidden mx-auto"
           animate={isScrolled ? "shrunk" : "expanded"}
           variants={{
             expanded: { 

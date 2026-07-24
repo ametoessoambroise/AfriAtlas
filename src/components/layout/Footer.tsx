@@ -122,7 +122,7 @@ export default function Footer() {
   return (
     <footer className="bg-background text-foreground relative w-full pt-20 pb-10 border-t border-border/60 mt-20">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="bg-white border border-border mb-16 rounded-2xl p-8 md:p-12 shadow-sm relative overflow-hidden">
+        <div className="bg-white dark:bg-black border border-border mb-16 rounded-2xl p-8 md:p-12 shadow-sm relative overflow-hidden">
           <div className="grid items-center gap-8 md:grid-cols-2 relative z-10">
             <div>
               <h3 className="mb-4 text-2xl font-bold md:text-3xl">

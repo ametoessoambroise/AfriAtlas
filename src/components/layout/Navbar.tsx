@@ -14,7 +14,6 @@ import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const SCROLL_THRESHOLD = 80;
-const NAVBAR_BACKGROUND = "rgba(255,255,255,0.96)";
 
 const getNavLinks = (user: any) => {
   const baseLinks = [
@@ -252,7 +251,22 @@ function NavBar() {
   const bgOpacity = useTransform(scrollY, [0, SCROLL_THRESHOLD], [0.3, 0.75]);
   const paddingY = useTransform(scrollY, [0, SCROLL_THRESHOLD], [12, 6]);
   const paddingX = useTransform(scrollY, [0, SCROLL_THRESHOLD], [24, 8]);
-  const bgStyle = useTransform(bgOpacity, (v) => `rgba(255,255,255,${Math.min(0.96, 0.9 + v * 0.06)})`);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const html = document.documentElement;
+    setIsDark(html.classList.contains("dark"));
+    const observer = new MutationObserver(() => {
+      setIsDark(html.classList.contains("dark"));
+    });
+    observer.observe(html, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
+  const bgStyle = useTransform(bgOpacity, (v) => {
+    const alpha = Math.min(0.96, 0.9 + v * 0.06);
+    return isDark ? `rgba(0,0,0,${alpha})` : `rgba(255,255,255,${alpha})`;
+  });
 
   useEffect(() => {
     const unsub = scrollY.on("change", (v) => {

@@ -70,15 +70,15 @@ export default function HeroSection() {
           className="mx-auto mb-8 max-w-4xl rounded-[28px] border border-white/20 bg-white/10 p-3.5 backdrop-blur-xl shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)]"
         >
           <div className="grid gap-3 md:grid-cols-[1.4fr_1fr_1fr_auto]">
-            <div className="rounded-2xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
+            <div className="rounded-2xl bg-white dark:bg-black/80 px-4 py-3 text-left text-sm text-foreground shadow-sm">
               <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Destination</div>
               <div className="mt-1 font-semibold">Lomé, Kpalimé, Kara...</div>
             </div>
-            <div className="rounded-2xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
+            <div className="rounded-2xl bg-white dark:bg-black/80 px-4 py-3 text-left text-sm text-foreground shadow-sm">
               <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Dates</div>
               <div className="mt-1 font-semibold">12 - 18 août</div>
             </div>
-            <div className="rounded-2xl bg-white px-4 py-3 text-left text-sm text-foreground shadow-sm">
+            <div className="rounded-2xl bg-white dark:bg-black/80 px-4 py-3 text-left text-sm text-foreground shadow-sm">
               <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Voyageurs</div>
               <div className="mt-1 font-semibold">2 adultes</div>
             </div>
